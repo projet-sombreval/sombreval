@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le Bailli — Sombreval 1348</title>
+  <link rel="stylesheet" href="exemple-bailli.css">
+</head>
+<body class="univers-sombreval">
+
+  <!-- Une carte de personnage = un <article>. Rien d'autre dans la page. -->
+  <article class="carte">
+
+    <header class="carte-entete">
+      <p class="carte-univers">Sombreval 1348</p>
+      <h1 class="carte-nom">Le Bailli</h1>
+      <p class="carte-camp">Camp du Village</p>
+    </header>
+
+    <!-- Le pouvoir : c'est ce que le joueur relit en pleine partie.
+         Il est donc en haut, en gros, et il tient en une phrase. -->
+    <section class="carte-pouvoir">
+      <h2>Ton pouvoir</h2>
+      <p>
+        Chaque nuit, tu désignes un joueur vivant : le jeu te dit s'il est
+        <strong>Semeur</strong> ou <strong>Villageois</strong>.
+      </p>
+    </section>
+
+    <!-- Une liste de définitions : à gauche la question, à droite la réponse.
+         C'est exactement ce à quoi sert <dl> en HTML. -->
+    <section class="carte-details">
+      <h2>En bref</h2>
+      <dl>
+        <dt>Quand tu joues</dt>
+        <dd>La nuit, après les Semeurs.</dd>
+
+        <dt>Combien de fois</dt>
+        <dd>Une fois par nuit.</dd>
+
+        <dt>Tu gagnes si</dt>
+        <dd>Tous les Semeurs de peste sont éliminés.</dd>
+      </dl>
+    </section>
+
+    <section class="carte-conseil">
+      <h2>Le conseil du meneur</h2>
+      <p>
+        Ce que tu sais ne sert à rien tant que tu te tais, et te condamne dès
+        que tu parles. Choisis bien ton jour.
+      </p>
+    </section>
+
+    <footer class="carte-pied">
+      <p>Carte d'exemple — modèle à recopier pour la tienne.</p>
+    </footer>
+
+  </article>
+
+</body>
+</html>

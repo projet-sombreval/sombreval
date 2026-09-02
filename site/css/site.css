@@ -1,0 +1,86 @@
+/* Feuille de style des écrans du jeu.
+   Les cartes de personnage ont la leur, dans cartes/. */
+
+:root {
+  --fond-page: #171310;
+  --fond-ecran: #efe6d6;
+  --encre: #2c231b;
+  --encre-pale: #6d6154;
+  --accent: #7d1f13;
+  --bordure: #c8b898;
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+  background: var(--fond-page);
+  color: var(--encre);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.5;
+}
+
+.ecran {
+  max-width: 26rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--fond-ecran);
+  border: 1px solid var(--bordure);
+  border-radius: 4px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: var(--accent);
+  text-align: center;
+}
+
+.accroche {
+  margin: 0.3rem 0 1.5rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--encre-pale);
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--encre-pale);
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid var(--bordure);
+  border-radius: 3px;
+  background: #fff;
+}
+
+/* 44 pixels de haut au minimum : c'est la taille d'un doigt sur un écran
+   de téléphone (exigence E12). */
+button {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--fond-ecran);
+  background: var(--accent);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 1.5rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--bordure);
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--encre-pale);
+}
