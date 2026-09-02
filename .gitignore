@@ -165,7 +165,8 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-/site
+# (la regle « /site » de ce modele est retiree : dans ce projet, site/
+#  contient les ecrans du jeu et doit etre suivi par git.)
 
 # mypy
 .mypy_cache/
