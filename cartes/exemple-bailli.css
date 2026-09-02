@@ -1,0 +1,165 @@
+/* Carte de personnage — exemple du Bailli (Sombreval 1348).
+   Recopie ce fichier, renomme-le, et change les couleurs et le contenu.
+   Tout est commenté : lis avant de modifier. */
+
+/* ------------------------------------------------------------------
+   1. Les couleurs de l'univers
+
+   Une "variable CSS" est une couleur à laquelle on donne un nom.
+   On l'écrit une fois ici, on s'en sert partout plus bas avec var().
+   Pour changer l'ambiance de toute la carte, on ne touche qu'ici.
+   ------------------------------------------------------------------ */
+
+.univers-sombreval {
+  --fond-page: #171310;      /* le fond de l'écran, derrière la carte */
+  --fond-carte: #efe6d6;     /* le parchemin */
+  --encre: #2c231b;          /* le texte */
+  --encre-pale: #6d6154;     /* le texte secondaire, moins important */
+  --accent: #7d1f13;         /* le rouge sang : titres et filets */
+  --bordure: #c8b898;
+  --police-titre: Georgia, "Times New Roman", serif;
+  --police-texte: Georgia, "Times New Roman", serif;
+}
+
+/* Les deux autres univers : même carte, autres couleurs.
+   Change la classe du <body> dans le fichier HTML pour les essayer. */
+
+.univers-salem {
+  --fond-page: #1b1d1f;
+  --fond-carte: #e8e6e0;
+  --encre: #22252a;
+  --encre-pale: #5f6570;
+  --accent: #2f4858;
+  --bordure: #b9bcc0;
+  --police-titre: Georgia, "Times New Roman", serif;
+  --police-texte: Georgia, "Times New Roman", serif;
+}
+
+.univers-serenissime {
+  --fond-page: #14121c;
+  --fond-carte: #f6eddc;
+  --encre: #2a2233;
+  --encre-pale: #6b5f78;
+  --accent: #8a6b1f;         /* l'or vénitien */
+  --bordure: #d3c096;
+  --police-titre: Georgia, "Times New Roman", serif;
+  --police-texte: Georgia, "Times New Roman", serif;
+}
+
+/* ------------------------------------------------------------------
+   2. La page
+   ------------------------------------------------------------------ */
+
+body {
+  margin: 0;
+  padding: 1rem;
+  background: var(--fond-page);
+  color: var(--encre);
+  font-family: var(--police-texte);
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------------
+   3. La carte
+
+   max-width en rem : sur un téléphone la carte prend toute la largeur,
+   sur un grand écran elle s'arrête et reste lisible. C'est tout ce qu'il
+   faut pour être "responsive" ici — pas besoin de media query.
+   ------------------------------------------------------------------ */
+
+.carte {
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: var(--fond-carte);
+  border: 1px solid var(--bordure);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ------------------------------------------------------------------
+   4. L'en-tête
+   ------------------------------------------------------------------ */
+
+.carte-entete {
+  text-align: center;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1rem;
+}
+
+.carte-univers {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--encre-pale);
+}
+
+.carte-nom {
+  margin: 0.3rem 0;
+  font-family: var(--police-titre);
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.carte-camp {
+  margin: 0;
+  font-style: italic;
+  color: var(--encre-pale);
+}
+
+/* ------------------------------------------------------------------
+   5. Les sections
+   ------------------------------------------------------------------ */
+
+.carte h2 {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--encre-pale);
+  margin: 1.5rem 0 0.4rem;
+}
+
+/* Le pouvoir est la seule chose qu'on relit en pleine partie :
+   il est plus gros que le reste, exprès. */
+.carte-pouvoir p {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.carte-pouvoir strong {
+  color: var(--accent);
+}
+
+/* Dans un <dl>, chaque <dt> est une question et chaque <dd> sa réponse. */
+.carte-details dl {
+  margin: 0;
+}
+
+.carte-details dt {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--encre-pale);
+  margin-top: 0.7rem;
+}
+
+.carte-details dd {
+  margin: 0;
+}
+
+.carte-conseil p {
+  margin: 0;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+}
+
+.carte-pied {
+  margin-top: 1.5rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--bordure);
+  font-size: 0.8rem;
+  color: var(--encre-pale);
+  text-align: center;
+}
