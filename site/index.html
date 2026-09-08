@@ -3,35 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sombreval — rejoindre une partie</title>
+  <title>Sombreval</title>
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
 
-  <main class="ecran">
-    <header>
-      <h1>Sombreval</h1>
-      <p class="accroche">Le village dort. Quelqu'un ne dort pas.</p>
-    </header>
-
-    <!-- Écran d'accueil (exigence E2) : un pseudo, un code, rien d'autre.
-         Le formulaire n'est pas encore branché sur le serveur. -->
-    <form class="formulaire" method="post" action="/rejoindre">
-      <p>
-        <label for="pseudo">Ton pseudo</label>
-        <input id="pseudo" name="pseudo" maxlength="20" required>
-      </p>
-      <p>
-        <label for="code">Le code de la partie</label>
-        <input id="code" name="code" maxlength="6" required>
-      </p>
-      <button type="submit">Rejoindre la partie</button>
-    </form>
-
-    <footer>
-      <p>Option Projet Sombreval — travail en cours.</p>
-    </footer>
+  <!-- Toute la page tient dans cette balise : le JavaScript la remplit avec
+       l'écran que le serveur dit d'afficher. -->
+  <main id="ecran" class="ecran">
+    <p class="patiente">Chargement…</p>
   </main>
 
+  <p id="message" class="message" hidden></p>
+
+  <script src="js/jeu.js"></script>
 </body>
 </html>
