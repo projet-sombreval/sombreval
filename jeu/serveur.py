@@ -1,48 +1,101 @@
-"""Le serveur local : il sert les écrans du dossier site/ dans le navigateur.
+"""Le guichet : il reçoit les demandes du navigateur et rend des écrans.
 
 Lancement, depuis la racine du dépôt :
 
     python3 -m jeu.serveur
 
-Puis ouvrir http://localhost:8000 dans un navigateur.
+Puis ouvrir http://localhost:8000.
 
-On utilise http.server, qui vient avec Python : rien à installer, ni sur ta
-machine ni sur le serveur du lycée.
+Ce fichier ne contient aucune règle du jeu. Il traduit une demande HTTP en
+un appel à jeu/application.py, et une erreur de jeu en message lisible.
+C'est voulu : tout le jeu se teste sans serveur.
 """
 
-import http.server
 import pathlib
 
+try:
+    import uvicorn
+    from fastapi import FastAPI
+    from fastapi.responses import JSONResponse
+    from fastapi.staticfiles import StaticFiles
+    from pydantic import BaseModel
+except ModuleNotFoundError as manque:
+    raise SystemExit(
+        f"Il manque une bibliothèque ({manque.name}).\n"
+        "À installer une seule fois :\n"
+        "    python3 -m pip install -r requirements.txt"
+    )
+
+from jeu.application import Application
+from jeu.erreurs import ErreurDeJeu
+
+DOSSIER_SITE = pathlib.Path(__file__).resolve().parent.parent / "site"
 PORT = 8000
 
-# Le dossier site/ est le voisin du dossier jeu/. On calcule son chemin à
-# partir de celui de ce fichier, pour que le serveur démarre depuis n'importe
-# quel dossier.
-DOSSIER_SITE = pathlib.Path(__file__).resolve().parent.parent / "site"
+app = FastAPI(title="Sombreval")
+application = Application()
+
+
+class Arrivee(BaseModel):
+    pseudo: str
+    univers: str = ""
+
+
+class Demande(BaseModel):
+    jeton: str
+
+
+class Action(BaseModel):
+    jeton: str
+    action: str
+    valeur: object
+
+
+@app.exception_handler(ErreurDeJeu)
+def repondre_une_erreur_de_jeu(requete, erreur):
+    """Une erreur prévue devient un message pour le joueur, pas un plantage."""
+    return JSONResponse(status_code=400, content={"erreur": str(erreur)})
+
+
+@app.get("/api/univers")
+def univers():
+    return application.univers_proposes()
+
+
+@app.post("/api/parties")
+def creer_une_partie(arrivee: Arrivee):
+    return application.creer_une_partie(arrivee.pseudo, arrivee.univers)
+
+
+@app.post("/api/parties/{identifiant}/joueurs")
+def rejoindre(identifiant: str, arrivee: Arrivee):
+    return application.rejoindre(identifiant, arrivee.pseudo)
+
+
+@app.post("/api/parties/{identifiant}/commencer")
+def commencer(identifiant: str, demande: Demande):
+    return application.commencer(identifiant, demande.jeton)
+
+
+@app.get("/api/parties/{identifiant}/vue")
+def vue(identifiant: str, jeton: str):
+    return application.vue(identifiant, jeton)
+
+
+@app.post("/api/parties/{identifiant}/actions")
+def agir(identifiant: str, action: Action):
+    return application.agir(identifiant, action.jeton, action.action, action.valeur)
+
+
+# Les écrans (HTML, CSS, JavaScript) sont servis à la racine. Cette ligne
+# doit rester la dernière : ce qui commence par /api est déjà pris.
+app.mount("/", StaticFiles(directory=DOSSIER_SITE, html=True), name="site")
 
 
 def lancer(port=PORT):
-    """Démarre le serveur et ne rend la main qu'au Ctrl-C."""
-    adresse = ("", port)
-    gestionnaire = _gestionnaire_du_site()
-
-    with http.server.ThreadingHTTPServer(adresse, gestionnaire) as serveur:
-        print(f"Sombreval tourne sur http://localhost:{port}")
-        print("Pour arrêter : Ctrl-C")
-        try:
-            serveur.serve_forever()
-        except KeyboardInterrupt:
-            print("\nServeur arrêté.")
-
-
-def _gestionnaire_du_site():
-    """Construit le gestionnaire qui sert les fichiers du dossier site/."""
-
-    class GestionnaireDuSite(http.server.SimpleHTTPRequestHandler):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, directory=str(DOSSIER_SITE), **kwargs)
-
-    return GestionnaireDuSite
+    print(f"Sombreval tourne sur http://localhost:{port}")
+    print("Pour arrêter : Ctrl-C")
+    uvicorn.run(app, host="127.0.0.1", port=port, log_level="warning")
 
 
 if __name__ == "__main__":

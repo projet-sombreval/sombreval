@@ -1,0 +1,5 @@
+# Les bibliothèques nécessaires au serveur du jeu.
+# À installer une seule fois :  python3 -m pip install -r requirements.txt
+fastapi
+uvicorn
+pyyaml
