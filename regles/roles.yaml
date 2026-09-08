@@ -1,0 +1,127 @@
+# Les dix rôles du jeu, et ce qu'ils FONT.
+#
+# Ce fichier est le même pour les trois univers : la mécanique ne change
+# jamais, seuls les noms changent (voir regles/univers/<nom>.yaml).
+# Aucun nom de rôle n'est écrit dans le code du jeu.
+#
+# Les champs possibles, une fois pour toutes :
+#
+#   camp                        village ou menace
+#   action                      ce que le rôle fait la nuit :
+#                                 aucune        il ne fait rien
+#                                 eliminer      il tue quelqu'un
+#                                 proteger      il empêche une élimination
+#                                 reveler_camp  il apprend le camp d'un joueur
+#                                 reveler_role  il apprend le rôle exact
+#   decision                    individuelle (il choisit seul)
+#                               ou collective (tous ceux qui ont ce rôle
+#                               votent, la majorité l'emporte)
+#   quand                       jamais, chaque_nuit, une_nuit_sur_deux,
+#                               une_seule_fois
+#   cible                       autre_vivant, vivant (soi compris), mort
+#   meme_cible_deux_nuits       false = interdit de reprendre la même cible
+#                               deux nuits de suite
+#   epargne_son_camp            true = il ne peut pas viser quelqu'un de son
+#                               propre camp
+#   apparait_comme              le camp que les autres CROIENT voir
+#   survit_premiere_attaque     true = la première élimination échoue
+#   implemente                  false = le moteur sait le décrire mais pas
+#                               encore le faire jouer ; il refuse de lancer
+#                               une partie qui en contient un.
+
+roles:
+
+  menace:
+    camp: menace
+    action: eliminer
+    decision: collective
+    quand: chaque_nuit
+    cible: autre_vivant
+    meme_cible_deux_nuits: true
+    epargne_son_camp: true
+    implemente: true
+
+  espion:
+    camp: menace
+    action: reveler_role
+    decision: individuelle
+    quand: une_nuit_sur_deux
+    cible: autre_vivant
+    meme_cible_deux_nuits: true
+    implemente: false
+
+  traitre:
+    camp: menace
+    action: aucune
+    quand: jamais
+    apparait_comme: village
+    implemente: false
+
+  enqueteur:
+    camp: village
+    action: reveler_camp
+    decision: individuelle
+    quand: chaque_nuit
+    cible: autre_vivant
+    meme_cible_deux_nuits: false
+    implemente: true
+
+  temoin:
+    camp: village
+    action: reveler_role
+    decision: individuelle
+    quand: chaque_nuit
+    cible: mort
+    meme_cible_deux_nuits: false
+    implemente: false
+
+  protecteur:
+    camp: village
+    action: proteger
+    decision: individuelle
+    quand: chaque_nuit
+    cible: autre_vivant
+    meme_cible_deux_nuits: false
+    implemente: true
+
+  guerisseur:
+    camp: village
+    action: proteger
+    decision: individuelle
+    quand: une_seule_fois
+    cible: vivant
+    meme_cible_deux_nuits: true
+    implemente: true
+
+  justicier:
+    camp: village
+    action: eliminer
+    decision: individuelle
+    quand: une_seule_fois
+    cible: autre_vivant
+    meme_cible_deux_nuits: true
+    implemente: false
+
+  doyen:
+    camp: village
+    action: aucune
+    quand: jamais
+    survit_premiere_attaque: true
+    implemente: false
+
+  villageois:
+    camp: village
+    action: aucune
+    quand: jamais
+    implemente: true
+
+# Qui joue quoi, selon le nombre de joueurs.
+# Ajouter une composition, c'est ajouter des lignes ici — pas une ligne de
+# code. Les rôles cités doivent être « implemente: true ».
+compositions:
+  8:
+    menace: 2
+    enqueteur: 1
+    protecteur: 1
+    guerisseur: 1
+    villageois: 3

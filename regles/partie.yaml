@@ -1,0 +1,23 @@
+# Les réglages de la partie. Ce sont les seuls nombres à changer pour la
+# démonstration ; le code n'en contient aucun.
+
+# Durée de chaque phase, en secondes.
+# 10 secondes, c'est court exprès : en classe, on ne peut pas attendre trois
+# minutes qu'un vote se termine. Pour une vraie partie, mets 60 et 180.
+durees:
+  decouverte_du_role: 8
+  nuit: 10
+  jour: 10
+
+# Combien de joueurs dans une partie. Doit correspondre à une composition
+# de regles/roles.yaml.
+nombre_de_joueurs: 8
+
+# Secondes entre l'arrivée de deux joueurs factices en salle d'attente.
+# Ils remplissent les places libres pour qu'on puisse jouer seul.
+delai_entre_les_arrivees: 1.2
+
+# Pour répéter la démonstration : le rôle donné à celui qui ouvre la partie.
+# Laisse vide (null) pour un tirage au sort honnête — c'est ce qu'il faut
+# pour une vraie partie.
+role_du_createur: enqueteur
