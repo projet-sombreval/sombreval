@@ -1,0 +1,158 @@
+# Sombreval, 1348 : un village de Bourgogne, l'hiver où la peste remonte la
+# vallée. Le seigneur est mort, le prêtre a fui, on ferme les portes le soir.
+#
+# Ce fichier ne contient AUCUNE règle : seulement des noms, des textes et des
+# couleurs. Changer « le Bailli » en « le Prévôt » ici change le jeu entier,
+# sans toucher au code.
+
+nom: sombreval
+disponible: true
+
+titre: Sombreval
+annee: 1348
+sous_titre: La peste remonte la vallée.
+presentation: >-
+  Sombreval, hiver 1348. Trois morts en deux nuits, et pas de la peste :
+  la gorge ouverte. Le village ferme ses portes et se regarde.
+
+# Ces couleurs deviennent des variables CSS dans la page.
+# Aucune couleur n'est écrite dans le code ni dans la feuille de style.
+couleurs:
+  fond: "#141110"
+  parchemin: "#efe6d6"
+  encre: "#241d16"
+  encre-pale: "#6b5f4f"
+  accent: "#8d2119"
+  accent-clair: "#c4552a"
+  bordure: "#b9a279"
+
+camps:
+  village:
+    nom: le Village
+    apparence: quelqu'un du village
+    victoire: Le dernier loup est mort. Sombreval passera l'hiver.
+  menace:
+    nom: les Loups
+    apparence: un loup
+    victoire: Les loups sont désormais les plus nombreux. Sombreval est à eux.
+
+roles:
+
+  menace:
+    nom: le Loup
+    pouvoir: >-
+      Chaque nuit, avec les autres loups, tu désignes un habitant : il ne
+      verra pas le jour.
+    instruction_nuit: Désignez ensemble celui qui ne verra pas le jour.
+    confirmation: "La meute a choisi {cible}."
+
+
+  enqueteur:
+    nom: le Bailli
+    pouvoir: >-
+      Chaque nuit, tu sondes un habitant et tu apprends s'il est un loup ou
+      non. Jamais le même deux nuits de suite.
+    instruction_nuit: Qui vas-tu sonder cette nuit ?
+    confirmation: "Tu es allé frapper chez {cible}."
+    revelation: "Tu as sondé {cible} : c'est {apparence}."
+
+
+  protecteur:
+    nom: le Chevalier
+    pouvoir: >-
+      Chaque nuit, tu veilles devant la porte d'un habitant : les loups ne
+      peuvent pas l'atteindre. Jamais le même deux nuits de suite.
+    instruction_nuit: Devant quelle porte montes-tu la garde ?
+    confirmation: "Tu as veillé devant la porte de {cible}."
+
+
+  guerisseur:
+    nom: l'Herboriste
+    pouvoir: >-
+      Une seule fois de toute la partie, tu sauves un blessé de la nuit —
+      toi comprise.
+    instruction_nuit: Tiens-tu ton remède prêt cette nuit, et pour qui ?
+    confirmation: "Tu as tenu ton remède prêt pour {cible}. Il ne t'en reste pas."
+
+
+  villageois:
+    nom: le Manant
+    pouvoir: >-
+      Tu n'as aucun pouvoir. Tu as tes yeux, tes oreilles et ta voix au
+      vote du jour.
+    instruction_nuit: Tu dors, comme tout le village.
+
+  # Les cinq rôles ci-dessous ne sont pas encore joués (voir « implemente »
+  # dans regles/roles.yaml). Leurs noms sont là pour le jour où ils le
+  # seront — à valider en séance.
+  espion:
+    nom: le Guetteur
+    pouvoir: Une nuit sur deux, tu apprends le rôle exact d'un habitant.
+    instruction_nuit: Qui vas-tu épier cette nuit ?
+  traitre:
+    nom: le Renégat
+    pouvoir: Tu n'agis jamais, mais le Bailli te voit comme un villageois.
+    instruction_nuit: Tu dors du sommeil du juste. Ou presque.
+  temoin:
+    nom: la Pleureuse
+    pouvoir: Chaque nuit, tu apprends le rôle exact d'un mort.
+    instruction_nuit: Sur quelle tombe vas-tu pleurer cette nuit ?
+  justicier:
+    nom: le Prévôt
+    pouvoir: Une seule fois, tu abats un habitant de ta main.
+    instruction_nuit: Tires-tu ton arme cette nuit, et contre qui ?
+  doyen:
+    nom: le Doyen
+    pouvoir: "Tu es vieux et dur à tuer : la première attaque te manque."
+    instruction_nuit: Tu dors d'un sommeil léger.
+
+# Les textes des écrans. Les mots entre accolades sont remplacés par le jeu.
+textes:
+  attente_titre: La nuit va tomber
+  attente_consigne: >-
+    Envoie ce lien à ceux que tu veux voir jouer. La partie commence quand
+    le village est au complet.
+  decouverte_titre: Voici qui tu es
+  decouverte_consigne: "Ne le dis à personne. Ou mens : c'est le jeu."
+  nuit_titre: Le village dort
+  nuit_sans_pouvoir: >-
+    Tu dors. Tu ne sauras qu'au matin ce qui s'est passé cette nuit.
+  nuit_choix_fait: Ton choix est fait. Attends le jour.
+  nuit_mort: Tu es mort. La nuit passe sans toi.
+  jour_titre: Le village s'éveille
+  jour_consigne: Parle, écoute, puis désigne celui que le village jugera.
+  jour_mort: >-
+    Tu es mort : tu vois tout, tu ne votes plus et tu ne parles plus.
+  vote_en_cours: "{nombre} voix"
+  elimine_nuit: "{pseudo} n'a pas vu le jour. C'était {role}."
+  personne_eliminee_nuit: Cette nuit, personne n'est mort. Quelqu'un a veillé.
+  elimine_jour: "Le village a jugé {pseudo}. C'était {role}."
+  egalite_jour: Le village n'a pas su choisir. Personne n'est jugé.
+  fin_titre: La partie est finie
+  nuit_numero: "Nuit {numero}"
+  jour_numero: "Jour {numero}"
+
+# Les pseudonymes des joueurs factices : ils remplissent les places libres
+# pour qu'on puisse jouer seul. Des prénoms du XIVe siècle, tant qu'à faire.
+pseudos_factices:
+  - Perrine
+  - Guillot
+  - Aalis
+  - Thibaut
+  - Jehanne
+  - Colin
+  - Mahaut
+  - Renaud
+  - Ysabeau
+
+# La discussion du jour se fait avec ces phrases-là, et pas d'autres.
+# Personne n'écrit ce qu'il veut : ni insulte, ni règlement de comptes.
+messages:
+  - Je n'ai rien vu cette nuit.
+  - Je me méfie de celui qui parle le plus.
+  - Je suis du village, je le jure devant Dieu.
+  - Attendons encore une nuit avant de juger.
+  - Votons vite, la peste n'attend pas.
+  - Quelqu'un ment ici, et je crois savoir qui.
+  - Je suivrai le vote du plus sage d'entre nous.
+  - Ce silence ne me dit rien qui vaille.

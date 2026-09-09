@@ -1,86 +1,300 @@
-/* Feuille de style des écrans du jeu.
-   Les cartes de personnage ont la leur, dans cartes/. */
+/* Les écrans du jeu.
+   Aucune couleur d'univers n'est écrite ici : elles arrivent du serveur, qui
+   les lit dans regles/univers/<nom>.yaml, et le JavaScript les pose comme
+   variables CSS. Les valeurs de secours ci-dessous sont des gris neutres :
+   elles ne servent que si le serveur ne répond pas.
+
+   Tout est écrit gros : ces écrans sont montrés en partage d'écran à une
+   classe, dont une partie sur téléphone. */
 
 :root {
-  --fond-page: #171310;
-  --fond-ecran: #efe6d6;
-  --encre: #2c231b;
-  --encre-pale: #6d6154;
-  --accent: #7d1f13;
-  --bordure: #c8b898;
+  --fond: #1a1a1a;
+  --parchemin: #eeeeee;
+  --encre: #222222;
+  --encre-pale: #666666;
+  --accent: #883333;
+  --accent-clair: #bb6644;
+  --bordure: #bbbbbb;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   padding: 1rem;
-  background: var(--fond-page);
+  background: var(--fond);
   color: var(--encre);
   font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
   line-height: 1.5;
 }
 
 .ecran {
-  max-width: 26rem;
-  margin: 2rem auto;
+  max-width: 44rem;
+  margin: 1rem auto;
   padding: 1.5rem;
-  background: var(--fond-ecran);
+  background: var(--parchemin);
   border: 1px solid var(--bordure);
   border-radius: 4px;
 }
 
+/* --- titres ------------------------------------------------------------ */
+
 h1 {
   margin: 0;
-  font-size: 2.2rem;
+  font-size: 2.6rem;
+  line-height: 1.1;
   color: var(--accent);
   text-align: center;
 }
 
-.accroche {
-  margin: 0.3rem 0 1.5rem;
+h2 {
+  margin: 1.6rem 0 0.6rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--encre-pale);
+}
+
+.sous-titre {
+  margin: 0.4rem 0 1.4rem;
   text-align: center;
   font-style: italic;
   color: var(--encre-pale);
 }
 
+.consigne {
+  font-size: 1.2rem;
+}
+
+/* --- formulaire d'entrée ----------------------------------------------- */
+
 label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
   color: var(--encre-pale);
+  margin-bottom: 0.3rem;
 }
 
 input {
   width: 100%;
-  box-sizing: border-box;
-  padding: 0.6rem;
-  font-size: 1rem;
+  padding: 0.7rem;
+  font-size: 1.2rem;
   font-family: inherit;
+  color: var(--encre);
+  background: #fff;
   border: 1px solid var(--bordure);
   border-radius: 3px;
-  background: #fff;
 }
 
-/* 44 pixels de haut au minimum : c'est la taille d'un doigt sur un écran
-   de téléphone (exigence E12). */
+/* --- boutons ------------------------------------------------------------
+   48 pixels de haut au minimum : c'est la taille d'un doigt sur un
+   téléphone. */
+
 button {
-  width: 100%;
-  min-height: 44px;
-  margin-top: 0.5rem;
-  font-size: 1rem;
+  min-height: 48px;
+  padding: 0.6rem 1rem;
+  font-size: 1.1rem;
   font-family: inherit;
-  color: var(--fond-ecran);
+  color: var(--parchemin);
   background: var(--accent);
-  border: none;
+  border: 1px solid var(--accent);
   border-radius: 3px;
   cursor: pointer;
 }
 
-footer {
-  margin-top: 1.5rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid var(--bordure);
-  font-size: 0.8rem;
+button:hover {
+  background: var(--accent-clair);
+  border-color: var(--accent-clair);
+}
+
+button:disabled {
+  color: var(--encre-pale);
+  background: transparent;
+  border: 1px dashed var(--bordure);
+  cursor: not-allowed;
+}
+
+.large {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 1.3rem;
+}
+
+/* Les listes de joueurs : une grille de boutons, deux colonnes dès qu'il y
+   a la place. */
+.choix {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 30rem) {
+  .choix {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.choix button {
+  width: 100%;
+  text-align: left;
+}
+
+.choisi {
+  background: var(--accent-clair);
+  border-color: var(--encre);
+}
+
+/* --- la liste des joueurs ---------------------------------------------- */
+
+.village {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.village li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--bordure);
+  font-size: 1.15rem;
+}
+
+.mort {
+  color: var(--encre-pale);
+  text-decoration: line-through;
+}
+
+.mort .role-revele {
+  text-decoration: none;
+  font-style: italic;
+}
+
+.voix {
+  float: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+}
+
+/* Dans une liste, le chiffre est rouge sur le parchemin ; sur un bouton, il
+   garde la couleur du bouton, sinon on ne le lit pas. */
+.village .voix {
+  color: var(--accent);
+}
+
+/* Le bandeau du joueur éliminé : il regarde, il ne joue plus. */
+.bandeau {
+  padding: 0.8rem 1rem;
+  color: var(--parchemin);
+  background: var(--encre);
+  border-radius: 3px;
+}
+
+/* --- la minuterie ------------------------------------------------------- */
+
+.minuterie {
+  margin: 1.2rem 0 0;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--parchemin);
+  background: var(--encre);
+  border-radius: 3px;
+}
+
+/* --- la carte du rôle, plein écran ------------------------------------- */
+
+.role {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.role-nom {
+  font-size: 3.2rem;
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.role-camp {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--encre-pale);
+}
+
+.role-pouvoir {
+  margin: 1.5rem auto 0;
+  max-width: 32rem;
+  font-size: 1.35rem;
+}
+
+/* --- journal, discussion, secrets --------------------------------------- */
+
+.journal, .discussion {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.journal li, .discussion li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.quand {
+  display: inline-block;
+  min-width: 5.5rem;
+  color: var(--encre-pale);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.secret {
+  margin: 1rem 0 0;
+  padding: 0.8rem 1rem;
+  background: var(--encre);
+  color: var(--parchemin);
+  border-radius: 3px;
+  font-size: 1.15rem;
+}
+
+.secret p {
+  margin: 0.2rem 0;
+}
+
+.lien {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.lien input {
+  flex: 1 1 16rem;
+  font-size: 1rem;
+}
+
+.patiente {
   text-align: center;
   color: var(--encre-pale);
+  font-style: italic;
+}
+
+/* --- le message d'erreur ------------------------------------------------ */
+
+.message {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0.8rem 1rem;
+  color: var(--parchemin);
+  background: var(--accent);
+  border-radius: 3px;
+  text-align: center;
 }

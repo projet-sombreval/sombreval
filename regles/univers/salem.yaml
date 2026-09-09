@@ -1,0 +1,13 @@
+# Salem, 1692. Univers annoncé mais pas encore écrit : « disponible: false »
+# suffit pour que l'écran de choix l'affiche en « bientôt » et refuse de
+# lancer une partie.
+#
+# Pour l'ouvrir, il faudra recopier la structure de sombreval.yaml et rien
+# d'autre : le moteur ne change pas.
+
+nom: salem
+disponible: false
+
+titre: Salem
+annee: 1692
+sous_titre: Le village accuse, le tribunal écoute.
