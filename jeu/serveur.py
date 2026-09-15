@@ -22,8 +22,14 @@ try:
 except ModuleNotFoundError as manque:
     raise SystemExit(
         f"Il manque une bibliothèque ({manque.name}).\n"
-        "À installer une seule fois :\n"
-        "    python3 -m pip install -r requirements.txt"
+        "\n"
+        "Si c'est la première fois, installe-les dans un dossier .venv :\n"
+        "    python3 -m venv .venv\n"
+        "    .venv/bin/pip install -r requirements.txt\n"
+        "\n"
+        "Si c'est déjà fait, c'est que ce terminal ne s'en sert pas encore :\n"
+        "    source .venv/bin/activate\n"
+        "    python3 -m jeu.serveur"
     )
 
 from jeu.application import Application
