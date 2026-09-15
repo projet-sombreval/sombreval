@@ -68,6 +68,18 @@ Il fallait quelque chose qui tourne pour la séance de lancement du
   `regles/roles.yaml` avec `implemente: false`. Le jeu refuse de lancer une
   partie qui en contient un, plutôt que de se bloquer en pleine séance.
 
+## Mise à jour du 15 septembre 2026 — la séance de lancement
+
+La séance du 21 septembre se jouera finalement sur <https://wolfy.fr>, un
+Loup-Garou en ligne qui existe déjà : la classe découvre le genre en y
+jouant, et notre jeu n'est pas montré ce jour-là.
+
+Ce qui précède n'est pas effacé pour autant : c'est la raison pour laquelle
+la première tranche a été faite comme ça, et la contrainte des trois minutes
+a produit un jeu qui tourne pour de bon plutôt qu'une maquette. Le scénario
+de démonstration est rangé dans [demonstration.md](demonstration.md), pour
+le jour où on montrera le jeu.
+
 ## Les réglages de démonstration
 
 Deux réglages de `regles/partie.yaml` existent pour la classe, et pas pour

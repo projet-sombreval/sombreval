@@ -4,18 +4,41 @@ Le troisième temps de séance, c'est le moment où les élèves voient le vrai
 code du projet. Ce document dit quoi ouvrir, dans quel ordre, et quoi faire
 remarquer — pour ne rien chercher en direct devant eux.
 
-**À lire avant la première fois :** les adresses GitHub ci-dessous pointent
-sur `main`. Elles ne marcheront qu'une fois la pull request #2 fusionnée.
-D'ici là, remplace `main` par `demonstration-du-21-septembre` dans
-l'adresse.
+La séance de lancement fait exception : on n'y ouvre rien du dépôt, et notre
+jeu ne tourne pas. Elle est quand même dans le tableau, pour que le tableau
+dise tout.
 
 ## Le tableau de correspondance
 
 | Séance | Sujet | Ce que j'ouvre | Ça existe ? |
 |---|---|---|---|
+| **S1** — 21/09 | Découvrir le genre | Rien du dépôt : la classe joue à <https://wolfy.fr> | **Sans objet.** Notre jeu ne tourne pas ce jour-là. Voir la séance 1 ci-dessous. |
 | **S2** — 28/09 | HTML sémantique | `cartes/exemple-bailli.html` (la carte de référence) **et** `site/js/jeu.js` (l'écran de rôle du jeu) | **Oui, mais pas comme prévu.** L'écran de découverte du rôle n'existe pas en HTML : il est fabriqué en JavaScript, et il a **moins** de balises que la carte des élèves. Voir la séance 2 ci-dessous. |
 | **S3** — 05/10 | CSS et variables d'univers | `cartes/exemple-bailli.css` (instantané) puis `regles/univers/sombreval.yaml` (le vrai réglage du jeu) | **Oui**, mais la valeur qui fait basculer l'ambiance du jeu n'est pas dans le CSS : elle est dans le YAML. C'est justement la leçon. |
 | **S4** — 12/10 | Responsive et clavier | `site/css/site.css` et n'importe quel écran du jeu | **Le responsive : oui.** **Le clavier : non.** La page est redessinée entièrement chaque seconde, donc le focus du clavier est perdu chaque seconde. Voir la séance 4. |
+
+---
+
+## S1 — 21/09 — découvrir le genre
+
+On ne montre pas le jeu du dépôt : la classe joue à un Loup-Garou en ligne
+qui existe déjà. On joue à ce qu'on va fabriquer avant de le fabriquer, et
+rien ne peut rater en direct.
+
+| | |
+|---|---|
+| **Adresse** | <https://wolfy.fr> — l'adresse renvoie sur `wolfy.net`, c'est normal |
+| **Fichier du dépôt** | aucun |
+| **Commande** | aucune : notre serveur reste éteint |
+
+> **Ce que je fais remarquer :** tout ce qui se passe là — le rôle qu'on
+> reçoit en secret, la nuit où l'on agit sans se voir, le vote du jour, le
+> mort dont on révèle le rôle — c'est exactement la liste de ce que vous
+> aurez à écrire ; et ce qui vous manque ou vous agace en jouant, notez-le,
+> c'est la matière de la séance 2.
+
+Le scénario pour montrer **notre** jeu, le jour où ce sera le moment, est
+dans [demonstration.md](demonstration.md).
 
 ---
 
