@@ -19,19 +19,36 @@ débutants.
 
 ## Lancer le jeu
 
-Il faut Python 3. La première fois, et une seule fois :
+Il faut Python 3. Le jeu a besoin de deux bibliothèques, qu'on installe dans
+un dossier `.venv` à part, sans rien changer au reste de la machine.
+
+**La première fois, et une seule fois**, depuis le dossier du dépôt :
 
 ```bash
-python3 -m pip install -r requirements.txt
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
 
-Ensuite, à chaque fois, depuis le dossier du dépôt :
+**Ensuite, à chaque fois**, dans un terminal neuf :
 
 ```bash
+source .venv/bin/activate
 python3 -m jeu.serveur
 ```
 
 Puis ouvre <http://localhost:8000>. `Ctrl-C` arrête le serveur.
+
+Deux choses qui peuvent coincer :
+
+- `python3 -m pip` répond **« No module named pip »** : c'est normal, et
+  c'est pour ça qu'on passe par `.venv` — pip n'est pas installé sur la
+  machine, mais chaque `.venv` en contient un. Suis les commandes ci-dessus.
+- `python3 -m venv .venv` répond **« ensurepip is not available »** : il
+  manque un paquet du système, à installer une fois avec
+  `sudo apt install python3.12-venv`.
+
+Le dossier `.venv` n'est pas suivi par git : il t'appartient, il se refait en
+deux commandes, et on peut le supprimer sans rien casser.
 
 ## Scénario de démonstration
 
