@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sombreval — écran de connexion (gabarit)</title>
+<link rel="stylesheet" href="connexion.css">
+</head>
+<body>
+
+<main class="ecran">
+  <h1 class="titre">Sombreval</h1>
+  <p class="accroche">Trois mondes. Une nuit.</p>
+
+  <form class="entree">
+    <label for="pseudo">Ton pseudo</label>
+    <input id="pseudo" name="pseudo" type="text"
+           maxlength="20" placeholder="Ex. Corneille">
+
+    <p class="aide">De 3 à 20 signes.</p>
+    <p class="erreur" hidden>Ce pseudo est déjà pris.</p>
+
+    <button type="submit">Entrer</button>
+  </form>
+
+  <p class="pied">Partie privée — sur invitation.</p>
+</main>
+
+</body>
+</html>

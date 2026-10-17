@@ -1,0 +1,28 @@
+/* Gabarit — écran de connexion
+   Groupe A. Tu ne changes QUE ce fichier. */
+
+.ecran {
+  /* Les trois couleurs de l'écran commun.
+     Neutres : aucun monde n'est encore choisi. */
+  --fond:   #141b22;
+  --encre:  #e8e2d4;
+  --accent: #c9a227;
+
+  background: var(--fond);
+  color: var(--encre);
+  padding: 1.5rem;
+}
+
+.titre {
+  color: var(--accent);
+  margin: 0;
+}
+
+/* ---- À TOI ----------------------------------
+   1. l'accroche et le pied, en texte discret
+   2. le champ : hauteur confortable, bordure
+   3. le bouton : fond d'accent, texte lisible
+   4. l'aide en petit, l'erreur en rouge
+   5. le focus : un contour visible au clavier
+   Aucune couleur en dur : var(--...) partout.
+   ------------------------------------------ */

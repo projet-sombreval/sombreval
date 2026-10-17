@@ -1,0 +1,33 @@
+/* Gabarit — écran de choix de l'univers
+   Groupe B. Tu ne changes QUE ce fichier. */
+
+.ecran {
+  /* Les trois couleurs de l'écran commun.
+     Neutres : aucun monde n'est encore choisi. */
+  --fond:   #141b22;
+  --encre:  #e8e2d4;
+  --accent: #c9a227;
+
+  background: var(--fond);
+  color: var(--encre);
+  padding: 1.5rem;
+}
+
+.titre {
+  color: var(--accent);
+  margin: 0;
+}
+
+.mondes {
+  list-style: none;
+  padding: 0;
+}
+
+/* ---- À TOI ----------------------------------
+   1. les trois mondes côte à côte (flex)
+   2. chaque monde : un cadre, de l'air dedans
+   3. l'année en petit, le résumé en gris clair
+   4. le bouton : fond d'accent, texte lisible
+   5. le focus : un contour visible au clavier
+   Aucune couleur en dur : var(--...) partout.
+   ------------------------------------------ */
