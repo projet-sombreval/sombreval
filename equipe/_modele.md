@@ -1,9 +1,11 @@
 # Prénom
 
-- pseudo GitHub :
-- écran : connexion  (ou : choix de l'univers)
-- ce que je sais déjà faire :
-- ce que je veux apprendre cette année :
+| | |
+|---|---|
+| pseudo GitHub | |
+| écran | connexion · ou · choix de l'univers |
 
-<!-- Recopie ce modèle dans un fichier à ton prénom.
+<!-- Recopie ce modèle dans un fichier à ton prénom, et remplis
+     la colonne de droite. Deux renseignements, pas plus :
+     ce dossier sert à savoir qui est derrière quel pseudo.
      Ne modifie pas ce fichier-ci : il sert aux suivantes. -->
