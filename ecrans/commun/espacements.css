@@ -1,0 +1,17 @@
+/* -----------------------------------------------------------------
+   CRITÈRE 3 · LES ESPACEMENTS
+   Une seule échelle : 4, 8, 16, 24, 32 pixels. Aucune autre valeur.
+
+   À VÉRIFIER : relève toutes les valeurs de margin et de padding
+   des deux écrans. Celles qui ne sont pas dans l'échelle sont à
+   ramener à la plus proche. Note celles que tu as trouvées.
+
+   À TOI : déclare les cinq valeurs de l'échelle, puis applique-les
+   aux deux ou trois endroits qui en avaient besoin.
+   ----------------------------------------------------------------- */
+
+:root {
+  /* À TOI — les cinq valeurs de l'échelle */
+}
+
+/* À TOI — les corrections */
