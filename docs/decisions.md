@@ -51,6 +51,36 @@ Jamais de saisie libre. Les joueurs sont mineurs, le jeu se joue à distance
 et personne ne peut modérer trente conversations en direct. Les phrases sont
 dans le fichier de l'univers ; les rajouter est un travail d'élève.
 
+## Octobre 2026 — l'hébergement
+
+**8. Le jeu est hébergé dans un conteneur isolé, sur un sous-domaine dédié.**
+Un conteneur à lui, géré comme les autres applications de la plateforme, à son
+adresse. Trois raisons, et la troisième est la seule qui ait vraiment tranché.
+
+D'abord, **il n'y a rien à protéger qui ne le soit déjà** : aucune donnée
+personnelle n'est conservée (E11), aucune saisie n'est libre (décision 7),
+aucune base de données n'existe. Le serveur fait cent lignes et ne contient
+aucune règle du jeu ; tout le moteur se teste sans lui.
+
+Ensuite, **le secret des rôles reste tenu côté serveur**, exactement comme le
+dit la décision 3 : la vue de chaque joueur est calculée pour lui seul. Un
+hébergement ne change pas cette propriété — c'est le moteur qui la tient, pas
+l'endroit où il tourne.
+
+Enfin, **l'API ne peut pas vivre sur des pages statiques.** `site/js/jeu.js`
+appelle `/api/…` en chemins relatifs, et c'est `jeu/serveur.py` qui monte
+`site/` à la racine : servi par un hébergement de fichiers statiques, le jeu
+s'affiche et répond 404 à sa première requête. Il faut donc un serveur qui
+tourne, et c'est ce qui fixe la date.
+
+⚠️ **Un point à ne pas oublier au provisionnement** : `jeu/serveur.py` écoute
+aujourd'hui `host="127.0.0.1"`, c'est-à-dire la boucle locale **uniquement**.
+Dans un conteneur, personne ne peut l'atteindre de l'extérieur : il devra
+écouter l'interface du conteneur. C'est la panne silencieuse classique — le
+serveur démarre, les journaux sont propres, et l'adresse ne répond pas. À
+changer **avec** le provisionnement, pas avant : en local, `127.0.0.1` est le
+bon réglage.
+
 ## Ce que la première tranche ne fait pas
 
 Il fallait quelque chose qui tourne pour la séance de lancement du
