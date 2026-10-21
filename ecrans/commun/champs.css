@@ -1,0 +1,21 @@
+/* -----------------------------------------------------------------
+   CRITÈRE 5 · LES CHAMPS DE SAISIE
+   Un seul modèle de champ. Et son étiquette doit être visible —
+   un texte d'exemple gris dans le champ ne suffit pas : il
+   disparaît dès qu'on tape.
+
+   À VÉRIFIER : l'écran de connexion a-t-il une vraie étiquette
+   (balise label) pour chaque champ, ou seulement un placeholder ?
+   Note ce que tu trouves : c'est le défaut d'accessibilité le plus
+   fréquent du web.
+
+   À TOI : une règle pour les champs, une pour les étiquettes.
+   ----------------------------------------------------------------- */
+
+input, select {
+  /* À TOI */
+}
+
+label {
+  /* À TOI */
+}

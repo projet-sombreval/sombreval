@@ -1,0 +1,16 @@
+/* -----------------------------------------------------------------
+   CRITÈRE 1 · LES COULEURS
+   Les deux écrans doivent utiliser les mêmes noms de variables et
+   les mêmes valeurs.
+
+   À VÉRIFIER : ouvre connexion.css et choix-univers.css. Cherche
+   les lignes qui commencent par deux tirets. Note dans ta demande
+   de fusion ce qui diffère : un nom, une valeur, les deux ?
+
+   À TOI : écris ici les trois variables, une seule fois, avec la
+   valeur retenue pour les deux écrans.
+   ----------------------------------------------------------------- */
+
+:root {
+  /* À TOI — par exemple : --fond: #141b22; */
+}

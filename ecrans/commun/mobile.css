@@ -1,0 +1,16 @@
+/* -----------------------------------------------------------------
+   CRITÈRE 7 · LE TÉLÉPHONE
+   Les joueurs seront sur téléphone. Rien ne doit déborder sur un
+   écran large de 360 pixels, et il n'y a qu'un seul point de
+   rupture pour les deux écrans.
+
+   À VÉRIFIER : dans les outils du navigateur, réduis la fenêtre à
+   360 pixels de large. Note ce qui déborde, ou ce qui devient
+   illisible, sur chacun des deux écrans.
+
+   À TOI : une seule media query, et les corrections dedans.
+   ----------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  /* À TOI */
+}

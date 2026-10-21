@@ -1,0 +1,17 @@
+/* -----------------------------------------------------------------
+   CRITÈRE 6 · LE FOCUS
+   On doit voir où on est quand on navigue à la touche Tab. Partout,
+   et de la même façon.
+
+   À VÉRIFIER : ouvre les deux écrans et appuie plusieurs fois sur
+   Tab, sans toucher la souris. Est-ce que tu vois toujours où tu
+   es ? Note le premier endroit où tu perds le fil. Si un style
+   contient outline: none, c'est là.
+
+   À TOI : un contour de focus visible, pour tout ce qui se
+   sélectionne au clavier.
+   ----------------------------------------------------------------- */
+
+:focus-visible {
+  /* À TOI */
+}
