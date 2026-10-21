@@ -280,10 +280,22 @@ un ordinateur familial, un téléphone, une connexion parfois mauvaise. Le jeu
 doit supporter qu'un joueur disparaisse trente secondes et revienne. Rien ne
 peut dépendre du fait que tout le monde est dans la même salle.
 
-**Le serveur est celui du lycée.** Python 3 est disponible, la bibliothèque
-standard aussi, et c'est tout. Pas d'installation de paquets, pas de base de
-données, pas de service extérieur. Le serveur peut redémarrer sans prévenir —
-d'où E11 et le refus de sauvegarde.
+**Le serveur est un conteneur isolé, sur un sous-domaine dédié.** Le jeu a
+trois dépendances, et elles sont installées une fois dans l'image : FastAPI,
+uvicorn et pyyaml (`requirements.txt`). **Pas de base de données** — cette
+contrainte-là ne bouge pas, et c'est elle qui tient E11. Pas de service
+extérieur non plus. Le serveur peut redémarrer sans prévenir, et une partie
+interrompue est perdue : les parties vivent en mémoire.
+
+**Zéro installation, oui — mais pour les élèves.** Un joueur ouvre une
+adresse dans son navigateur et n'installe rien (E12) ; aucun élève ne lance
+le serveur. C'est cette contrainte-là qui est absolue, et elle est tenue.
+
+*Ce paragraphe disait jusqu'ici « Python 3 et la bibliothèque standard, et
+c'est tout, pas d'installation de paquets ». C'était périmé : `jeu/serveur.py`
+refuse de démarrer sans ses trois bibliothèques, et il le dit clairement. Une
+contrainte fausse est pire qu'une contrainte absente — la session suivante
+réécrit le serveur pour s'y conformer.*
 
 **La livraison est en mai.** La date est celle de la séance de jeu avec la
 classe ; elle ne bouge pas. Ce qui bouge, c'est le contenu : si une exigence
