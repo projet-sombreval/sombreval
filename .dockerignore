@@ -1,0 +1,16 @@
+# Ce qui n'a rien à faire dans l'image du serveur.
+#
+# ⚠️ `site/` et `regles/` NE DOIVENT PAS figurer ici : le serveur monte `site/`
+# à sa racine et lit les YAML de `regles/` au démarrage. `ecrans/` non plus,
+# tant qu'on ne sait pas si son reversement vers `site/` aura lieu avant
+# janvier — mieux vaut une image un peu plus grosse qu'une image à laquelle
+# manque un dossier.
+.git
+.github
+tests
+docs
+cartes
+equipe
+roles
+__pycache__
+*.pyc
