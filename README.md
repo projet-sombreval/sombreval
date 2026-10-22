@@ -125,7 +125,7 @@ de pourquoi cet ordre-là.
 ## Lancer les tests
 
 ```bash
-python3 -m pip install -r requirements.txt   # une seule fois
+source .venv/bin/activate    # le même .venv que pour lancer le jeu
 python3 -m unittest discover tests
 ```
 
@@ -133,8 +133,10 @@ python3 -m unittest discover tests
 que [jeu/application.py](jeu/application.py) ne connaît pas HTTP.
 
 **Mais ils demandent `pyyaml`** : [jeu/configuration.py](jeu/configuration.py)
-lit les fichiers de `regles/`. Dans un Python nu, sept tests tombent en erreur
-— installe `requirements.txt` d'abord.
+lit les fichiers de `regles/`. Dans un Python nu, sept tests tombent en erreur.
+Si le `.venv` n'existe pas encore, les deux commandes qui le créent sont dans
+« Lancer le jeu » ci-dessus — il n'y en a pas d'autres, et pas d'autre endroit
+où les chercher.
 
 ## Le dépôt
 
