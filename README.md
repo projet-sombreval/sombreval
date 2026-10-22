@@ -111,6 +111,7 @@ aucune couleur n'est écrit dans le code :
 | [regles/roles.yaml](regles/roles.yaml) | Les dix rôles : leur camp, leur action, quand ils agissent. Et les compositions selon le nombre de joueurs. |
 | [regles/univers/sombreval.yaml](regles/univers/sombreval.yaml) | Les noms, les textes, les couleurs, les phrases de la discussion. |
 | [regles/partie.yaml](regles/partie.yaml) | Les durées, le nombre de joueurs, les réglages de démonstration. |
+| [regles/defauts.yaml](regles/defauts.yaml) | Ce qui remplace ce qu'un univers n'a pas encore écrit : des gris, et des « à écrire » bien visibles. |
 
 Cinq rôles sur dix sont joués par le moteur ; les cinq autres sont décrits
 avec `implemente: false`, et le jeu refuse de lancer une partie qui en

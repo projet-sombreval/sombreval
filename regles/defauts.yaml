@@ -1,0 +1,106 @@
+# Ce qui remplace ce qu'un univers n'a pas encore écrit.
+#
+# Un univers se remplit SEMAINE APRÈS SEMAINE. Sans ce fichier, il fallait
+# qu'il soit fini pour être montré : le moteur lit ses clés en indexation dure
+# — à vingt-six endroits, dans sept modules — et la première manquante arrêtait
+# le serveur. Rien n'était donc visible avant que tout soit fini.
+#
+# Avec ce fichier, un univers réduit à son nom se charge, s'affiche et se joue.
+# Il est gris et criblé de « à écrire », et c'est le but : UN TROU VISIBLE EST
+# UNE INFORMATION, UN BLANC EST UN BOGUE.
+#
+# ⚠️ CE FICHIER NE CONTIENT QUE DES CLÉS LUES EN INDEXATION DURE. Les clés
+# optionnelles — `confirmation` et `revelation` d'un rôle, lues par
+# `texte_du_role()` avec `.get()` — n'y sont PAS, et ne doivent pas y entrer :
+# un rôle qui ne révèle rien doit continuer à ne rien révéler. Y mettre un
+# « à écrire » ferait parler des rôles muets, dans les trois univers.
+#
+# ⚠️ ET LES TROUS GARDENT LEURS PARAMÈTRES. Un texte est passé par
+# `.format(...)` : s'il perd son `{pseudo}`, on ne sait plus qui est mort ;
+# s'il gagne un paramètre que l'appelant ne fournit pas, `.format` lève une
+# erreur. Les paramètres ci-dessous sont exactement ceux que le code passe.
+
+presentation: à écrire
+annee: 0
+sous_titre: à écrire
+
+# Des GRIS, parce qu'un monde pas encore habillé doit se voir comme tel. Mais
+# des gris LISIBLES : mesuré, l'encre rend 13,4:1 sur le parchemin, l'encre
+# pâle 5,3:1, et l'accent 4,7:1 dans les deux sens (il sert d'encre et de fond).
+# Sept nuances identiques auraient donné un écran illisible.
+couleurs:
+  fond: "#2b2b2b"
+  parchemin: "#e8e8e8"
+  encre: "#1f1f1f"
+  encre-pale: "#5e5e5e"
+  accent: "#666666"
+  accent-clair: "#9a9a9a"
+  bordure: "#b4b4b4"
+
+camps:
+  village:
+    nom: le camp à écrire
+    apparence: quelqu'un — à écrire
+    victoire: à écrire
+  menace:
+    nom: la menace à écrire
+    apparence: une menace — à écrire
+    victoire: à écrire
+
+# Les dix rôles de regles/roles.yaml. Trois clés chacun, celles qui sont lues
+# durement : `nom`, `pouvoir`, `instruction_nuit`.
+roles:
+  menace:      {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  espion:      {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  traitre:     {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  enqueteur:   {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  temoin:      {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  protecteur:  {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  guerisseur:  {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  justicier:   {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  doyen:       {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  villageois:  {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+
+# Les dix-neuf textes. « à écrire » partout, et les paramètres conservés.
+textes:
+  attente_titre: à écrire
+  attente_consigne: à écrire
+  decouverte_titre: à écrire
+  decouverte_consigne: à écrire
+  nuit_titre: à écrire
+  nuit_sans_pouvoir: à écrire
+  nuit_choix_fait: à écrire
+  nuit_mort: à écrire
+  jour_titre: à écrire
+  jour_consigne: à écrire
+  jour_mort: à écrire
+  vote_en_cours: "{nombre} — à écrire"
+  elimine_nuit: "{pseudo} est mort — texte à écrire (c'était {role})"
+  personne_eliminee_nuit: à écrire
+  elimine_jour: "{pseudo} a été jugé — texte à écrire (c'était {role})"
+  egalite_jour: à écrire
+  fin_titre: à écrire
+  nuit_numero: Nuit {numero} — à écrire
+  jour_numero: Jour {numero} — à écrire
+
+# ⚠️ ONZE, ET CE NOMBRE EST PORTEUR — mesuré. Les joueurs factices remplissent
+# les places libres avec un pseudonyme NON DÉJÀ PRIS : avec un seul, un seul
+# arrive, le village plafonne à deux sur huit, et la partie refuse de démarrer
+# sur un message qui accuse le village au lieu de ce fichier. Onze couvre la
+# plus grande partie (douze joueurs, moins l'humain).
+pseudos_factices:
+  - Joueuse 1
+  - Joueuse 2
+  - Joueuse 3
+  - Joueuse 4
+  - Joueuse 5
+  - Joueuse 6
+  - Joueuse 7
+  - Joueuse 8
+  - Joueuse 9
+  - Joueuse 10
+  - Joueuse 11
+
+# Non vide : le jour, le moteur tire une phrase au hasard dans cette liste.
+messages:
+  - Phrases de discussion à écrire.
