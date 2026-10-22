@@ -7,3 +7,14 @@ disponible: false
 titre: Sérénissime
 annee: 1487
 sous_titre: Venise complote derrière ses masques.
+# ── À TOI ─────────────────────────────────────────────
+# 1. La présentation de ton monde : deux ou trois phrases,
+#    reprises du carnet d'univers rendu le 19 octobre.
+# 2. Les sept couleurs, recopiées de D1. Les sept NOMS
+#    sont imposés : tu ne changes que les valeurs.
+# 3. Quand les deux sont faits : disponible: true
+#
+# Tant qu'une clé manque, le jeu la remplace par une valeur
+# d'attente et l'écran l'affiche en « à écrire ». Ton monde
+# n'attend donc pas d'être fini pour être montré.
+# ──────────────────────────────────────────────────────

@@ -288,3 +288,21 @@ button:disabled {
   border-radius: 3px;
   text-align: center;
 }
+
+/* ── À TOI · LE TEXTE QUI MANQUE ───────────────────────
+   Tant qu'une équipe n'a pas écrit un texte, le jeu
+   affiche « à écrire ». Aujourd'hui ça ressemble à du
+   texte normal, donc personne ne voit le trou.
+
+   Fais que ça se voie — sans que ce soit laid, et sans
+   couleur seule : quelqu'un qui ne distingue pas les
+   couleurs doit le voir aussi.
+
+   Le serveur dit lesquels sont des trous, et le
+   JavaScript leur pose la classe ci-dessous. Tu n'as
+   donc rien à chercher : tu n'écris que le style.
+   ────────────────────────────────────────────────────── */
+
+.a-ecrire {
+  /* À TOI */
+}

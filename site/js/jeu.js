@@ -38,6 +38,20 @@ function remplir(modele, valeur, trou = "{numero}") {
   return modele.replace(trou, valeur);
 }
 
+// Un texte de l'univers, échappé, et SIGNALÉ s'il n'est pas encore écrit.
+//
+// Le serveur dit lesquels viennent des valeurs d'attente (`a_ecrire`) : on ne
+// compare donc aucune chaîne, et changer le mot « à écrire » dans
+// regles/defauts.yaml ne casse rien ici.
+function texteEcrit(vue, cle, valeur, trou) {
+  let rendu = vue.univers.textes[cle];
+  if (valeur !== undefined) rendu = remplir(rendu, valeur, trou);
+  rendu = echapper(rendu);
+  return (vue.univers.a_ecrire || []).includes("textes." + cle)
+    ? `<span class="a-ecrire">${rendu}</span>`
+    : rendu;
+}
+
 function signaler(texte) {
   const message = document.getElementById("message");
   message.textContent = texte;
@@ -223,7 +237,6 @@ async function commencerLaPartie() {
 /* ------------------------------------------------------------- les écrans */
 
 function ecranSalleDAttente(vue) {
-  const textes = vue.univers.textes;
   const lien = window.location.origin + "/?partie=" + vue.partie;
   const complet = vue.joueurs.length === vue.joueurs_attendus;
 
@@ -232,8 +245,8 @@ function ecranSalleDAttente(vue) {
     <p class="sous-titre">${vue.univers.annee} — ${echapper(vue.univers.sous_titre)}</p>
     <p class="consigne">${echapper(vue.univers.presentation)}</p>
 
-    <h2>${echapper(textes.attente_titre)}</h2>
-    <p>${echapper(textes.attente_consigne)}</p>
+    <h2>${texteEcrit(vue, "attente_titre")}</h2>
+    <p>${texteEcrit(vue, "attente_consigne")}</p>
     <div class="lien">
       <input id="lien" value="${echapper(lien)}" readonly>
       <button onclick="copierLeLien()">Copier</button>
@@ -265,30 +278,28 @@ function copierLeLien() {
 }
 
 function ecranDecouverteDuRole(vue) {
-  const textes = vue.univers.textes;
   dessiner(`
-    <h2>${echapper(textes.decouverte_titre)}</h2>
+    <h2>${texteEcrit(vue, "decouverte_titre")}</h2>
     <div class="role">
       <p class="role-nom">${echapper(vue.moi.role.nom)}</p>
       <p class="role-camp">${echapper(vue.moi.role.camp)}</p>
       <p class="role-pouvoir">${echapper(vue.moi.role.pouvoir)}</p>
     </div>
-    <p class="consigne">${echapper(textes.decouverte_consigne)}</p>
+    <p class="consigne">${texteEcrit(vue, "decouverte_consigne")}</p>
     ${minuterie(vue)}
   `);
 }
 
 function ecranVillageQuiDort(vue) {
-  const textes = vue.univers.textes;
   const cibles = vue.cibles || [];
 
   dessiner(`
-    <h1>${echapper(textes.nuit_titre)}</h1>
-    <p class="sous-titre">${remplir(textes.nuit_numero, vue.numero_de_nuit)}</p>
+    <h1>${texteEcrit(vue, "nuit_titre")}</h1>
+    <p class="sous-titre">${texteEcrit(vue, "nuit_numero", vue.numero_de_nuit)}</p>
     ${consigne(vue)}
 
     ${cibles.length ? `<ul class="choix">${boutonsDeCible(vue, cibles)}</ul>` : ""}
-    ${vue.mon_choix ? `<p class="patiente">${echapper(textes.nuit_choix_fait)}</p>` : ""}
+    ${vue.mon_choix ? `<p class="patiente">${texteEcrit(vue, "nuit_choix_fait")}</p>` : ""}
     ${choixDesAllies(vue)}
     ${mesSecrets(vue)}
     ${minuterie(vue)}
@@ -313,10 +324,9 @@ function choixDesAllies(vue) {
 }
 
 function ecranVillageEveille(vue) {
-  const textes = vue.univers.textes;
   dessiner(`
-    <h1>${echapper(textes.jour_titre)}</h1>
-    <p class="sous-titre">${remplir(textes.jour_numero, vue.numero_de_nuit)}</p>
+    <h1>${texteEcrit(vue, "jour_titre")}</h1>
+    <p class="sous-titre">${texteEcrit(vue, "jour_numero", vue.numero_de_nuit)}</p>
 
     <h2>Ce qui s'est passé</h2>
     ${journal(vue)}
@@ -370,7 +380,7 @@ function discussion(vue) {
 
 function ecranFinal(vue) {
   dessiner(`
-    <h2>${echapper(vue.univers.textes.fin_titre)}</h2>
+    <h2>${texteEcrit(vue, "fin_titre")}</h2>
     <h1>${echapper(vue.resultat.camp)}</h1>
     <p class="sous-titre">${echapper(vue.resultat.texte)}</p>
 

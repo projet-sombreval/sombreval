@@ -1,6 +1,13 @@
 # Les réglages de la partie. Ce sont les seuls nombres à changer pour la
 # démonstration ; le code n'en contient aucun.
 
+# ── À TOI ─────────────────────────────────────────────
+# Ces trois durées sont celles de la démonstration.
+# Combien de temps faut-il VRAIMENT pour lire sa carte
+# de rôle ? Pour une nuit ? Pour un débat ?
+# Mesure, puis propose. Et dis pourquoi dans ta demande.
+# ──────────────────────────────────────────────────────
+
 # Durée de chaque phase, en secondes.
 # 10 secondes, c'est court exprès : en classe, on ne peut pas attendre trois
 # minutes qu'un vote se termine. Pour une vraie partie, mets 60 et 180.

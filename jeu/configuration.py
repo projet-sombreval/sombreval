@@ -94,8 +94,14 @@ def _lire_les_univers(dossier, defauts):
     return univers
 
 
-def _avec_les_defauts(defauts, univers):
+def _avec_les_defauts(defauts, univers, prefixe=""):
     """Les valeurs de l'univers par-dessus celles d'attente, en profondeur.
+
+    Note aussi CE QUI A ÉTÉ COMBLÉ, sous la clé `a_ecrire` : la liste des
+    chemins venus des défauts (« textes.attente_titre », « couleurs.encre »…).
+    C'est ici, et nulle part ailleurs, qu'on le sait — le reste du programme ne
+    voit qu'un dictionnaire complet. L'écran s'en sert pour montrer les trous
+    au lieu de les faire passer pour du texte écrit.
 
     UN SEUL point de fusion, et c'est le propos : le moteur lit `univers[...]`
     en indexation dure à vingt-six endroits, dans sept modules. Combler ici
@@ -108,9 +114,30 @@ def _avec_les_defauts(defauts, univers):
     jamais l'inverse.
     """
     complet = copy.deepcopy(defauts)
+    a_ecrire = []
+    for cle in complet:
+        if cle not in univers:
+            a_ecrire.extend(_chemins(prefixe + cle, complet[cle]))
     for cle, valeur in univers.items():
         if isinstance(valeur, dict) and isinstance(complet.get(cle), dict):
-            complet[cle] = _avec_les_defauts(complet[cle], valeur)
+            complet[cle] = _avec_les_defauts(complet[cle], valeur, prefixe + cle + ".")
+            a_ecrire.extend(complet[cle].pop("a_ecrire", []))
         else:
             complet[cle] = valeur
+    complet["a_ecrire"] = sorted(a_ecrire)
     return complet
+
+
+def _chemins(chemin, valeur):
+    """Les feuilles d'une valeur comblée, en chemins pointés.
+
+    Un bloc entier manquant compte pour chacune de ses feuilles : il est plus
+    utile de savoir que « textes.attente_titre » est à écrire que d'apprendre
+    que « textes » l'est — c'est texte par texte que les équipes avancent.
+    """
+    if isinstance(valeur, dict):
+        feuilles = []
+        for cle, sous_valeur in valeur.items():
+            feuilles.extend(_chemins(f"{chemin}.{cle}", sous_valeur))
+        return feuilles
+    return [chemin]

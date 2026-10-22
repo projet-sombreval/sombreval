@@ -128,6 +128,39 @@ class TestUnUniversIncomplet(unittest.TestCase):
                 self.assertNotIn("confirmation", role)
                 self.assertNotIn("revelation", role)
 
+    def test_la_vue_dit_ce_qui_reste_a_ecrire(self):
+        """L'écran doit pouvoir montrer les trous : il lui faut la liste."""
+        jeu = self._jeu()
+        ouverture = jeu.creer_une_partie("Sonde", "vide")
+
+        vue = jeu.vue(ouverture["partie"], ouverture["jeton"])
+
+        a_ecrire = vue["univers"]["a_ecrire"]
+        self.assertIn("presentation", a_ecrire)
+        self.assertIn("textes.attente_titre", a_ecrire)
+        self.assertIn("couleurs.encre", a_ecrire)
+        # une FEUILLE par trou, jamais le bloc entier : c'est texte par texte
+        # que les équipes avancent.
+        self.assertNotIn("textes", a_ecrire)
+
+    def test_un_univers_complet_n_a_rien_a_ecrire(self):
+        """Sombreval est écrit : sa liste doit être VIDE.
+
+        Sans cette moitié-là, une liste qui renverrait tout marquerait aussi
+        les textes déjà écrits — et le signal ne voudrait plus rien dire.
+        """
+        configuration = Configuration()
+
+        self.assertEqual(configuration.univers["sombreval"]["a_ecrire"], [])
+
+    def test_une_cle_ecrite_sort_de_la_liste(self):
+        self._ecrire_univers(UNIVERS_NU | {"presentation": "Un monde bien à lui."})
+
+        a_ecrire = Configuration(self.dossier).univers_choisi("vide")["a_ecrire"]
+
+        self.assertNotIn("presentation", a_ecrire)
+        self.assertIn("textes.attente_titre", a_ecrire)
+
     def test_il_y_a_assez_de_pseudonymes_pour_la_plus_grande_partie(self):
         """Mesuré : un seul pseudonyme plafonne le village à deux joueurs.
 

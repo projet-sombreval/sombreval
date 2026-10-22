@@ -11,6 +11,14 @@ disponible: true
 titre: Sombreval
 annee: 1348
 sous_titre: La peste remonte la vallée.
+# ── À TOI ─────────────────────────────────────────────
+# 1. La présentation de ton monde : deux ou trois phrases,
+#    reprises du carnet d'univers rendu le 19 octobre.
+# 2. Les sept couleurs, recopiées de D1. Les sept NOMS
+#    sont imposés : tu ne changes que les valeurs.
+#
+# Pas de troisième ligne ici : Sombreval est déjà allumé.
+# ──────────────────────────────────────────────────────
 presentation: >-
   Sombreval, hiver 1348. Trois morts en deux nuits, et pas de la peste :
   la gorge ouverte. Le village ferme ses portes et se regarde.
