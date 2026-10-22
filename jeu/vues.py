@@ -55,6 +55,9 @@ def _univers(partie):
         "presentation": partie.univers["presentation"],
         "couleurs": partie.univers["couleurs"],
         "textes": partie.univers["textes"],
+        # Ce qui vient des valeurs d'attente, pour que l'écran montre les
+        # trous au lieu de les faire passer pour du texte écrit.
+        "a_ecrire": partie.univers["a_ecrire"],
     }
 
 
