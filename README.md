@@ -108,11 +108,16 @@ de pourquoi cet ordre-là.
 ## Lancer les tests
 
 ```bash
+python3 -m pip install -r requirements.txt   # une seule fois
 python3 -m unittest discover tests
 ```
 
-Ils ne demandent ni serveur ni bibliothèque : tout le jeu se teste sans le
-web, parce que [jeu/application.py](jeu/application.py) ne connaît pas HTTP.
+**Ils ne demandent pas de serveur** : tout le jeu se teste sans le web, parce
+que [jeu/application.py](jeu/application.py) ne connaît pas HTTP.
+
+**Mais ils demandent `pyyaml`** : [jeu/configuration.py](jeu/configuration.py)
+lit les fichiers de `regles/`. Dans un Python nu, sept tests tombent en erreur
+— installe `requirements.txt` d'abord.
 
 ## Le dépôt
 
