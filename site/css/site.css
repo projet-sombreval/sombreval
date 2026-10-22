@@ -1,21 +1,11 @@
-/* Les écrans du jeu.
-   Aucune couleur d'univers n'est écrite ici : elles arrivent du serveur, qui
-   les lit dans regles/univers/<nom>.yaml, et le JavaScript les pose comme
-   variables CSS. Les valeurs de secours ci-dessous sont des gris neutres :
-   elles ne servent que si le serveur ne répond pas.
+/* Les écrans du jeu : la mise en page, les tailles, les états.
+
+   LES SEPT COULEURS NE SONT PAS ICI — elles vivent dans couleurs.css, chargé
+   juste avant celui-ci. Les `var(--...)` ci-dessous les consomment ; ce
+   fichier n'en déclare aucune.
 
    Tout est écrit gros : ces écrans sont montrés en partage d'écran à une
    classe, dont une partie sur téléphone. */
-
-:root {
-  --fond: #1a1a1a;
-  --parchemin: #eeeeee;
-  --encre: #222222;
-  --encre-pale: #666666;
-  --accent: #883333;
-  --accent-clair: #bb6644;
-  --bordure: #bbbbbb;
-}
 
 * {
   box-sizing: border-box;

@@ -1,0 +1,28 @@
+/* LES SEPT COULEURS, et rien d'autre.
+   Ce fichier est séparé de site.css pour une raison d'équipe, pas de style :
+   l'ambiance écrit ici, les écrans écrivent là-bas, et personne ne se marche
+   dessus. C'est le seul endroit du site où deux rôles auraient travaillé dans
+   le même fichier toutes les semaines.
+
+   AUCUNE COULEUR D'UNIVERS N'EST ÉCRITE ICI. Elles arrivent du serveur, qui
+   les lit dans regles/univers/<nom>.yaml, et jeu.js les pose sur
+   document.documentElement — une valeur en ligne, qui bat donc celles-ci.
+   Les sept ci-dessous ne servent que si le serveur ne répond pas : sans elles,
+   une page sans réponse serait du texte invisible sur du vide.
+
+   ⚠️ Pour changer les couleurs D'UN MONDE, ce n'est pas ici : c'est dans son
+   fichier d'univers. Ici, on ne touche qu'au filet. */
+
+:root {
+  --fond: #1a1a1a;
+  --parchemin: #eeeeee;
+  --encre: #222222;
+  --encre-pale: #666666;
+  /* ⚠️ L'accent n'est PAS gris, contrairement à ce que disait le commentaire
+     de site.css : il est rouge brique, et le reste. Un filet entièrement gris
+     effacerait les titres et les boutons au moment où l'on en a le plus
+     besoin — quand rien ne répond. */
+  --accent: #883333;
+  --accent-clair: #bb6644;
+  --bordure: #bbbbbb;
+}

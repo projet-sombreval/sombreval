@@ -5,6 +5,7 @@ lit ici. Changer regles/univers/sombreval.yaml change le jeu sans toucher au
 code.
 """
 
+import copy
 import pathlib
 
 import yaml
@@ -23,7 +24,8 @@ class Configuration:
         self.roles = mecanique["roles"]
         self.compositions = mecanique["compositions"]
         self.parametres = _lire(self.dossier / "partie.yaml")
-        self.univers = _lire_les_univers(self.dossier / "univers")
+        self.defauts = _lire(self.dossier / "defauts.yaml")
+        self.univers = _lire_les_univers(self.dossier / "univers", self.defauts)
 
     def role(self, nom):
         """La mécanique d'un rôle (son camp, son action, quand il agit)."""
@@ -77,10 +79,38 @@ def _lire(fichier):
     return yaml.safe_load(fichier.read_text(encoding="utf-8"))
 
 
-def _lire_les_univers(dossier):
-    """Un fichier .yaml par univers, rangé par son nom court."""
+def _lire_les_univers(dossier, defauts):
+    """Un fichier .yaml par univers, rangé par son nom court.
+
+    Chaque univers est complété par `regles/defauts.yaml` : ce qu'il n'a pas
+    encore écrit reçoit une valeur d'attente, visible à l'écran. C'est ce qui
+    permet de MONTRER un monde en cours de remplissage au lieu d'attendre
+    qu'il soit fini.
+    """
     univers = {}
     for fichier in sorted(dossier.glob("*.yaml")):
         donnees = _lire(fichier)
-        univers[donnees["nom"]] = donnees
+        univers[donnees["nom"]] = _avec_les_defauts(defauts, donnees)
     return univers
+
+
+def _avec_les_defauts(defauts, univers):
+    """Les valeurs de l'univers par-dessus celles d'attente, en profondeur.
+
+    UN SEUL point de fusion, et c'est le propos : le moteur lit `univers[...]`
+    en indexation dure à vingt-six endroits, dans sept modules. Combler ici
+    les couvre tous par construction — il n'y a pas vingt-six gardes à écrire,
+    ni à maintenir d'accord.
+
+    La fusion est RÉCURSIVE parce que les trous sont imbriqués : un univers
+    peut avoir ses couleurs mais pas ses camps, ou le nom d'un rôle sans son
+    pouvoir. Et elle est faite dans ce sens-là — l'univers écrase le défaut,
+    jamais l'inverse.
+    """
+    complet = copy.deepcopy(defauts)
+    for cle, valeur in univers.items():
+        if isinstance(valeur, dict) and isinstance(complet.get(cle), dict):
+            complet[cle] = _avec_les_defauts(complet[cle], valeur)
+        else:
+            complet[cle] = valeur
+    return complet
