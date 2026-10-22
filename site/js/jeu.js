@@ -34,8 +34,8 @@ function echapper(texte) {
   return boite.innerHTML;
 }
 
-function remplir(modele, numero) {
-  return modele.replace("{numero}", numero);
+function remplir(modele, valeur, trou = "{numero}") {
+  return modele.replace(trou, valeur);
 }
 
 function signaler(texte) {
@@ -342,7 +342,9 @@ function boutonsDeVote(vue) {
       const choisi = vue.mon_vote === joueur.numero ? "choisi" : "";
       return `<li><button class="${choisi}" onclick="voter('${joueur.numero}')"
         ${vue.moi.vivant ? "" : "disabled"}>
-        ${echapper(joueur.pseudo)}<span class="voix">${voix}</span></button></li>`;
+        ${echapper(joueur.pseudo)}<span class="voix"
+          title="${echapper(remplir(vue.univers.textes.vote_en_cours, voix, "{nombre}"))}"
+          >${voix}</span></button></li>`;
     }).join("");
 }
 
