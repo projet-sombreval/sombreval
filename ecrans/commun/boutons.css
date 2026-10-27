@@ -1,19 +1,25 @@
-/* -----------------------------------------------------------------
-   CRITÈRE 4 · LES BOUTONS
-   Un seul bouton pour tout le jeu : même hauteur, même rayon,
-   même couleur, même comportement au survol.
+/* ── LES BOUTONS ───────────────────────────────────────
+   Compare les boutons des deux écrans.
 
-   À VÉRIFIER : les deux écrans ont chacun au moins un bouton.
-   Compare-les côte à côte. Note les trois différences les plus
-   visibles.
+   À TOI, dans cet ordre :
+     1. la différence que tu as trouvée ;
+     2. le critère qui l'empêcherait de revenir — une
+        phrase qui se vérifie, pas qui se discute ;
+     3. comment on la vérifie, en un geste ;
+     4. le CSS qui l'applique.
 
-   À TOI : une seule règle button, et une règle de survol.
-   ----------------------------------------------------------------- */
+   Les trois premiers s'écrivent juste en dessous.
+   ────────────────────────────────────────────────────── */
+
+/* 1 · la différence :
+   2 · le critère     :
+   3 · on vérifie en  :
+*/
 
 button {
-  /* À TOI */
+  /* 4 · À TOI */
 }
 
 button:hover {
-  /* À TOI */
+  /* 4 · À TOI */
 }
