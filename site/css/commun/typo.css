@@ -1,8 +1,10 @@
 /* ── LA TYPOGRAPHIE ─────────────────────────
-   Compare le texte des deux écrans.
+   Compare le texte et les titres des deux
+   écrans.
 
-   Pas de couleur ici : elles appartiennent
-   aux univers, et ce fichier sert aux trois.
+   Pas de couleur ici : ce fichier est
+   partagé avec le jeu, où chaque monde
+   a les siennes.
 
    À TOI, dans cet ordre :
      1. la différence que tu as trouvée ;
@@ -21,3 +23,11 @@
 */
 
 /* 4 · À TOI */
+
+h1 {
+  /* 4 · À TOI */
+}
+
+h2 {
+  /* 4 · À TOI */
+}
