@@ -1,15 +1,17 @@
-/* ── LE TÉLÉPHONE ──────────────────────────────────────
-   Compare les deux écrans à la largeur d'un téléphone.
+/* ── LE TÉLÉPHONE ───────────────────────────
+   Compare les deux écrans à la largeur
+   d'un téléphone.
 
    À TOI, dans cet ordre :
      1. la différence que tu as trouvée ;
-     2. le critère qui l'empêcherait de revenir — une
-        phrase qui se vérifie, pas qui se discute ;
+     2. le critère qui l'empêcherait de
+        revenir — une phrase qui se vérifie,
+        pas qui se discute ;
      3. comment on la vérifie, en un geste ;
      4. le CSS qui l'applique.
 
-   Les trois premiers s'écrivent juste en dessous.
-   ────────────────────────────────────────────────────── */
+   Les trois premiers s'écrivent en dessous.
+   ──────────────────────────────────────── */
 
 /* 1 · la différence :
    2 · le critère     :
