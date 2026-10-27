@@ -11,6 +11,9 @@
   box-sizing: border-box;
 }
 
+/* ⚠️ --encre sur --fond : 1,13:1 avec Sombreval. Aucun texte n'est posé
+   directement sur la page aujourd'hui ; un texte qui sortirait de la carte
+   serait invisible — il lui faut sa propre boîte. */
 body {
   margin: 0;
   padding: 1rem;
@@ -76,8 +79,11 @@ input {
   font-size: 1.2rem;
   font-family: inherit;
   color: var(--encre);
-  background: #fff;
-  border: 1px solid var(--bordure);
+  /* Le champ prend le fond de la carte : c'est sa bordure qui le dessine.
+     --encre-pale contre --parchemin = 5,03:1 (--bordure n'y faisait que
+     2,47:1 contre l'ancien blanc en dur, sous le seuil de 3:1). */
+  background: var(--parchemin);
+  border: 1px solid var(--encre-pale);
   border-radius: 3px;
 }
 
@@ -97,9 +103,13 @@ button {
   cursor: pointer;
 }
 
+/* Survol : la boîte devient sombre. --parchemin sur --accent-clair ne
+   faisait que 3,62:1 — l'accent clair est un ton moyen, aucun texte ne
+   tient dessus. --parchemin sur --encre est le couple que les tests
+   garantissent dans les trois univers. */
 button:hover {
-  background: var(--accent-clair);
-  border-color: var(--accent-clair);
+  background: var(--encre);
+  border-color: var(--encre);
 }
 
 button:disabled {
@@ -179,7 +189,8 @@ button:disabled {
   color: var(--accent);
 }
 
-/* Le bandeau du joueur éliminé : il regarde, il ne joue plus. */
+/* Le bandeau du joueur éliminé : il regarde, il ne joue plus.
+   Inversion voulue : boîte sombre sur carte claire, 13,44:1. */
 .bandeau {
   padding: 0.8rem 1rem;
   color: var(--parchemin);
@@ -189,6 +200,7 @@ button:disabled {
 
 /* --- la minuterie ------------------------------------------------------- */
 
+/* Inversion voulue : boîte sombre sur carte claire, 13,44:1. */
 .minuterie {
   margin: 1.2rem 0 0;
   padding: 0.5rem;
@@ -247,6 +259,7 @@ button:disabled {
   letter-spacing: 0.08em;
 }
 
+/* Inversion voulue : boîte sombre sur carte claire, 13,44:1. */
 .secret {
   margin: 1rem 0 0;
   padding: 0.8rem 1rem;
