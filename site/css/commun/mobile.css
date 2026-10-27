@@ -1,5 +1,9 @@
-/* ── LA TYPOGRAPHIE ─────────────────────────
-   Compare le texte des deux écrans.
+/* ── LE TÉLÉPHONE ───────────────────────────
+   Compare les deux écrans à la largeur
+   d'un téléphone.
+
+   Pas de couleur ici : elles appartiennent
+   aux univers, et ce fichier sert aux trois.
 
    À TOI, dans cet ordre :
      1. la différence que tu as trouvée ;
@@ -17,4 +21,6 @@
    3 · on vérifie en  :
 */
 
-/* 4 · À TOI */
+@media (max-width: 480px) {
+  /* 4 · À TOI */
+}
