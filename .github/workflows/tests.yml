@@ -1,0 +1,53 @@
+# Lance les tests du jeu sur chaque demande de fusion — et rien d'autre.
+#
+# Pas de déploiement, pas de publication : GitHub Pages reste en
+# construction « legacy », que ce fichier ne touche pas.
+#
+# Le nom du travail ci-dessous est celui qu'on voit sur chaque demande de
+# fusion. Si une palette d'univers est illisible, le résumé de la
+# vérification dit pourquoi, en une phrase.
+
+name: Vérifications
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: contrastes et tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les bibliothèques du jeu
+        run: python3 -m pip install -r requirements.txt
+
+      - name: Lancer les tests
+        run: |
+          set +e
+          python3 -m unittest discover tests 2> sortie.txt
+          code=$?
+          cat sortie.txt
+          # Chaque échec devient UNE phrase, en tête du résumé — sans la
+          # trace Python, qui reste lisible plus bas pour qui la cherche.
+          python3 - <<'PY'
+          import os, re
+          texte = open("sortie.txt", encoding="utf-8").read()
+          phrases = re.findall(r"^AssertionError: (.+)$", texte, flags=re.M)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as resume:
+              if phrases:
+                  resume.write("## ❌ Un test ne passe pas\n\n")
+                  for phrase in phrases:
+                      resume.write(f"- {phrase}\n")
+                      print(f"::error title=Un test ne passe pas::{phrase}")
+              elif texte.rstrip().endswith("OK"):
+                  resume.write("## ✅ Tous les tests passent\n")
+          PY
+          exit $code

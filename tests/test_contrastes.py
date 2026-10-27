@@ -27,6 +27,11 @@ def luminance(couleur):
     return 0.2126 * lineaires[0] + 0.7152 * lineaires[1] + 0.0722 * lineaires[2]
 
 
+def virgule(nombre):
+    """Un nombre comme on l'écrit en français : 2,22 et non 2.22."""
+    return f"{nombre:.2f}".rstrip("0").rstrip(".").replace(".", ",")
+
+
 def contraste(a, b):
     """Rapport de contraste entre deux couleurs, de 1 à 21."""
     claire, sombre = sorted((luminance(a), luminance(b)), reverse=True)
@@ -41,8 +46,8 @@ def defauts_de_lisibilite(couleurs):
                        "la carte ne se détache plus de la page")
     ratio = contraste(couleurs["encre"], couleurs["parchemin"])
     if ratio < SEUIL_TEXTE:
-        defauts.append(f"--encre contre --parchemin : {ratio:.2f}:1, "
-                       f"sous le seuil de {SEUIL_TEXTE}:1")
+        defauts.append(f"--encre contre --parchemin : {virgule(ratio)}:1, "
+                       f"sous le seuil de {virgule(SEUIL_TEXTE)}:1")
     return defauts
 
 
@@ -55,13 +60,22 @@ class TestLesCouleursDesUnivers(unittest.TestCase):
         self.assertEqual(len(univers), 3)
         for nom, donnees in univers.items():
             with self.subTest(univers=nom):
-                self.assertEqual(defauts_de_lisibilite(donnees["couleurs"]), [])
+                defauts = defauts_de_lisibilite(donnees["couleurs"])
+                # Le message est lu par l'élève qui a collé ses couleurs :
+                # une phrase, pas une comparaison de listes.
+                if defauts:
+                    self.fail(f"Les couleurs de {donnees.get('titre', nom)} "
+                              f"ne se lisent pas — " + " ; ".join(defauts))
 
 
 class TestLaSondeMord(unittest.TestCase):
     """La sonde doit refuser une palette illisible : sinon elle ne garde rien."""
 
     BONNE = {"fond": "#141110", "parchemin": "#efe6d6", "encre": "#241d16"}
+
+    def test_les_nombres_s_ecrivent_a_la_francaise(self):
+        self.assertEqual(virgule(2.2213), "2,22")
+        self.assertEqual(virgule(4.5), "4,5")
 
     def test_le_calcul_donne_les_valeurs_connues(self):
         self.assertAlmostEqual(contraste("#000000", "#ffffff"), 21.0, places=2)
