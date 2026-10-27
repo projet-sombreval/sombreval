@@ -1,5 +1,8 @@
-/* ── LES BOUTONS ────────────────────────────
-   Compare les boutons des deux écrans.
+/* ── LES TITRES ─────────────────────────────
+   Compare les titres des deux écrans.
+
+   Pas de couleur ici : elles appartiennent
+   aux univers, et ce fichier sert aux trois.
 
    À TOI, dans cet ordre :
      1. la différence que tu as trouvée ;
@@ -17,10 +20,10 @@
    3 · on vérifie en  :
 */
 
-button {
+h1 {
   /* 4 · À TOI */
 }
 
-button:hover {
+h2 {
   /* 4 · À TOI */
 }

@@ -1,6 +1,9 @@
-/* ── LES CHAMPS DE SAISIE ───────────────────
-   Compare les champs de saisie des deux
-   écrans.
+/* ── LE FOCUS ───────────────────────────────
+   Compare les deux écrans à la touche Tab,
+   sans souris.
+
+   Pas de couleur ici : elles appartiennent
+   aux univers, et ce fichier sert aux trois.
 
    À TOI, dans cet ordre :
      1. la différence que tu as trouvée ;
@@ -18,10 +21,6 @@
    3 · on vérifie en  :
 */
 
-input, select {
-  /* 4 · À TOI */
-}
-
-label {
+:focus-visible {
   /* 4 · À TOI */
 }
