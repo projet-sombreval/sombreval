@@ -1,21 +1,27 @@
-/* -----------------------------------------------------------------
-   CRITÈRE 5 · LES CHAMPS DE SAISIE
-   Un seul modèle de champ. Et son étiquette doit être visible —
-   un texte d'exemple gris dans le champ ne suffit pas : il
-   disparaît dès qu'on tape.
+/* ── LES CHAMPS DE SAISIE ───────────────────
+   Compare les champs de saisie des deux
+   écrans.
 
-   À VÉRIFIER : l'écran de connexion a-t-il une vraie étiquette
-   (balise label) pour chaque champ, ou seulement un placeholder ?
-   Note ce que tu trouves : c'est le défaut d'accessibilité le plus
-   fréquent du web.
+   À TOI, dans cet ordre :
+     1. la différence que tu as trouvée ;
+     2. le critère qui l'empêcherait de
+        revenir — une phrase qui se vérifie,
+        pas qui se discute ;
+     3. comment on la vérifie, en un geste ;
+     4. le CSS qui l'applique.
 
-   À TOI : une règle pour les champs, une pour les étiquettes.
-   ----------------------------------------------------------------- */
+   Les trois premiers s'écrivent en dessous.
+   ──────────────────────────────────────── */
+
+/* 1 · la différence :
+   2 · le critère     :
+   3 · on vérifie en  :
+*/
 
 input, select {
-  /* À TOI */
+  /* 4 · À TOI */
 }
 
 label {
-  /* À TOI */
+  /* 4 · À TOI */
 }
