@@ -49,7 +49,7 @@ def defauts_de_lisibilite(couleurs):
     # pas de contraste : c'est tests/test_univers.py qui le dit à l'élève, en
     # une phrase. Ici, on ne planterait qu'en trace Python.
     if not all(isinstance(couleurs.get(c), str) and HEXA.match(couleurs[c])
-               for c in ("fond", "parchemin", "encre")):
+               for c in ("fond", "parchemin", "encre", "accent")):
         return defauts
     if luminance(couleurs["parchemin"]) <= luminance(couleurs["fond"]):
         defauts.append("--parchemin n'est pas plus clair que --fond : "
@@ -58,6 +58,16 @@ def defauts_de_lisibilite(couleurs):
     if ratio < SEUIL_TEXTE:
         defauts.append(f"--encre contre --parchemin : {virgule(ratio)}:1, "
                        f"sous le seuil de {virgule(SEUIL_TEXTE)}:1")
+    # Troisième règle : site.css lit --accent CONTRE --parchemin dans les deux
+    # sens — titres et nom du rôle en accent sur la carte, texte des boutons
+    # en parchemin sur l'accent. Une palette inversée (parchemin sombre,
+    # encre claire) passe les deux premières règles et casse pourtant ces
+    # deux couples : mesuré à 1,64:1 sur l'exemple que portait la fiche S7.
+    ratio = contraste(couleurs["accent"], couleurs["parchemin"])
+    if ratio < SEUIL_TEXTE:
+        defauts.append(f"--accent contre --parchemin : {virgule(ratio)}:1, "
+                       f"sous le seuil de {virgule(SEUIL_TEXTE)}:1 — les titres "
+                       f"et les boutons ne se liraient pas")
     return defauts
 
 
@@ -84,7 +94,8 @@ class TestLesCouleursDesUnivers(unittest.TestCase):
 class TestLaSondeMord(unittest.TestCase):
     """La sonde doit refuser une palette illisible : sinon elle ne garde rien."""
 
-    BONNE = {"fond": "#141110", "parchemin": "#efe6d6", "encre": "#241d16"}
+    BONNE = {"fond": "#141110", "parchemin": "#efe6d6", "encre": "#241d16",
+             "accent": "#8d2119"}
 
     def test_les_nombres_s_ecrivent_a_la_francaise(self):
         self.assertEqual(virgule(2.2213), "2,22")
@@ -100,6 +111,15 @@ class TestLaSondeMord(unittest.TestCase):
     def test_une_encre_trop_claire_est_refusee(self):
         palette = dict(self.BONNE, encre="#a89a86")
         self.assertIn("--encre contre --parchemin", defauts_de_lisibilite(palette)[0])
+
+    def test_un_accent_illisible_sur_le_parchemin_est_refuse(self):
+        # La palette inversée que portait l'exemple de la fiche S7 : elle passe
+        # les deux premières règles, et c'est celle-ci qui l'arrête.
+        palette = {"fond": "#110d0a", "parchemin": "#1e1418",
+                   "encre": "#faf6ed", "accent": "#800000"}
+        defauts = defauts_de_lisibilite(palette)
+        self.assertEqual(len(defauts), 1, defauts)
+        self.assertIn("--accent contre --parchemin : 1,64:1", defauts[0])
 
     def test_un_parchemin_plus_sombre_que_le_fond_est_refuse(self):
         palette = dict(self.BONNE, fond="#efe6d6", parchemin="#141110",
