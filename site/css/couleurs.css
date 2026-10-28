@@ -1,17 +1,23 @@
-/* LES SEPT COULEURS, et rien d'autre.
+/* LES COULEURS DU JEU : les sept variables, et où va chacune.
+
    Ce fichier est séparé de site.css pour une raison d'équipe, pas de style :
    l'ambiance écrit ici, les écrans écrivent là-bas, et personne ne se marche
-   dessus. C'est le seul endroit du site où deux rôles auraient travaillé dans
-   le même fichier toutes les semaines.
+   dessus. site.css dit la forme de chaque section ; ce fichier dit sa
+   couleur. Il est chargé JUSTE APRÈS site.css, et c'est voulu : une bordure
+   s'y écrit sans couleur, et c'est ici qu'elle reçoit la sienne.
 
-   AUCUNE COULEUR D'UNIVERS N'EST ÉCRITE ICI. Elles arrivent du serveur, qui
-   les lit dans regles/univers/<nom>.yaml, et jeu.js les pose sur
-   document.documentElement — une valeur en ligne, qui bat donc celles-ci.
-   Les sept ci-dessous ne servent que si le serveur ne répond pas : sans elles,
-   une page sans réponse serait du texte invisible sur du vide.
+   AUCUNE VALEUR D'UNIVERS N'EST ÉCRITE ICI. Les couleurs arrivent du
+   serveur, qui les lit dans regles/univers/<nom>.yaml, et jeu.js les pose
+   sur document.documentElement — une valeur en ligne, qui bat donc celles
+   du bloc :root ci-dessous. Ces sept-là ne servent que si le serveur ne
+   répond pas : sans elles, une page sans réponse serait du texte invisible
+   sur du vide.
+
+   Donc, sous le bloc :root, UNIQUEMENT des var(--...) : une couleur écrite
+   en clair serait la même dans les trois mondes.
 
    ⚠️ Pour changer les couleurs D'UN MONDE, ce n'est pas ici : c'est dans son
-   fichier d'univers. Ici, on ne touche qu'au filet. */
+   fichier d'univers. Ici, on décide où va chaque couleur. */
 
 :root {
   --fond: #1a1a1a;
@@ -25,4 +31,100 @@
   --accent: #883333;
   --accent-clair: #bb6644;
   --bordure: #bbbbbb;
+}
+
+/* ── Où va chaque couleur ─────────────────────────────────────────────── */
+
+/* ⚠️ --encre sur --fond : 1,13:1 avec Sombreval. Aucun texte n'est posé
+   directement sur la page aujourd'hui ; un texte qui sortirait de la carte
+   serait invisible — il lui faut sa propre boîte. */
+body {
+  background: var(--fond);
+  color: var(--encre);
+}
+
+.ecran {
+  background: var(--parchemin);
+  border-color: var(--bordure);
+}
+
+h1 {
+  color: var(--accent);
+}
+
+h2,
+.sous-titre,
+label {
+  color: var(--encre-pale);
+}
+
+/* Le champ prend le fond de la carte : c'est sa bordure qui le dessine.
+   --encre-pale contre --parchemin = 5,03:1 (--bordure n'y faisait que
+   2,47:1 contre l'ancien blanc en dur, sous le seuil de 3:1). */
+input {
+  color: var(--encre);
+  background: var(--parchemin);
+  border-color: var(--encre-pale);
+}
+
+button {
+  color: var(--parchemin);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Survol : la boîte devient sombre. --parchemin sur --accent-clair ne
+   faisait que 3,62:1 — l'accent clair est un ton moyen, aucun texte ne
+   tient dessus. --parchemin sur --encre est le couple que les tests
+   garantissent dans les trois univers. */
+button:hover {
+  background: var(--encre);
+  border-color: var(--encre);
+}
+
+button:disabled {
+  color: var(--encre-pale);
+  background: transparent;
+  border-color: var(--bordure);
+}
+
+.choisi {
+  background: var(--accent-clair);
+  border-color: var(--encre);
+}
+
+.village li,
+.journal li,
+.discussion li {
+  border-bottom-color: var(--bordure);
+}
+
+.mort,
+.role-camp,
+.quand,
+.patiente {
+  color: var(--encre-pale);
+}
+
+/* Dans une liste, le chiffre est rouge sur le parchemin ; sur un bouton, il
+   garde la couleur du bouton, sinon on ne le lit pas. */
+.village .voix {
+  color: var(--accent);
+}
+
+/* Inversion voulue : boîtes sombres sur carte claire, 13,44:1. */
+.bandeau,
+.minuterie,
+.secret {
+  color: var(--parchemin);
+  background: var(--encre);
+}
+
+.role-nom {
+  color: var(--accent);
+}
+
+.message {
+  color: var(--parchemin);
+  background: var(--accent);
 }

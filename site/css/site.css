@@ -1,8 +1,13 @@
-/* Les écrans du jeu : la mise en page, les tailles, les états.
+/* LES SECTIONS DU JEU : la mise en page, les tailles, les états.
 
-   LES SEPT COULEURS NE SONT PAS ICI — elles vivent dans couleurs.css, chargé
-   juste avant celui-ci. Les `var(--...)` ci-dessous les consomment ; ce
-   fichier n'en déclare aucune.
+   AUCUNE COULEUR ICI — ni valeur, ni var(--...). Où va chaque couleur se
+   décide dans couleurs.css, chargé JUSTE APRÈS celui-ci : l'ordre compte,
+   car une bordure s'écrit ici sans couleur (« border: 1px solid ») et
+   couleurs.css lui donne la sienne ensuite. Chargé dans l'autre sens, le
+   raccourci « border » effacerait cette couleur.
+
+   Deux fichiers pour deux rôles de l'équipe : les écrans écrivent ici,
+   l'ambiance écrit là-bas, et personne n'écrit dans le fichier d'une autre.
 
    Tout est écrit gros : ces écrans sont montrés en partage d'écran à une
    classe, dont une partie sur téléphone. */
@@ -11,14 +16,9 @@
   box-sizing: border-box;
 }
 
-/* ⚠️ --encre sur --fond : 1,13:1 avec Sombreval. Aucun texte n'est posé
-   directement sur la page aujourd'hui ; un texte qui sortirait de la carte
-   serait invisible — il lui faut sa propre boîte. */
 body {
   margin: 0;
   padding: 1rem;
-  background: var(--fond);
-  color: var(--encre);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 20px;
   line-height: 1.5;
@@ -28,8 +28,7 @@ body {
   max-width: 44rem;
   margin: 1rem auto;
   padding: 1.5rem;
-  background: var(--parchemin);
-  border: 1px solid var(--bordure);
+  border: 1px solid;
   border-radius: 4px;
 }
 
@@ -39,7 +38,6 @@ h1 {
   margin: 0;
   font-size: 2.6rem;
   line-height: 1.1;
-  color: var(--accent);
   text-align: center;
 }
 
@@ -48,14 +46,12 @@ h2 {
   font-size: 0.95rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--encre-pale);
 }
 
 .sous-titre {
   margin: 0.4rem 0 1.4rem;
   text-align: center;
   font-style: italic;
-  color: var(--encre-pale);
 }
 
 .consigne {
@@ -69,7 +65,6 @@ label {
   font-size: 0.95rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--encre-pale);
   margin-bottom: 0.3rem;
 }
 
@@ -78,12 +73,7 @@ input {
   padding: 0.7rem;
   font-size: 1.2rem;
   font-family: inherit;
-  color: var(--encre);
-  /* Le champ prend le fond de la carte : c'est sa bordure qui le dessine.
-     --encre-pale contre --parchemin = 5,03:1 (--bordure n'y faisait que
-     2,47:1 contre l'ancien blanc en dur, sous le seuil de 3:1). */
-  background: var(--parchemin);
-  border: 1px solid var(--encre-pale);
+  border: 1px solid;
   border-radius: 3px;
 }
 
@@ -96,26 +86,13 @@ button {
   padding: 0.6rem 1rem;
   font-size: 1.1rem;
   font-family: inherit;
-  color: var(--parchemin);
-  background: var(--accent);
-  border: 1px solid var(--accent);
+  border: 1px solid;
   border-radius: 3px;
   cursor: pointer;
 }
 
-/* Survol : la boîte devient sombre. --parchemin sur --accent-clair ne
-   faisait que 3,62:1 — l'accent clair est un ton moyen, aucun texte ne
-   tient dessus. --parchemin sur --encre est le couple que les tests
-   garantissent dans les trois univers. */
-button:hover {
-  background: var(--encre);
-  border-color: var(--encre);
-}
-
 button:disabled {
-  color: var(--encre-pale);
-  background: transparent;
-  border: 1px dashed var(--bordure);
+  border: 1px dashed;
   cursor: not-allowed;
 }
 
@@ -148,11 +125,6 @@ button:disabled {
   text-align: left;
 }
 
-.choisi {
-  background: var(--accent-clair);
-  border-color: var(--encre);
-}
-
 /* --- la liste des joueurs ---------------------------------------------- */
 
 .village {
@@ -163,12 +135,11 @@ button:disabled {
 
 .village li {
   padding: 0.4rem 0;
-  border-bottom: 1px solid var(--bordure);
+  border-bottom: 1px solid;
   font-size: 1.15rem;
 }
 
 .mort {
-  color: var(--encre-pale);
   text-decoration: line-through;
 }
 
@@ -183,32 +154,20 @@ button:disabled {
   font-weight: bold;
 }
 
-/* Dans une liste, le chiffre est rouge sur le parchemin ; sur un bouton, il
-   garde la couleur du bouton, sinon on ne le lit pas. */
-.village .voix {
-  color: var(--accent);
-}
-
-/* Le bandeau du joueur éliminé : il regarde, il ne joue plus.
-   Inversion voulue : boîte sombre sur carte claire, 13,44:1. */
+/* Le bandeau du joueur éliminé : il regarde, il ne joue plus. */
 .bandeau {
   padding: 0.8rem 1rem;
-  color: var(--parchemin);
-  background: var(--encre);
   border-radius: 3px;
 }
 
 /* --- la minuterie ------------------------------------------------------- */
 
-/* Inversion voulue : boîte sombre sur carte claire, 13,44:1. */
 .minuterie {
   margin: 1.2rem 0 0;
   padding: 0.5rem;
   text-align: center;
   font-size: 1.4rem;
   font-variant-numeric: tabular-nums;
-  color: var(--parchemin);
-  background: var(--encre);
   border-radius: 3px;
 }
 
@@ -222,13 +181,11 @@ button:disabled {
 .role-nom {
   font-size: 3.2rem;
   line-height: 1.1;
-  color: var(--accent);
 }
 
 .role-camp {
   font-size: 1.2rem;
   font-style: italic;
-  color: var(--encre-pale);
 }
 
 .role-pouvoir {
@@ -247,24 +204,20 @@ button:disabled {
 
 .journal li, .discussion li {
   padding: 0.35rem 0;
-  border-bottom: 1px solid var(--bordure);
+  border-bottom: 1px solid;
 }
 
 .quand {
   display: inline-block;
   min-width: 5.5rem;
-  color: var(--encre-pale);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-/* Inversion voulue : boîte sombre sur carte claire, 13,44:1. */
 .secret {
   margin: 1rem 0 0;
   padding: 0.8rem 1rem;
-  background: var(--encre);
-  color: var(--parchemin);
   border-radius: 3px;
   font-size: 1.15rem;
 }
@@ -286,7 +239,6 @@ button:disabled {
 
 .patiente {
   text-align: center;
-  color: var(--encre-pale);
   font-style: italic;
 }
 
@@ -296,8 +248,6 @@ button:disabled {
   max-width: 44rem;
   margin: 0 auto;
   padding: 0.8rem 1rem;
-  color: var(--parchemin);
-  background: var(--accent);
   border-radius: 3px;
   text-align: center;
 }
