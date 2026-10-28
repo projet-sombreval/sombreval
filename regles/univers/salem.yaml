@@ -6,7 +6,7 @@
 # d'autre : le moteur ne change pas.
 
 nom: salem
-disponible: false
+disponible: true
 
 titre: Salem
 annee: 1692
@@ -22,3 +22,14 @@ sous_titre: Le village accuse, le tribunal écoute.
 # d'attente et l'écran l'affiche en « à écrire ». Ton monde
 # n'attend donc pas d'être fini pour être montré.
 # ──────────────────────────────────────────────────────
+
+presentation: Salem, 1692.
+
+couleurs:
+  fond: "#1b1a16"
+  parchemin: "#ece3cf"
+  encre: #2a2119
+  encre-pale: "#6b5f4f"
+  accent: "#3d5a40"
+  accent-clair: "#6b8f6e"
+  bordure: "#b9a279"
