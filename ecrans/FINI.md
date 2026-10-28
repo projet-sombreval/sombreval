@@ -8,7 +8,7 @@ carte de rôle, D5 l'écran de jour, D6 l'écran de nuit, D7 l'écran final.
 personnes qui le vérifient trouvent la même chose. Un écran qui n'en respecte
 pas un n'est pas fini : il est renvoyé, avec le numéro du critère.
 
-| | Le critère | Comment on le vérifie |
+| | Le critère | Comment on le contrôle |
 |---|---|---|
 | | | |
 
