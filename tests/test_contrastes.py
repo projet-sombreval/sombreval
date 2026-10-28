@@ -10,17 +10,21 @@ Le calcul est celui des règles d'accessibilité (WCAG 2) : luminance relative
 de chaque couleur, puis (claire + 0,05) / (sombre + 0,05).
 """
 
+import re
 import unittest
 
 from jeu.configuration import Configuration
 
 # Le seuil du texte courant. En dessous, c'est un défaut, pas un goût.
 SEUIL_TEXTE = 4.5
+HEXA = re.compile(r"^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$")
 
 
 def luminance(couleur):
-    """Luminance relative d'une couleur écrite « #rrggbb »."""
+    """Luminance relative d'une couleur écrite « #rrggbb » ou « #rgb »."""
     hexa = couleur.lstrip("#")
+    if len(hexa) == 3:
+        hexa = "".join(c * 2 for c in hexa)
     canaux = [int(hexa[i:i + 2], 16) / 255 for i in (0, 2, 4)]
     lineaires = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
                  for c in canaux]
@@ -41,6 +45,12 @@ def contraste(a, b):
 def defauts_de_lisibilite(couleurs):
     """Ce qui ne va pas dans ces sept couleurs — une liste vide si tout va."""
     defauts = []
+    # Une couleur vide ou mal écrite (`encre: #241d16` sans guillemets) n'a
+    # pas de contraste : c'est tests/test_univers.py qui le dit à l'élève, en
+    # une phrase. Ici, on ne planterait qu'en trace Python.
+    if not all(isinstance(couleurs.get(c), str) and HEXA.match(couleurs[c])
+               for c in ("fond", "parchemin", "encre")):
+        return defauts
     if luminance(couleurs["parchemin"]) <= luminance(couleurs["fond"]):
         defauts.append("--parchemin n'est pas plus clair que --fond : "
                        "la carte ne se détache plus de la page")
@@ -57,7 +67,10 @@ class TestLesCouleursDesUnivers(unittest.TestCase):
         univers = Configuration().univers
         # Sans cette garde, un dossier vide rendrait le test vert sans rien
         # avoir vérifié.
-        self.assertEqual(len(univers), 3)
+        if len(univers) != 3:
+            self.fail("Le jeu ne trouve pas ses trois mondes. Regarde la ligne « nom: » "
+                      "de chaque fichier de regles/univers/ : elle doit dire "
+                      "le nom du fichier (salem, serenissime ou sombreval).")
         for nom, donnees in univers.items():
             with self.subTest(univers=nom):
                 defauts = defauts_de_lisibilite(donnees["couleurs"])

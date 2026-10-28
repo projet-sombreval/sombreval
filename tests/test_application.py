@@ -5,11 +5,13 @@ millisecondes au lieu de deux minutes.
 """
 
 import random
+import shutil
 import unittest
 
 from jeu.application import Application
 from jeu.configuration import Configuration
 from jeu.erreurs import ErreurDeJeu
+from tests.fabrique import configuration_avec_un_monde_pas_encore_ecrit
 
 
 class HorlogeFausse(Application):
@@ -52,8 +54,11 @@ class TestApplication(unittest.TestCase):
         self.assertTrue(self.partie["jeton"])
 
     def test_un_univers_pas_encore_ecrit_est_refuse(self):
+        dossier = configuration_avec_un_monde_pas_encore_ecrit()
+        self.addCleanup(shutil.rmtree, dossier)
+        jeu = Application(Configuration(dossier), random.Random(0))
         with self.assertRaises(ErreurDeJeu):
-            self.jeu.creer_une_partie("Delphine", "salem")
+            jeu.creer_une_partie("Delphine", "brouillon")
 
     def test_les_joueurs_factices_arrivent_un_par_un(self):
         self.assertEqual(len(self._vue()["joueurs"]), 1)
