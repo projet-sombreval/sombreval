@@ -44,7 +44,9 @@ jobs:
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as resume:
               if phrases:
                   resume.write("## ❌ Un test ne passe pas\n\n")
-                  for phrase in phrases:
+                  # Une même faute peut faire tomber deux tests : une
+                  # seule ligne par phrase.
+                  for phrase in dict.fromkeys(phrases):
                       resume.write(f"- {phrase}\n")
                       print(f"::error title=Un test ne passe pas::{phrase}")
               elif texte.rstrip().endswith("OK"):

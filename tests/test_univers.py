@@ -37,6 +37,15 @@ COULEURS = ("fond", "parchemin", "encre", "encre-pale", "accent",
             "accent-clair", "bordure")
 HEXA = re.compile(r"^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$")
 
+# Autant de pseudonymes que la plus grande partie compte de joueurs, moins
+# l'humain. En dessous, les joueurs factices ne remplissent pas le village et
+# la partie refuse de démarrer — avec un message du moteur qui accuse le
+# village, pas le fichier. D'où une phrase à nous, avant.
+#
+# Le seuil SUIT la table de regles/roles.yaml : sept tant qu'elle s'arrête à
+# huit joueurs, onze le jour où elle va jusqu'à douze (séance 9).
+PSEUDOS_MINIMUM = max(Configuration().compositions) - 1
+
 
 def chemin(fichier):
     return f"regles/univers/{fichier.name}"
@@ -73,7 +82,26 @@ def defaut_de_contenu(fichier, donnees):
                 f"{fichier.stem}, pas {donnees.get('nom')}. C'est par ce nom "
                 f"que le jeu reconnaît ton monde.")
     titre = donnees.get("titre") or fichier.stem
-    couleurs = donnees.get("couleurs")
+    souci = defaut_de_couleur(titre, donnees.get("couleurs"))
+    if souci:
+        return souci
+    if "pseudos_factices" in donnees:
+        pseudos = donnees["pseudos_factices"]
+        if not isinstance(pseudos, list):
+            return (f"Dans le fichier de {titre}, « pseudos_factices: » doit "
+                    f"être suivie d'une liste, un pseudonyme par ligne, chacun "
+                    f"précédé de « - », comme dans sombreval.yaml.")
+        differents = {str(p).strip() for p in pseudos if p is not None and str(p).strip()}
+        if len(differents) < PSEUDOS_MINIMUM:
+            return (f"Dans le fichier de {titre}, il faut au moins "
+                    f"{PSEUDOS_MINIMUM} pseudonymes différents, et il y en a "
+                    f"{len(differents)}. En dessous, la partie refuse de "
+                    f"démarrer.")
+    return None
+
+
+def defaut_de_couleur(titre, couleurs):
+    """La première couleur que le jeu ne pourra pas lire — ou None."""
     if couleurs is None:
         return None
     if not isinstance(couleurs, dict):
@@ -204,11 +232,25 @@ class TestLesMessagesSontLisibles(unittest.TestCase):
         souci = self._souci(self.base.replace("nom: salem", "nom: sombreval"))
         self.assertIn("doit dire salem, pas sombreval", souci)
 
+    def test_trop_peu_de_pseudonymes_est_dit_avant_que_la_partie_refuse(self):
+        # Le bloc de Sombreval réduit à trois lignes, dont un doublon : le
+        # moteur ne compte que des pseudonymes DIFFÉRENTS.
+        texte = re.sub(r"pseudos_factices:\n(  - .*\n)+",
+                       "pseudos_factices:\n  - Ana\n  - Bea\n  - Ana\n",
+                       self.base)
+        self.assertIn("  - Ana\n  - Bea\n  - Ana\n", texte)
+        souci = self._souci(texte)
+        self.assertIn(f"il faut au moins {PSEUDOS_MINIMUM} pseudonymes "
+                      f"différents, et il y en a 2", souci)
+
     def test_le_vrai_fichier_de_sombreval_ne_signale_rien(self):
         fichier = DOSSIER_REGLES / "univers" / "sombreval.yaml"
         donnees, souci = lire_ou_expliquer(fichier)
-        self.assertIsNone(souci)
-        self.assertIsNone(defaut_de_contenu(fichier, donnees))
+        souci = souci or defaut_de_contenu(fichier, donnees)
+        # Même phrase que le test des mondes, pour ne pas la doubler en
+        # anglais (« … is not None ») dans le résumé de la vérification.
+        if souci:
+            self.fail(souci)
 
     def test_chaque_message_tient_sur_une_seule_ligne(self):
         # Le résumé de la vérification ne reprend que la PREMIÈRE ligne d'un
