@@ -4,11 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sombreval</title>
-  <!-- Les couleurs d'abord : ce sont les variables que site.css consomme. -->
-  <link rel="stylesheet" href="css/couleurs.css">
+  <!-- Les sections, PUIS leurs couleurs : site.css trace les bordures sans
+       couleur, couleurs.css la leur donne ensuite. Dans l'autre ordre, le
+       raccourci « border » de site.css effacerait cette couleur. -->
   <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/couleurs.css">
   <!-- La base commune, partagée avec les écrans de ecrans/ : chargée
-       après site.css, elle l'emporte là où elle écrit. Aucune couleur
+       après site.css et couleurs.css, elle l'emporte là où elle écrit. Aucune couleur
        dedans — les couleurs viennent de l'univers. -->
   <link rel="stylesheet" href="css/commun/typo.css">
   <link rel="stylesheet" href="css/commun/espacements.css">
