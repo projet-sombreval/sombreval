@@ -96,7 +96,7 @@ def completer_le_village(partie, maintenant):
     parametres = partie.configuration.parametres
     if partie.phase != "attente":
         return
-    if len(partie.joueurs) >= parametres["nombre_de_joueurs"]:
+    if len(partie.joueurs) >= partie.nombre_de_joueurs:
         return
     if maintenant - partie.derniere_arrivee < parametres["delai_entre_les_arrivees"]:
         return

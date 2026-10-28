@@ -17,6 +17,7 @@ const etat = {
   jeton: null,
   pseudo: "",
   univers: [],
+  tailles: { tailles: [8], par_defaut: 8 },
   boucle: null,
   vue: null,      // la dernière vue reçue, pour redessiner sans attendre le serveur
   carte: null,    // le numéro du joueur dont la carte est ouverte
@@ -94,6 +95,7 @@ function appliquerLesCouleurs(couleurs) {
 async function demarrer() {
   try {
     etat.univers = await lire("/api/univers");
+    etat.tailles = await lire("/api/tailles");
   } catch (souci) {
     signaler(souci.message);
     return;
@@ -154,13 +156,32 @@ function ecranChoixDeLUnivers() {
   dessiner(`
     <h1>Trois villages</h1>
     <p class="sous-titre">Celui que tu choisis vaut pour tout le monde.</p>
+    ${choixDeLaTaille()}
     <ul class="choix">${choix}</ul>
   `);
 }
 
+// Le nombre de joueurs, parmi ceux que regles/roles.yaml sait composer.
+// Une seule taille possible : rien à choisir, rien d'affiché.
+function choixDeLaTaille() {
+  const { tailles, par_defaut } = etat.tailles;
+  if (tailles.length < 2) return "";
+  const options = tailles.map((taille) =>
+    `<option value="${taille}" ${taille === par_defaut ? "selected" : ""}>${taille} joueurs</option>`)
+    .join("");
+  return `<label for="taille">Combien de joueurs ?</label>
+    <select id="taille">${options}</select>`;
+}
+
+function tailleChoisie() {
+  const champ = document.getElementById("taille");
+  return champ ? Number(champ.value) : etat.tailles.par_defaut;
+}
+
 async function creerLaPartie(nom) {
   try {
-    memoriser(await poster("/api/parties", { pseudo: etat.pseudo, univers: nom }));
+    memoriser(await poster("/api/parties",
+      { pseudo: etat.pseudo, univers: nom, joueurs: tailleChoisie() }));
     lancerLaBoucle();
   } catch (souci) {
     signaler(souci.message);
@@ -263,11 +284,22 @@ function ecranSalleDAttente(vue) {
       ${vue.joueurs.map((joueur) => `<li>${joueurCliquable(joueur)}</li>`).join("")}
     </ul>
 
+    ${annonceDeLaComposition(vue)}
+
     ${vue.je_suis_le_createur ? `
       <button class="large" onclick="commencerLaPartie()" ${complet ? "" : "disabled"}>
         ${complet ? "Commencer la partie" : "On attend le village…"}
       </button>` : `<p class="patiente">La partie commencera bientôt.</p>`}
   `);
+}
+
+// Publique, et par camp : combien de menaces, combien du village — jamais
+// quels rôles, ni qui les porte.
+function annonceDeLaComposition(vue) {
+  if (!vue.composition || !vue.composition.length) return "";
+  return `<h2>La composition</h2>
+    <p class="composition">${vue.composition.map((ligne) =>
+      `<strong>${ligne.nombre}</strong> · ${echapper(ligne.camp)}`).join(" — ")}</p>`;
 }
 
 function copierLeLien() {
