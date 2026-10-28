@@ -128,3 +128,27 @@ button:disabled {
   color: var(--parchemin);
   background: var(--accent);
 }
+
+/* Un nom de joueur reste un nom : ni fond, ni bordure de bouton. */
+.joueur,
+.joueur:hover {
+  color: inherit;
+  background: transparent;
+  border-color: transparent;
+}
+
+.carte-joueur {
+  color: var(--encre);
+  background: var(--parchemin);
+  border-color: var(--accent);
+}
+
+.carte-role {
+  color: var(--accent);
+}
+
+.carte-etat,
+.carte-raison,
+.carte-role.inconnu {
+  color: var(--encre-pale);
+}

@@ -18,6 +18,8 @@ const etat = {
   pseudo: "",
   univers: [],
   boucle: null,
+  vue: null,      // la dernière vue reçue, pour redessiner sans attendre le serveur
+  carte: null,    // le numéro du joueur dont la carte est ouverte
 };
 
 /* ------------------------------------------------------------------ outils */
@@ -205,12 +207,16 @@ async function rafraichir() {
 }
 
 function afficher(vue) {
+  etat.vue = vue;
   appliquerLesCouleurs(vue.univers.couleurs);
-  if (vue.phase === "attente") return ecranSalleDAttente(vue);
-  if (vue.phase === "decouverte") return ecranDecouverteDuRole(vue);
-  if (vue.phase === "nuit") return ecranVillageQuiDort(vue);
-  if (vue.phase === "jour") return ecranVillageEveille(vue);
-  if (vue.phase === "fin") return ecranFinal(vue);
+  if (vue.phase === "attente") ecranSalleDAttente(vue);
+  else if (vue.phase === "decouverte") ecranDecouverteDuRole(vue);
+  else if (vue.phase === "nuit") ecranVillageQuiDort(vue);
+  else if (vue.phase === "jour") ecranVillageEveille(vue);
+  else if (vue.phase === "fin") ecranFinal(vue);
+  // Redessinée à chaque rafraîchissement : sinon elle se fermerait seule
+  // toutes les secondes et demie.
+  montrerLaCarte(vue);
 }
 
 async function agir(action, valeur) {
@@ -254,7 +260,7 @@ function ecranSalleDAttente(vue) {
 
     <h2>Le village (${vue.joueurs.length} sur ${vue.joueurs_attendus})</h2>
     <ul class="village">
-      ${vue.joueurs.map((joueur) => `<li>${echapper(joueur.pseudo)}</li>`).join("")}
+      ${vue.joueurs.map((joueur) => `<li>${joueurCliquable(joueur)}</li>`).join("")}
     </ul>
 
     ${vue.je_suis_le_createur ? `
@@ -301,6 +307,7 @@ function ecranVillageQuiDort(vue) {
     ${cibles.length ? `<ul class="choix">${boutonsDeCible(vue, cibles)}</ul>` : ""}
     ${vue.mon_choix ? `<p class="patiente">${texteEcrit(vue, "nuit_choix_fait")}</p>` : ""}
     ${choixDesAllies(vue)}
+    ${listeDuVillage(vue)}
     ${mesSecrets(vue)}
     ${minuterie(vue)}
   `);
@@ -334,7 +341,7 @@ function ecranVillageEveille(vue) {
     ${consigne(vue)}
     <h2>Le village</h2>
     <ul class="choix">${boutonsDeVote(vue)}</ul>
-    ${listeDesMorts(vue)}
+    ${listeDuVillage(vue)}
 
     ${vue.messages.length ? `<h2>Dire quelque chose</h2>
       <ul class="choix">${boutonsDeMessage(vue)}</ul>` : ""}
@@ -358,12 +365,14 @@ function boutonsDeVote(vue) {
     }).join("");
 }
 
-function listeDesMorts(vue) {
-  const morts = vue.joueurs.filter((joueur) => !joueur.vivant);
-  if (!morts.length) return "";
-  return `<ul class="village">${morts.map((joueur) => `
-    <li class="mort">${echapper(joueur.pseudo)}
-      <span class="role-revele">— ${echapper(joueur.role)}</span></li>`).join("")}</ul>`;
+// Tout le village, vivants et morts. Chaque nom ouvre la carte du joueur ;
+// les morts gardent leur rôle à côté, comme avant.
+function listeDuVillage(vue) {
+  return `<h2>Les joueurs</h2>
+    <ul class="village">${vue.joueurs.map((joueur) => `
+    <li class="${joueur.vivant ? "" : "mort"}">${joueurCliquable(joueur)}
+      ${joueur.vivant ? "" : `<span class="role-revele">— ${echapper(joueur.role)}</span>`}
+    </li>`).join("")}</ul>`;
 }
 
 function boutonsDeMessage(vue) {
@@ -386,8 +395,8 @@ function ecranFinal(vue) {
 
     <h2>Qui était qui</h2>
     <ul class="village">
-      ${vue.resultat.roles.map((ligne) => `<li>${echapper(ligne.pseudo)}
-        <span class="voix">${echapper(ligne.role)}</span></li>`).join("")}
+      ${vue.joueurs.map((joueur, rang) => `<li>${joueurCliquable(joueur)}
+        <span class="voix">${echapper(vue.resultat.roles[rang].role)}</span></li>`).join("")}
     </ul>
 
     <h2>Ce qui s'est passé</h2>
@@ -399,6 +408,74 @@ function ecranFinal(vue) {
 function rejouer() {
   sessionStorage.clear();
   window.location.href = "/";
+}
+
+/* ------------------------------------------------------ la carte d'un joueur
+
+   On clique sur un nom, sa carte s'ouvre. Elle n'affiche QUE ce que le
+   serveur a envoyé : le rôle d'un autre joueur n'arrive dans la vue que si
+   c'est moi, s'il est mort, si nous sommes de la même menace, ou si la
+   partie est finie (jeu/vues.py, _role_visible). Sinon la carte dit « rôle
+   inconnu » — et ce n'est pas l'écran qui le cache : le serveur n'a rien
+   envoyé. La raison affichée est déduite de la vue, rien d'autre. */
+
+function joueurCliquable(joueur) {
+  return `<button class="joueur" onclick="ouvrirLaCarte('${joueur.numero}')">${echapper(joueur.pseudo)}</button>`;
+}
+
+function ouvrirLaCarte(numero) {
+  etat.carte = numero;
+  if (etat.vue) afficher(etat.vue);
+}
+
+function fermerLaCarte() {
+  etat.carte = null;
+  if (etat.vue) afficher(etat.vue);
+}
+
+document.addEventListener("keydown", (evenement) => {
+  if (evenement.key === "Escape" && etat.carte) fermerLaCarte();
+});
+
+function ceQueDitLaCarte(vue, joueur) {
+  if (joueur.numero === vue.moi.numero) {
+    if (!vue.moi.role) {
+      return { connu: false, role: "rôle pas encore tiré",
+        raison: "C'est toi. Les rôles seront tirés au début de la partie." };
+    }
+    return { connu: true, role: vue.moi.role.nom, pouvoir: vue.moi.role.pouvoir,
+      raison: "C'est toi : le serveur t'envoie ton propre rôle." };
+  }
+  if (!joueur.role) {
+    return { connu: false, role: "rôle inconnu",
+      raison: vue.phase === "attente"
+        ? "Les rôles ne sont pas encore tirés."
+        : "Le serveur ne t'a pas envoyé son rôle : tant que ce joueur est en vie, il reste secret." };
+  }
+  if (!joueur.vivant) {
+    return { connu: true, role: joueur.role, raison: "Son rôle a été révélé à sa mort." };
+  }
+  if (vue.phase === "fin") {
+    return { connu: true, role: joueur.role, raison: "La partie est finie : tous les rôles sont révélés." };
+  }
+  return { connu: true, role: joueur.role,
+    raison: "Vous êtes du même camp, celui de la menace : vous vous connaissez." };
+}
+
+function montrerLaCarte(vue) {
+  if (!etat.carte) return;
+  const joueur = vue.joueurs.find((j) => j.numero === etat.carte);
+  if (!joueur) { etat.carte = null; return; }
+  const carte = ceQueDitLaCarte(vue, joueur);
+  document.getElementById("ecran").insertAdjacentHTML("beforeend", `
+    <div class="carte-joueur" role="dialog" aria-label="Carte de ${echapper(joueur.pseudo)}">
+      <p class="carte-pseudo">${echapper(joueur.pseudo)}</p>
+      <p class="carte-etat">${joueur.vivant ? "en vie" : "mort"}</p>
+      <p class="carte-role${carte.connu ? "" : " inconnu"}">${echapper(carte.role)}</p>
+      ${carte.pouvoir ? `<p class="carte-pouvoir">${echapper(carte.pouvoir)}</p>` : ""}
+      <p class="carte-raison">${echapper(carte.raison)}</p>
+      <button onclick="fermerLaCarte()">Fermer</button>
+    </div>`);
 }
 
 /* ------------------------------------------------------- morceaux communs */

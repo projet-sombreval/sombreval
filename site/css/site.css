@@ -194,6 +194,66 @@ button:disabled {
   font-size: 1.35rem;
 }
 
+/* --- la carte d'un joueur ---------------------------------------------
+   Un nom de joueur est un bouton : on clique, sa carte s'ouvre. Il garde
+   l'allure d'un nom (souligné en pointillé), pas celle d'un bouton d'action.
+   La carte se pose en bas de l'écran, par-dessus la page. */
+
+.joueur {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.carte-joueur {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  border: 2px solid;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.carte-pseudo {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.carte-etat {
+  margin: 0;
+  font-style: italic;
+}
+
+/* « rôle inconnu » se distingue sans la couleur : pas de gras, en italique. */
+.carte-role {
+  margin: 0.6rem 0 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.carte-role.inconnu {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.carte-pouvoir {
+  margin: 0.4rem 0 0;
+}
+
+.carte-raison {
+  margin: 0.8rem 0;
+  font-size: 0.95rem;
+}
+
 /* --- journal, discussion, secrets --------------------------------------- */
 
 .journal, .discussion {
