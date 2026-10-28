@@ -24,7 +24,7 @@ PHASES_RATTRAPEES_AU_MAXIMUM = 20
 
 
 def commencer_la_partie(partie, maintenant):
-    attendus = partie.configuration.parametres["nombre_de_joueurs"]
+    attendus = partie.nombre_de_joueurs
     if partie.phase != "attente":
         raise ErreurDeJeu("La partie a déjà commencé.")
     if len(partie.joueurs) != attendus:

@@ -32,7 +32,11 @@ def vue_pour(partie, observateur, maintenant):
         "numero_de_nuit": partie.numero_de_nuit,
         "journal": partie.journal,
         "mes_revelations": partie.revelations.get(observateur.numero, []),
-        "joueurs_attendus": partie.configuration.parametres["nombre_de_joueurs"],
+        "joueurs_attendus": partie.nombre_de_joueurs,
+        # Annoncée à tous, PAR CAMP : combien de menaces, combien du village.
+        # C'est ce qui donne son sens au vote — sans ce chiffre, on ne sait
+        # pas combien de traîtres chercher.
+        "composition": _composition(partie),
     }
 
     if partie.phase == "nuit":
@@ -59,6 +63,25 @@ def _univers(partie):
         # trous au lieu de les faire passer pour du texte écrit.
         "a_ecrire": partie.univers["a_ecrire"],
     }
+
+
+def _composition(partie):
+    """Combien de joueurs dans chaque camp, avec les noms de l'univers.
+
+    PAR CAMP, et pas rôle par rôle : annoncer « un Bailli, un Chevalier »
+    mettrait des noms de rôle dans la page de chacun, alors que tant que
+    personne n'est mort, seul le sien doit y figurer (décision n° 3, gardée
+    par test_le_nom_des_autres_roles_nest_meme_pas_dans_la_page). Le nombre
+    de menaces suffit à donner son sens au vote.
+    """
+    par_camp = {}
+    for nom, combien in partie.configuration.composition(partie.nombre_de_joueurs).items():
+        camp = partie.configuration.role(nom)["camp"]
+        par_camp[camp] = par_camp.get(camp, 0) + combien
+    return [
+        {"camp": partie.univers["camps"][camp]["nom"], "nombre": nombre}
+        for camp, nombre in par_camp.items()
+    ]
 
 
 def _moi(partie, observateur):

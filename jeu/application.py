@@ -49,11 +49,29 @@ class Application:
             )
         ]
 
-    def creer_une_partie(self, pseudo, nom_univers):
+    def tailles_proposees(self):
+        """Les nombres de joueurs possibles : ceux qu'on sait composer."""
+        return {
+            "tailles": sorted(self.configuration.compositions),
+            "par_defaut": self.configuration.parametres["nombre_de_joueurs"],
+        }
+
+    def creer_une_partie(self, pseudo, nom_univers, nombre_de_joueurs=None):
         univers = self.configuration.univers_choisi(nom_univers)
+        nombre = nombre_de_joueurs or self.configuration.parametres["nombre_de_joueurs"]
+        if nombre not in self.configuration.compositions:
+            tailles = ", ".join(str(t) for t in sorted(self.configuration.compositions))
+            raise ErreurDeJeu(
+                f"Le jeu ne sait pas composer une partie de {nombre} joueurs "
+                f"(possible : {tailles})."
+            )
+        # Refuse dès la création une taille dont un rôle n'est pas encore
+        # joué, plutôt qu'au moment de commencer, village déjà rempli.
+        self.configuration.composition(nombre)
         identifiant = secrets.token_urlsafe(6)
 
         partie = Partie(identifiant, univers, self.configuration, self.hasard)
+        partie.nombre_de_joueurs = nombre
         partie.derniere_arrivee = self.maintenant()
         joueur = ajouter_un_joueur(partie, pseudo)
         self.parties[identifiant] = partie

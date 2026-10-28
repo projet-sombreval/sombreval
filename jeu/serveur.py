@@ -60,6 +60,9 @@ application = Application()
 class Arrivee(BaseModel):
     pseudo: str
     univers: str = ""
+    # À la création seulement : la taille de la partie. Absente, celle de
+    # regles/partie.yaml.
+    joueurs: int | None = None
 
 
 class Demande(BaseModel):
@@ -85,7 +88,12 @@ def univers():
 
 @app.post("/api/parties")
 def creer_une_partie(arrivee: Arrivee):
-    return application.creer_une_partie(arrivee.pseudo, arrivee.univers)
+    return application.creer_une_partie(arrivee.pseudo, arrivee.univers, arrivee.joueurs)
+
+
+@app.get("/api/tailles")
+def tailles():
+    return application.tailles_proposees()
 
 
 @app.post("/api/parties/{identifiant}/joueurs")

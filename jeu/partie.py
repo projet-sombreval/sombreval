@@ -39,6 +39,10 @@ class Partie:
         self.configuration = configuration
         self.hasard = hasard or random.Random()
 
+        # Le nombre de joueurs de CETTE partie, choisi à sa création parmi les
+        # tailles de regles/roles.yaml. Par défaut, celui de regles/partie.yaml.
+        self.nombre_de_joueurs = configuration.parametres["nombre_de_joueurs"]
+
         self.joueurs = []
         self.createur = None
         self.phase = "attente"
@@ -128,7 +132,7 @@ def ajouter_un_joueur(partie, pseudo, automate=False):
         )
     if any(j.pseudo.lower() == pseudo.lower() for j in partie.joueurs):
         raise ErreurDeJeu("Ce pseudonyme est déjà pris dans cette partie.")
-    if len(partie.joueurs) >= partie.configuration.parametres["nombre_de_joueurs"]:
+    if len(partie.joueurs) >= partie.nombre_de_joueurs:
         raise ErreurDeJeu("La partie est complète.")
 
     joueur = Joueur(f"j{len(partie.joueurs) + 1}", pseudo, automate)
