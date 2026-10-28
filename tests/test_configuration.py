@@ -1,9 +1,12 @@
 """Les fichiers de regles/ sont lus, et ce qu'ils contiennent tient debout."""
 
+import shutil
 import unittest
 
 from jeu.configuration import Configuration
 from jeu.erreurs import ErreurDeJeu
+from tests.fabrique import configuration_avec_un_monde_pas_encore_ecrit
+
 
 ROLES_ATTENDUS = {
     "menace", "espion", "traitre", "enqueteur", "temoin",
@@ -26,17 +29,22 @@ class TestConfiguration(unittest.TestCase):
                 self.assertIn("action", regle)
 
     def test_les_trois_univers_sont_lus(self):
-        self.assertEqual(
-            set(self.configuration.univers), {"sombreval", "salem", "serenissime"}
-        )
+        # Écrit pour l'élève : ce test tombe quand un fichier d'univers a gardé
+        # le « nom: » de celui dont il a été recopié.
+        if set(self.configuration.univers) != {"sombreval", "salem", "serenissime"}:
+            self.fail("Le jeu ne trouve pas ses trois mondes. Regarde la ligne « nom: » "
+                      "de chaque fichier de regles/univers/ : elle doit dire "
+                      "le nom du fichier (salem, serenissime ou sombreval).")
 
     def test_sombreval_nomme_les_dix_roles(self):
         univers = self.configuration.univers_choisi("sombreval")
         self.assertEqual(set(univers["roles"]), ROLES_ATTENDUS)
 
     def test_un_univers_pas_encore_ecrit_est_refuse(self):
+        dossier = configuration_avec_un_monde_pas_encore_ecrit()
+        self.addCleanup(shutil.rmtree, dossier)
         with self.assertRaises(ErreurDeJeu):
-            self.configuration.univers_choisi("salem")
+            Configuration(dossier).univers_choisi("brouillon")
 
     def test_la_composition_a_huit_fait_bien_huit_joueurs(self):
         composition = self.configuration.composition(8)
