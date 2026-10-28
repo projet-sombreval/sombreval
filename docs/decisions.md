@@ -36,6 +36,16 @@ ou un univers doit être une ligne de configuration, pas une modification du
 moteur. C'est aussi ce qui permet à un élève de contribuer sans savoir
 programmer.
 
+*Précisé le 29 octobre 2026.* La règle porte sur la **fiction du monde** —
+les noms, les textes et les couleurs d'un univers, ce qui fait qu'il est
+Salem plutôt que Sérénissime. Elle ne porte **pas** sur les libellés de
+l'interface, qui restent dans le code : « Le village », « Ce qui s'est
+passé », « Fermer », les phrases de la carte d'un joueur. Le critère tient
+en une question : **ce texte serait-il différent dans un autre monde ?** Si
+oui, il appartient au fichier de l'univers ; sinon, à l'écran. Faire remonter
+un libellé d'interface dans les trois fichiers d'univers n'y ajouterait que
+trois « à écrire » identiques, sans rien à inventer.
+
 **5. La nuit est un seul écran, identique pour tous.**
 Seul le texte de l'instruction change selon le rôle. Tout le monde joue en
 même temps : pas d'ordre de réveil, pas d'attente de son tour. Un jeu où
