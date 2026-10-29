@@ -7,7 +7,7 @@ L'ordre compte, et c'est la partie la plus délicate du jeu :
 3. on applique les éliminations — viser un joueur protégé échoue ;
 4. on calcule les révélations SUR L'ÉTAT FIGÉ à l'étape 1.
 
-Sans l'étape 4, le Bailli apprendrait la mort d'un joueur avant le reste du
+Sans l'étape 4, l'enquêteur apprendrait la mort d'un joueur avant le reste du
 village : il saurait au matin quelque chose que personne d'autre ne peut
 savoir.
 """
@@ -18,7 +18,7 @@ from jeu.pouvoirs import action_de, camp_apparent, peut_agir_cette_nuit
 def resoudre_la_nuit(partie):
     etat = _figer_letat(partie)
     # La liste de ceux qui agissent est arrêtée elle aussi avant les morts :
-    # un Bailli tué cette nuit apprend quand même ce qu'il est allé chercher.
+    # un enquêteur tué cette nuit apprend quand même ce qu'il est allé chercher.
     agissants = _ceux_qui_ont_agi(partie)
 
     proteges = _appliquer_les_protections(partie, agissants)

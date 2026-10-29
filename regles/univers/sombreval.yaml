@@ -90,7 +90,7 @@ roles:
       vote du jour.
     instruction_nuit: Tu dors, comme tout le village.
 
-  # Les cinq rôles ci-dessous ne sont pas encore joués (voir « implemente »
+  # Les rôles ci-dessous ne sont pas encore joués (voir « implemente »
   # dans regles/roles.yaml). Leurs noms sont là pour le jour où ils le
   # seront — à valider en séance.
   espion:

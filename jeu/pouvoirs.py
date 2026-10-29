@@ -1,7 +1,7 @@
 """Qui peut agir la nuit, et sur qui.
 
-Tout ce qui est ici se lit dans regles/roles.yaml. Le moteur ne sait pas ce
-qu'est un loup ou un bailli : il sait qu'un rôle a une action, un moment et
+Tout ce qui est ici se lit dans regles/roles.yaml. Le moteur ne connaît aucun
+nom de rôle : il sait qu'un rôle a une action, un moment et
 une liste de cibles permises.
 """
 
