@@ -8,6 +8,10 @@
 # le contrôle rougit tout de suite. C'est aussi le
 # compteur que la cheffe de projet lira chaque semaine.
 #
+# Où trouver les données : la liste des « à écrire » d'un
+# monde est Configuration().univers["salem"]["a_ecrire"]
+# (Configuration se trouve dans jeu.configuration).
+#
 # En attendant, le test ci-dessous passe et ne vérifie
 # rien : c'est ce qui garde la vérification verte. Tu
 # remplaces tout son contenu.
