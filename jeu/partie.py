@@ -87,7 +87,7 @@ class Partie:
         return [j for j in self.joueurs if self.camp_de(j) == camp]
 
     def nom_du_role(self, joueur):
-        """Le nom du rôle dans l'univers choisi : « le Bailli »."""
+        """Le nom du rôle dans l'univers choisi, tel que son fichier l'écrit."""
         return self.univers["roles"][joueur.role]["nom"]
 
     def texte(self, cle, **remplacements):

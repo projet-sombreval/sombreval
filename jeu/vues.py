@@ -68,7 +68,7 @@ def _univers(partie):
 def _composition(partie):
     """Combien de joueurs dans chaque camp, avec les noms de l'univers.
 
-    PAR CAMP, et pas rôle par rôle : annoncer « un Bailli, un Chevalier »
+    PAR CAMP, et pas rôle par rôle : annoncer « un enquêteur, un protecteur »
     mettrait des noms de rôle dans la page de chacun, alors que tant que
     personne n'est mort, seul le sien doit y figurer (décision n° 3, gardée
     par test_le_nom_des_autres_roles_nest_meme_pas_dans_la_page). Le nombre
