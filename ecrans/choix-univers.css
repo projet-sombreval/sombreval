@@ -1,7 +1,52 @@
-/* =====================================================
-   SOMBREVAL — TROIS PORTES GOTHIQUES
-   CSS COMPLET
-===================================================== */
+:root {
+  /* Texte */
+  --encre: #eadbd3;
+  --encre-douce: #b8a4a0;
+  --encre-loading: #e5c7bd;
+  --ecran-texte-blanc: #ffffff;
+
+  /* Fond de page */
+  --fond-1: #35171d;
+  --fond-2: #1c1016;
+  --fond-3: #09070a;
+  --fond-4: #030304;
+  --noir: #000000;
+  --ombre-bord: #000000a8;
+  --ombre-porte: #000000b0;
+  --ombre-porte-fort: #000000c0;
+
+  /* Rouge sang (Sombreval + loading + titre) */
+  --sang: #a82e3a;
+  --sang-vif: #d52d3c;
+  --sang-sombre: #9c1728;
+  --sang-titre: #9b3640;
+  --sang-titre-fond: #551923;
+  --sang-barre: #8c2834;
+  --sang-barre-fond: #382127;
+  --sang-ligne: #a83240;
+  --sang-lueur-1: #c52c3b78;
+  --sang-lueur-2: #791a2750;
+  --sang-phrase: #f0c2c0;
+
+  /* Blanc (Salem) */
+  --blanc-lueur-1: #ffffff8c;
+  --blanc-lueur-2: #dce9ff55;
+  --blanc-phrase: #edf1ff;
+  --blanc-halo: #dceaff;
+  --blanc-pur: #ffffff;
+
+  /* Or (Sérénissime) */
+  --or-lueur-1: #e9c36d78;
+  --or-lueur-2: #a16c3150;
+  --or-phrase: #f4dfb0;
+  --or-halo: #e7b858;
+  --or-halo-fond: #9d6b30;
+
+  /* Divers */
+  --bronze: #b58b70;
+  --titre-halo: #ffffff20;
+  --brume: #aaa2bd;
+}
 
 * {
   box-sizing: border-box;
@@ -16,10 +61,10 @@ body {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  color: #eadbd3;
+  color: var(--encre);
   font-family: Georgia, "Times New Roman", serif;
   background:
-    radial-gradient(ellipse at 50% 38%, #35171d 0%, #1c1016 38%, #09070a 78%, #030304 100%);
+    radial-gradient(ellipse at 50% 38%, var(--fond-1) 0%, var(--fond-2) 38%, var(--fond-3) 78%, var(--fond-4) 100%);
 }
 
 /* Ombres sur les bords */
@@ -29,7 +74,7 @@ body::before {
   inset: 0;
   z-index: 20;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 42%, #000000a8 100%);
+  background: radial-gradient(ellipse at center, transparent 42%, var(--ombre-bord) 100%);
 }
 
 .ecran {
@@ -50,10 +95,10 @@ body::before {
   top: 43%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #e5c7bd;
+  color: var(--encre-loading);
   font-size: 1rem;
   letter-spacing: 7px;
-  text-shadow: 0 0 15px #a82e3a, 0 0 40px #a82e3a;
+  text-shadow: 0 0 15px var(--sang), 0 0 40px var(--sang);
   pointer-events: none;
   animation: loadingTexte 3.5s ease forwards;
 }
@@ -67,8 +112,8 @@ body::before {
   width: min(280px, 60vw);
   height: 2px;
   transform: translateX(-50%);
-  background: #382127;
-  box-shadow: 0 0 15px #8c2834;
+  background: var(--sang-barre-fond);
+  box-shadow: 0 0 15px var(--sang-barre);
   pointer-events: none;
   animation: loadingBarre 3.5s ease forwards;
 }
@@ -96,8 +141,8 @@ body::before {
   font-weight: normal;
   font-size: clamp(2rem, 5.2vw, 5rem);
   letter-spacing: clamp(3px, .8vw, 9px);
-  color: #eadbd3;
-  text-shadow: 0 0 15px #ffffff20, 0 0 35px #9b3640, 0 0 70px #551923;
+  color: var(--encre);
+  text-shadow: 0 0 15px var(--titre-halo), 0 0 35px var(--sang-titre), 0 0 70px var(--sang-titre-fond);
   opacity: 0;
   animation:
     titreApparition 3s ease 3.5s forwards,
@@ -110,8 +155,8 @@ body::before {
   width: min(220px, 35vw);
   height: 1px;
   margin: 12px auto 0;
-  background: linear-gradient(90deg, transparent, #b58b70, transparent);
-  box-shadow: 0 0 12px #a83240;
+  background: linear-gradient(90deg, transparent, var(--bronze), transparent);
+  box-shadow: 0 0 12px var(--sang-ligne);
 }
 
 @keyframes titreApparition {
@@ -133,7 +178,7 @@ body::before {
   font-size: .95rem;
   font-style: italic;
   letter-spacing: 3px;
-  color: #b8a4a0;
+  color: var(--encre-douce);
   opacity: 0;
   animation: accrocheApparition 3s ease 4s forwards;
 }
@@ -186,7 +231,7 @@ body::before {
   height: 100%;
   object-fit: contain;
   object-position: center bottom;
-  filter: brightness(.86) contrast(1.08) drop-shadow(0 12px 22px #000000b0);
+  filter: brightness(.86) contrast(1.08) drop-shadow(0 12px 22px var(--ombre-porte));
   transition: filter .8s ease, transform 1s ease;
 }
 
@@ -207,17 +252,17 @@ body::before {
 }
 
 .monde-sombreval::before {
-  background: radial-gradient(ellipse at center, #c52c3b78, #791a2750 42%, transparent 78%);
+  background: radial-gradient(ellipse at center, var(--sang-lueur-1), var(--sang-lueur-2) 42%, transparent 78%);
   animation: lumiereRouge 4s ease 9s forwards;
 }
 
 .monde-salem::before {
-  background: radial-gradient(ellipse at center, #ffffff8c, #dce9ff55 42%, transparent 78%);
+  background: radial-gradient(ellipse at center, var(--blanc-lueur-1), var(--blanc-lueur-2) 42%, transparent 78%);
   animation: lumiereBlanche 4s ease 14s forwards;
 }
 
 .monde-serenissime::before {
-  background: radial-gradient(ellipse at center, #e9c36d78, #a16c3150 42%, transparent 78%);
+  background: radial-gradient(ellipse at center, var(--or-lueur-1), var(--or-lueur-2) 42%, transparent 78%);
   animation: lumiereDoree 4s ease 19s forwards;
 }
 
@@ -257,20 +302,20 @@ body::before {
 }
 
 .monde-sombreval .phrase {
-  color: #f0c2c0;
-  text-shadow: 0 0 15px #d52d3c, 0 0 40px #9c1728;
+  color: var(--sang-phrase);
+  text-shadow: 0 0 15px var(--sang-vif), 0 0 40px var(--sang-sombre);
   animation: phraseApparition 4s ease 9s forwards;
 }
 
 .monde-salem .phrase {
-  color: #edf1ff;
-  text-shadow: 0 0 15px #dceaff, 0 0 40px #ffffff;
+  color: var(--blanc-phrase);
+  text-shadow: 0 0 15px var(--blanc-halo), 0 0 40px var(--blanc-pur);
   animation: phraseApparition 4s ease 14s forwards;
 }
 
 .monde-serenissime .phrase {
-  color: #f4dfb0;
-  text-shadow: 0 0 15px #e7b858, 0 0 40px #9d6b30;
+  color: var(--or-phrase);
+  text-shadow: 0 0 15px var(--or-halo), 0 0 40px var(--or-halo-fond);
   animation: phraseApparition 4s ease 19s forwards;
 }
 
@@ -288,7 +333,7 @@ body::before {
 }
 
 .monde:hover img {
-  filter: brightness(1.08) contrast(1.1) drop-shadow(0 12px 28px #000000c0);
+  filter: brightness(1.08) contrast(1.1) drop-shadow(0 12px 28px var(--ombre-porte-fort));
   transform: scale(1.025);
 }
 
@@ -333,61 +378,62 @@ body::before {
     opacity: 1;
   }
 }
+
 /* =====================================
    IMMENSE BRUME EN ARRIÈRE-PLAN
 ===================================== */
 
 .ecran {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
 .brume-portes {
-    position: absolute;
-    z-index: -1;
+  position: absolute;
+  z-index: -1;
 
-    left: 50%;
-    bottom: -5vh;
+  left: 50%;
+  bottom: -5vh;
 
-    transform: translateX(-50%);
+  transform: translateX(-50%);
 
-    width: 190%;
-    max-width: none;
-    height: auto;
-    max-height: none;
+  width: 190%;
+  max-width: none;
+  height: auto;
+  max-height: none;
 
-    opacity: 0;
+  opacity: 0;
 
-    pointer-events: none;
+  pointer-events: none;
 
-    filter:
-        brightness(1.15)
-        drop-shadow(0 0 20px #aaa2bd);
+  filter:
+    brightness(1.15)
+    drop-shadow(0 0 20px var(--brume));
 
-    animation:
-        brumeApparition 4s ease 7s forwards,
-        brumeFlottement 14s ease-in-out 11s infinite;
+  animation:
+    brumeApparition 4s ease 7s forwards,
+    brumeFlottement 14s ease-in-out 11s infinite;
 }
 
 @keyframes brumeApparition {
-    from {
-        opacity: 0;
-        filter: blur(15px);
-    }
+  from {
+    opacity: 0;
+    filter: blur(15px);
+  }
 
-    to {
-        opacity: 0.85;
-        filter: blur(2px);
-    }
+  to {
+    opacity: 0.85;
+    filter: blur(2px);
+  }
 }
 
 @keyframes brumeFlottement {
-    0%, 100% {
-        transform: translate(-50%, 0);
-    }
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
 
-    50% {
-        transform: translate(-48%, 0);
-    }
+  50% {
+    transform: translate(-48%, 0);
+  }
 }
