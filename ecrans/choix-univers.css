@@ -1,33 +1,393 @@
-/* Gabarit — écran de choix de l'univers
-   Groupe B. Tu ne changes QUE ce fichier. */
+/* =====================================================
+   SOMBREVAL — TROIS PORTES GOTHIQUES
+   CSS COMPLET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: #eadbd3;
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(ellipse at 50% 38%, #35171d 0%, #1c1016 38%, #09070a 78%, #030304 100%);
+}
+
+/* Ombres sur les bords */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 42%, #000000a8 100%);
+}
 
 .ecran {
-  /* Les trois couleurs de l'écran commun.
-     Neutres : aucun monde n'est encore choisi. */
-  --fond:   #141b22;
-  --encre:  #e8e2d4;
-  --accent: #c9a227;
-
-  background: var(--fond);
-  color: var(--encre);
-  padding: 1.5rem;
+  position: relative;
+  min-height: 100vh;
+  padding: 22px clamp(4px, 1vw, 14px) 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
+/* LOADING */
+.ecran::before {
+  content: "L O A D I N G";
+  position: fixed;
+  z-index: 101;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #e5c7bd;
+  font-size: 1rem;
+  letter-spacing: 7px;
+  text-shadow: 0 0 15px #a82e3a, 0 0 40px #a82e3a;
+  pointer-events: none;
+  animation: loadingTexte 3.5s ease forwards;
+}
+
+.ecran::after {
+  content: "";
+  position: fixed;
+  z-index: 101;
+  top: 51%;
+  left: 50%;
+  width: min(280px, 60vw);
+  height: 2px;
+  transform: translateX(-50%);
+  background: #382127;
+  box-shadow: 0 0 15px #8c2834;
+  pointer-events: none;
+  animation: loadingBarre 3.5s ease forwards;
+}
+
+@keyframes loadingTexte {
+  0%, 10% { opacity: 0; filter: blur(10px); }
+  25%, 75% { opacity: 1; filter: blur(0); }
+  100% { opacity: 0; filter: blur(8px); visibility: hidden; }
+}
+
+@keyframes loadingBarre {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+  20% { opacity: 1; }
+  80% { clip-path: inset(0 0 0 0); opacity: 1; }
+  100% { opacity: 0; clip-path: inset(0 0 0 0); }
+}
+
+/* TITRE */
 .titre {
-  color: var(--accent);
+  position: relative;
+  z-index: 2;
   margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: clamp(2rem, 5.2vw, 5rem);
+  letter-spacing: clamp(3px, .8vw, 9px);
+  color: #eadbd3;
+  text-shadow: 0 0 15px #ffffff20, 0 0 35px #9b3640, 0 0 70px #551923;
+  opacity: 0;
+  animation:
+    titreApparition 3s ease 3.5s forwards,
+    titreFlottement 5s ease-in-out 6.5s infinite;
 }
 
+.titre::after {
+  content: "";
+  display: block;
+  width: min(220px, 35vw);
+  height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, #b58b70, transparent);
+  box-shadow: 0 0 12px #a83240;
+}
+
+@keyframes titreApparition {
+  from { opacity: 0; filter: blur(15px); transform: translateY(25px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+@keyframes titreFlottement {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+
+/* ACCROCHE */
+.accroche {
+  position: relative;
+  z-index: 2;
+  margin: 12px 0 18px;
+  text-align: center;
+  font-size: .95rem;
+  font-style: italic;
+  letter-spacing: 3px;
+  color: #b8a4a0;
+  opacity: 0;
+  animation: accrocheApparition 3s ease 4s forwards;
+}
+
+@keyframes accrocheApparition {
+  to { opacity: 1; }
+}
+
+/* TROIS PORTES */
 .mondes {
-  list-style: none;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  width: 100%;
+  max-width: 2200px;
+  gap: 0;
+  margin: 0 auto;
   padding: 0;
+  list-style: none;
 }
 
-/* ---- À TOI ----------------------------------
-   1. les trois mondes côte à côte (flex)
-   2. chaque monde : un cadre, de l'air dedans
-   3. l'année en petit, le résumé en gris clair
-   4. le bouton : fond d'accent, texte lisible
-   5. le focus : un contour visible au clavier
-   Aucune couleur en dur : var(--...) partout.
-   ------------------------------------------ */
+.monde {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  height: min(91vh, 1050px);
+  margin: 0 -28px;
+  padding: 0;
+  overflow: visible;
+  border: none !important;
+  outline: none !important;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none !important;
+  opacity: 0;
+  animation: porteApparition 2.5s ease 6s forwards;
+}
+
+.monde:nth-child(1) { z-index: 1; }
+.monde:nth-child(2) { z-index: 2; }
+.monde:nth-child(3) { z-index: 1; }
+
+.monde img {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: brightness(.86) contrast(1.08) drop-shadow(0 12px 22px #000000b0);
+  transition: filter .8s ease, transform 1s ease;
+}
+
+@keyframes porteApparition {
+  from { opacity: 0; transform: translateY(35px); filter: brightness(0); }
+  to { opacity: 1; transform: translateY(0); filter: brightness(1); }
+}
+
+/* LUEURS SUCCESSIVES */
+.monde::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 4% 8%;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.monde-sombreval::before {
+  background: radial-gradient(ellipse at center, #c52c3b78, #791a2750 42%, transparent 78%);
+  animation: lumiereRouge 4s ease 9s forwards;
+}
+
+.monde-salem::before {
+  background: radial-gradient(ellipse at center, #ffffff8c, #dce9ff55 42%, transparent 78%);
+  animation: lumiereBlanche 4s ease 14s forwards;
+}
+
+.monde-serenissime::before {
+  background: radial-gradient(ellipse at center, #e9c36d78, #a16c3150 42%, transparent 78%);
+  animation: lumiereDoree 4s ease 19s forwards;
+}
+
+@keyframes lumiereRouge {
+  0%, 100% { opacity: 0; }
+  20%, 70% { opacity: 1; }
+  45% { opacity: .65; }
+}
+
+@keyframes lumiereBlanche {
+  0%, 100% { opacity: 0; }
+  20%, 70% { opacity: 1; }
+  45% { opacity: .65; }
+}
+
+@keyframes lumiereDoree {
+  0%, 100% { opacity: 0; }
+  20%, 70% { opacity: 1; }
+  45% { opacity: .65; }
+}
+
+/* PHRASES SUR LES PORTES */
+.phrase {
+  position: absolute;
+  z-index: 3;
+  top: 43%;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: clamp(.85rem, 1.65vw, 1.55rem);
+  line-height: 1.5;
+  letter-spacing: clamp(1px, .25vw, 3px);
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.monde-sombreval .phrase {
+  color: #f0c2c0;
+  text-shadow: 0 0 15px #d52d3c, 0 0 40px #9c1728;
+  animation: phraseApparition 4s ease 9s forwards;
+}
+
+.monde-salem .phrase {
+  color: #edf1ff;
+  text-shadow: 0 0 15px #dceaff, 0 0 40px #ffffff;
+  animation: phraseApparition 4s ease 14s forwards;
+}
+
+.monde-serenissime .phrase {
+  color: #f4dfb0;
+  text-shadow: 0 0 15px #e7b858, 0 0 40px #9d6b30;
+  animation: phraseApparition 4s ease 19s forwards;
+}
+
+@keyframes phraseApparition {
+  0% { opacity: 0; filter: blur(15px); }
+  25%, 70% { opacity: 1; filter: blur(0); }
+  100% { opacity: 0; filter: blur(12px); }
+}
+
+/* SURVOL SANS CADRE */
+.monde:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.monde:hover img {
+  filter: brightness(1.08) contrast(1.1) drop-shadow(0 12px 28px #000000c0);
+  transform: scale(1.025);
+}
+
+/* TÉLÉPHONES */
+@media (max-width: 760px) {
+  .ecran {
+    padding: 24px 3vw;
+  }
+
+  .mondes {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .monde {
+    height: 72vh;
+    min-height: 420px;
+    margin: -22px 0;
+  }
+
+  .accroche {
+    margin-bottom: 18px;
+  }
+
+  .phrase {
+    font-size: 1.2rem;
+  }
+}
+
+/* ACCESSIBILITÉ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .titre,
+  .accroche,
+  .monde {
+    opacity: 1;
+  }
+}
+/* =====================================
+   IMMENSE BRUME EN ARRIÈRE-PLAN
+===================================== */
+
+.ecran {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.brume-portes {
+    position: absolute;
+    z-index: -1;
+
+    left: 50%;
+    bottom: -5vh;
+
+    transform: translateX(-50%);
+
+    width: 190%;
+    max-width: none;
+    height: auto;
+    max-height: none;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    filter:
+        brightness(1.15)
+        drop-shadow(0 0 20px #aaa2bd);
+
+    animation:
+        brumeApparition 4s ease 7s forwards,
+        brumeFlottement 14s ease-in-out 11s infinite;
+}
+
+@keyframes brumeApparition {
+    from {
+        opacity: 0;
+        filter: blur(15px);
+    }
+
+    to {
+        opacity: 0.85;
+        filter: blur(2px);
+    }
+}
+
+@keyframes brumeFlottement {
+    0%, 100% {
+        transform: translate(-50%, 0);
+    }
+
+    50% {
+        transform: translate(-48%, 0);
+    }
+}
