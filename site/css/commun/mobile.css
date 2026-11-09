@@ -1,28 +1,21 @@
-/* ── LE TÉLÉPHONE ───────────────────────────
-   Compare les deux écrans à la largeur
-   d'un téléphone.
-
-   Pas de couleur ici : ce fichier est
-   partagé avec le jeu, où chaque monde
-   a les siennes.
-
-   À TOI, dans cet ordre :
-     1. ce que tu as trouvé — une différence
-        entre les deux écrans, ou une absence
-        si aucun ne s'en occupe ;
-     2. le critère qui aurait évité ça ;
-     3. le geste qui permet de le contrôler
-        sur une seule page ;
-     4. le CSS qui l'applique.
-
-   Les trois premiers s'écrivent en dessous.
-   ──────────────────────────────────────── */
-
-/* 1 · ce que j'ai trouvé :
-   2 · le critère         :
-   3 · on contrôle en     :
-*/
+/* Version téléphone */
 
 @media (max-width: 480px) {
-  /* 4 · À TOI */
+  .entree {
+    max-width: 100%;
+  }
+
+  h1 {
+    letter-spacing: 3px;
+  }
+body {
+   width: 100%
+   margin: 0;
+   padding: 10px ;
 }
+img { 
+   max-width: 100%;
+   flex-direction: column;
+}
+
+   
