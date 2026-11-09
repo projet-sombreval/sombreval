@@ -18,6 +18,25 @@
    3 · on contrôle en     :
 */
 
+
+/*      -----MON CODE------   */
+
+
 .ecran {
-  /* 4 · À TOI */
+  --fond-1: #35171d;
+  --fond-2: #1c1016;
+  --encre: #eadbd3;
+  --encre-douce: #b8a4a0;
+  --accent: #a82e3a;
 }
+
+.ecran button {
+  background: var(--fond-1);
+  color: var(--encre);
+}
+
+.ecran button:hover {
+  background: var(--accent);
+  color: var(--encre);
+}
+
