@@ -18,6 +18,74 @@
    3 · on contrôle en     :
 */
 
-.ecran {
-  /* 4 · À TOI */
+:root {
+  /* Texte */
+  --encre: #eadbd3;
+  --encre-douce: #b8a4a0;
+  --encre-loading: #e5c7bd;
+  --ecran-texte-blanc: #ffffff;
+
+  /* Fond de page */
+  --fond-1: #35171d;
+  --fond-2: #1c1016;
+  --fond-3: #09070a;
+  --fond-4: #030304;
+  --noir: #000000;
+  --ombre-bord: #000000a8;
+  --ombre-porte: #000000b0;
+  --ombre-porte-fort: #000000c0;
+
+  /* Rouge sang (Sombreval + loading + titre) */
+  --sang: #a82e3a;
+  --sang-vif: #d52d3c;
+  --sang-sombre: #9c1728;
+  --sang-titre: #9b3640;
+  --sang-titre-fond: #551923;
+  --sang-barre: #8c2834;
+  --sang-barre-fond: #382127;
+  --sang-ligne: #a83240;
+  --sang-lueur-1: #c52c3b78;
+  --sang-lueur-2: #791a2750;
+  --sang-phrase: #f0c2c0;
+
+  /* Blanc (Salem) */
+  --blanc-lueur-1: #ffffff8c;
+  --blanc-lueur-2: #dce9ff55;
+  --blanc-phrase: #edf1ff;
+  --blanc-halo: #dceaff;
+  --blanc-pur: #ffffff;
+
+  /* Or (Sérénissime) */
+  --or-lueur-1: #e9c36d78;
+  --or-lueur-2: #a16c3150;
+  --or-phrase: #f4dfb0;
+  --or-halo: #e7b858;
+  --or-halo-fond: #9d6b30;
+
+  /* Divers */
+  --bronze: #b58b70;
+  --titre-halo: #ffffff20;
+  --brume: #aaa2bd;
 }
+
+/*      -----MON CODE------   */
+
+
+.ecran {
+  --fond-1: #35171d;
+  --fond-2: #1c1016;
+  --encre: #eadbd3;
+  --encre-douce: #b8a4a0;
+  --accent: #a82e3a;
+}
+
+.ecran button {
+  background: var(--fond-1);
+  color: var(--encre);
+}
+
+.ecran button:hover {
+  background: var(--accent);
+  color: var(--encre);
+}
+
