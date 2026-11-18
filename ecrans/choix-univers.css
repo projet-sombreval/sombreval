@@ -1,52 +1,14 @@
-:root {
-  /* Texte */
-  --encre: #eadbd3;
-  --encre-douce: #b8a4a0;
-  --encre-loading: #e5c7bd;
-  --ecran-texte-blanc: #ffffff;
+/* ── L'ÉCRAN DU CHOIX DES MONDES ────────────
+   Trois portes, une mise en scène.
 
-  /* Fond de page */
-  --fond-1: #35171d;
-  --fond-2: #1c1016;
-  --fond-3: #09070a;
-  --fond-4: #030304;
-  --noir: #000000;
-  --ombre-bord: #000000a8;
-  --ombre-porte: #000000b0;
-  --ombre-porte-fort: #000000c0;
-
-  /* Rouge sang (Sombreval + loading + titre) */
-  --sang: #a82e3a;
-  --sang-vif: #d52d3c;
-  --sang-sombre: #9c1728;
-  --sang-titre: #9b3640;
-  --sang-titre-fond: #551923;
-  --sang-barre: #8c2834;
-  --sang-barre-fond: #382127;
-  --sang-ligne: #a83240;
-  --sang-lueur-1: #c52c3b78;
-  --sang-lueur-2: #791a2750;
-  --sang-phrase: #f0c2c0;
-
-  /* Blanc (Salem) */
-  --blanc-lueur-1: #ffffff8c;
-  --blanc-lueur-2: #dce9ff55;
-  --blanc-phrase: #edf1ff;
-  --blanc-halo: #dceaff;
-  --blanc-pur: #ffffff;
-
-  /* Or (Sérénissime) */
-  --or-lueur-1: #e9c36d78;
-  --or-lueur-2: #a16c3150;
-  --or-phrase: #f4dfb0;
-  --or-halo: #e7b858;
-  --or-halo-fond: #9d6b30;
-
-  /* Divers */
-  --bronze: #b58b70;
-  --titre-halo: #ffffff20;
-  --brume: #aaa2bd;
-}
+   ⚠️ La palette N'EST PLUS ici : elle vivait
+   en double, à l'identique, dans ce fichier ET
+   dans couleurs.css. Deux copies de quarante
+   variables qui dérivent au premier changement
+   — c'est exactement ce que le critère n° 1
+   interdit. Elle est dans couleurs.css, chargé
+   juste avant celui-ci.
+   ──────────────────────────────────────── */
 
 * {
   box-sizing: border-box;
@@ -60,9 +22,7 @@ body {
 
 body {
   min-height: 100vh;
-  overflow-x: hidden;
   color: var(--encre);
-  font-family: Georgia, "Times New Roman", serif;
   background:
     radial-gradient(ellipse at 50% 38%, var(--fond-1) 0%, var(--fond-2) 38%, var(--fond-3) 78%, var(--fond-4) 100%);
 }
@@ -79,8 +39,11 @@ body::before {
 
 .ecran {
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
   min-height: 100vh;
-  padding: 22px clamp(4px, 1vw, 14px) 12px;
+  /* Échelle imposée, critère n° 3 : 4 · 8 · 16 · 24 · 32. */
+  padding: 24px 16px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -319,10 +282,14 @@ body::before {
   animation: phraseApparition 4s ease 19s forwards;
 }
 
+/* ⚠️ L'animation finissait à « opacity: 0 » : le nom de chaque monde
+   apparaissait, puis DISPARAISSAIT pour de bon. Au bout d'une vingtaine de
+   secondes, l'écran montrait trois portes sans un mot — sur un écran dont
+   tout le propos est de choisir entre trois mondes nommés. Elle se termine
+   maintenant visible. */
 @keyframes phraseApparition {
   0% { opacity: 0; filter: blur(15px); }
-  25%, 70% { opacity: 1; filter: blur(0); }
-  100% { opacity: 0; filter: blur(12px); }
+  100% { opacity: 1; filter: blur(0); }
 }
 
 /* SURVOL SANS CADRE */
@@ -383,11 +350,10 @@ body::before {
    IMMENSE BRUME EN ARRIÈRE-PLAN
 ===================================== */
 
-.ecran {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
+/* ⚠️ « .ecran » était déclaré DEUX fois, ici et plus haut. Les deux copies
+   se complétaient par chance ; au premier désaccord, c'est l'ordre du
+   fichier qui aurait tranché, pas une intention. Tout est remonté dans la
+   première déclaration. */
 
 .brume-portes {
   position: absolute;
@@ -436,4 +402,36 @@ body::before {
   50% {
     transform: translate(-48%, 0);
   }
+}
+
+/* =====================================
+   LES BOUTONS « ENTRER », SUR LA PORTE
+===================================== */
+
+/* ⚠️ Ils n'avaient AUCUNE règle, ni ici ni ailleurs : le dessin de bouton
+   écrit en séance vivait dans une classe « .enter-btn » que le HTML
+   n'emploie pas. Les trois « Entrer » étaient donc des boutons de
+   navigateur, posés dans le flux SOUS une image de 91vh — donc hors de
+   l'écran, et rognés par « overflow: hidden ». D'où, sans doute, le fichier
+   « choix-univers-AVEC-BOUTONS.html » : la question était la bonne.
+
+   Le modèle de bouton reste celui de site/css/commun/boutons.css — un seul,
+   partout (critère n° 4). Ici on ne fait que le POSER sur la porte. */
+
+.monde button {
+  position: absolute;
+  z-index: 4;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Le survol d'un bouton éclaire sa porte, comme le survol de la porte. */
+.monde button:hover {
+  transform: translateX(-50%) scale(1.04);
+}
+
+.monde:has(button:hover) img,
+.monde:has(button:focus-visible) img {
+  filter: brightness(1.08) contrast(1.1) drop-shadow(0 12px 28px var(--ombre-porte-fort));
 }

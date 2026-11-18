@@ -1,135 +1,127 @@
+/* ── LA TYPOGRAPHIE ─────────────────────────
+   Les polices, les tailles, les graisses.
+
+   ⚠️ AUCUNE COULEUR EN DUR ICI. Ce fichier est
+   partagé avec le jeu, et le jeu est chargé
+   APRÈS couleurs.css : une couleur écrite ici
+   écrase celle du monde choisi. Les sept noms
+   (--fond, --parchemin, --encre, --encre-pale,
+   --accent, --accent-clair, --bordure) sont
+   remplis par le serveur, monde par monde.
+
+   ⚠️ ET AUCUNE ANIMATION. Une animation n'est
+   pas de la typographie, et celle qui était
+   ici écrasait celle de choix-univers.css —
+   sans son délai, donc l'entrée en scène des
+   portes partait avant l'heure.
+   ──────────────────────────────────────── */
+
+/* 1 · ce que j'ai trouvé : la connexion écrivait en Georgia,
+                            le choix des mondes aussi, mais
+                            ni les tailles ni les graisses ne
+                            se répondaient d'un écran à l'autre.
+   2 · le critère         : n° 2 — une seule police, et trois
+                            tailles de texte au maximum.
+   3 · on contrôle en     : comptant les polices et les tailles
+                            déclarées dans les deux fichiers.
+*/
+
+body {
+  color: var(--encre);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Les TROIS tailles, et pas une de plus (critère n° 2) :
+   le titre, le texte, le petit texte. */
+
 .titre {
-opacity: 0;
-animation:
-titreApparition 3s ease forwards,
-titreFlottement 5s ease-in-out 3s infinite;
+  color: var(--encre);
+  font-size: clamp(2rem, 5.2vw, 5rem);
+  font-weight: normal;
+  letter-spacing: clamp(3px, .8vw, 9px);
+  text-transform: uppercase;
+  /* La lueur suit l'accent du monde au lieu d'un rouge figé. */
+  text-shadow:
+    0 0 15px color-mix(in srgb, var(--parchemin) 12%, transparent),
+    0 0 35px color-mix(in srgb, var(--accent) 70%, transparent),
+    0 0 70px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 .titre::after {
-content: "";
-display: block;
-width: min(220px, 35vw);
-height: 1px;
-margin: 12px auto 0;
-background: linear-gradient(90deg, transparent, #b58b70, transparent);
-box-shadow: 0 0 12px #a83240;
+  content: "";
+  display: block;
+  width: min(220px, 35vw);
+  height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent-clair), transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
 }
-
-@keyframes titreApparition {
-from {
-opacity: 0;
-filter: blur(15px);
-transform: translateY(25px);
-}
-to {
-opacity: 1;
-filter: blur(0);
-transform: translateY(0);
-}
-}
-
-@keyframes titreFlottement {
-0%, 100% {
-translate: 0 0;
-}
-50% {
-translate: 0 -6px;
-}
-}
-/* TEXTES — IDENTITÉ SOMBREVAL */
-
-body {
-color: #eadbd3;
-font-family: Georgia, "Times New Roman", serif;
-}
-
-
-
-.titre {
-color: #eadbd3;
-font-family: Georgia, "Times New Roman", serif;
-font-size: clamp(2rem, 5.2vw, 5rem);
-font-weight: normal;
-letter-spacing: clamp(3px, .8vw, 9px);
-text-transform: uppercase;
-
-text-shadow:
-0 0 15px #ffffff20,
-0 0 35px #9b3640,
-0 0 70px #551923;
-}
-
-
 
 .accroche {
-color: #b8a4a0;
-font-family: Georgia, "Times New Roman", serif;
-font-size: .95rem;
-font-style: italic;
-letter-spacing: 3px;
+  color: var(--encre-pale);
+  font-size: .95rem;
+  font-style: italic;
+  letter-spacing: 3px;
 }
 
-/* LABEL DU PSEUDO */
+/* Le champ et son étiquette (critère n° 5 : une étiquette VISIBLE,
+   pas seulement un texte d'exemple qui disparaît à la frappe). */
 
 .entree label {
-color: #eadbd3;
-font-family: Georgia, "Times New Roman", serif;
-font-size: .95rem;
-letter-spacing: 2px;
+  color: var(--encre);
+  font-size: .95rem;
+  letter-spacing: 2px;
 }
 
-/* CHAMP PSEUDO */
-
 .entree input {
-color: #eadbd3;
-font-family: Georgia, "Times New Roman", serif;
-font-size: 1rem;
-letter-spacing: 1px;
+  color: var(--encre);
+  font-family: inherit;
+  font-size: 1rem;
+  letter-spacing: 1px;
 }
 
 .entree input::placeholder {
-color: #b8a4a0;
-font-family: Georgia, "Times New Roman", serif;
-font-style: italic;
+  color: var(--encre-pale);
+  font-style: italic;
 }
-
-/* TEXTE D'AIDE */
 
 .aide {
-color: #b8a4a0;
-font-family: Georgia, "Times New Roman", serif;
-font-size: .85rem;
-font-style: italic;
-letter-spacing: 1px;
+  color: var(--encre-pale);
+  font-size: .85rem;
+  font-style: italic;
+  letter-spacing: 1px;
 }
 
-/* MESSAGE D'ERREUR */
-
+/* ⚠️ L'erreur ne prend PAS « --accent » en texte, et c'est mesuré : cette
+   couleur est un FOND dans les sept noms (le jeu l'emploie sous du texte
+   clair). Aucune valeur ne peut être à la fois lisible en texte sur un fond
+   sombre ET servir de fond sous un texte clair — les deux contraintes tirent
+   en sens opposés (sur la palette de ces écrans : 2,75:1 d'un côté ou 2,98:1
+   de l'autre, jamais 4,5 des deux). L'erreur se reconnaît donc à « ⚠ » et à
+   l'italique, ce que le critère n° 8 demande de toute façon : un état ne se
+   lit jamais à la seule couleur. */
 .erreur {
-color: #d52d3c;
-font-family: Georgia, "Times New Roman", serif;
-font-size: .9rem;
-font-style: italic;
-text-shadow: 0 0 12px #a82e3a78;
+  color: var(--encre);
+  font-size: .9rem;
+  font-style: italic;
+  font-weight: bold;
 }
 
-/* BOUTON */
+.erreur::before {
+  content: "⚠ ";
+}
 
 .entree button {
-color: #eadbd3;
-font-family: Georgia, "Times New Roman", serif;
-font-size: .95rem;
-font-weight: normal;
-letter-spacing: 3px;
-text-transform: uppercase;
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: normal;
+  letter-spacing: 3px;
+  text-transform: uppercase;
 }
 
-/* PIED DE PAGE */
-
 .pied {
-color: #b8a4a0;
-font-family: Georgia, "Times New Roman", serif;
-font-size: .85rem;
-font-style: italic;
-letter-spacing: 2px;
+  color: var(--encre-pale);
+  font-size: .85rem;
+  font-style: italic;
+  letter-spacing: 2px;
 }

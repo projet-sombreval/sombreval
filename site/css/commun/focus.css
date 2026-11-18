@@ -1,28 +1,35 @@
 /* ── LE FOCUS ───────────────────────────────
-   Compare les deux écrans à la touche Tab,
-   sans souris.
+   On doit voir où on est quand on navigue à la
+   touche Tab. Partout, et de la même façon
+   (critère n° 6).
 
-   Pas de couleur ici : ce fichier est
-   partagé avec le jeu, où chaque monde
-   a les siennes.
-
-   À TOI, dans cet ordre :
-     1. ce que tu as trouvé — une différence
-        entre les deux écrans, ou une absence
-        si aucun ne s'en occupe ;
-     2. le critère qui aurait évité ça ;
-     3. le geste qui permet de le contrôler
-        sur une seule page ;
-     4. le CSS qui l'applique.
-
-   Les trois premiers s'écrivent en dessous.
+   Pas de couleur en dur : ce fichier est
+   partagé avec le jeu, où chaque monde a les
+   siennes.
    ──────────────────────────────────────── */
 
-/* 1 · ce que j'ai trouvé :
-   2 · le critère         :
-   3 · on contrôle en     :
+/* 1 · ce que j'ai trouvé : rien, dans aucun des deux écrans.
+                            À la touche Tab on perdait le fil
+                            dès le premier bouton — et sur le
+                            choix des mondes, qui n'a que des
+                            boutons, on ne voyait jamais où on
+                            était.
+   2 · le critère         : n° 6 — on voit où on est quand on
+                            navigue à la touche Tab.
+   3 · on contrôle en     : appuyant plusieurs fois sur Tab sans
+                            toucher la souris.
 */
 
+/* ⚠️ Un contour, pas un changement de couleur : quelqu'un qui ne
+   distingue pas les couleurs doit le voir aussi (critère n° 8).
+   Et « outline-offset », sinon le contour se confond avec la
+   bordure du bouton. */
 :focus-visible {
-  /* 4 · À TOI */
+  outline: 3px solid var(--accent-clair);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
+
+/* ⚠️ On ne retire JAMAIS le contour par défaut sans en remettre un :
+   c'est la faute la plus fréquente du web, et elle rend un écran
+   injouable au clavier. */

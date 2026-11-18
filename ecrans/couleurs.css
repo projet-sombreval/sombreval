@@ -1,41 +1,78 @@
 /* ── LES COULEURS ───────────────────────────
-   Compare les couleurs des deux écrans.
+   La palette des deux écrans, sous LES SEPT
+   NOMS IMPOSÉS — ceux que le serveur remplit,
+   monde par monde, dans le jeu.
 
-   À TOI, dans cet ordre :
-     1. ce que tu as trouvé — une différence
-        entre les deux écrans, ou une absence
-        si aucun ne s'en occupe ;
-     2. le critère qui aurait évité ça ;
-     3. le geste qui permet de le contrôler
-        sur une seule page ;
-     4. le CSS qui l'applique.
+   ⚠️ C'est le point qui manquait : la palette
+   ne portait que des noms à elle (--sang,
+   --fond-1, --or-halo…). Jolis, mais le jeu
+   ne sait pas les remplir : il pose --fond,
+   --parchemin, --encre, --encre-pale,
+   --accent, --accent-clair et --bordure. Une
+   maquette bâtie sur d'autres noms ne peut pas
+   recevoir les couleurs d'un monde.
 
-   Les trois premiers s'écrivent en dessous.
+   Les sept d'abord, donc. Les couleurs de
+   décor des trois portes viennent ensuite :
+   elles sont propres à CETTE maquette, et
+   elles le disent.
    ──────────────────────────────────────── */
 
-/* 1 · ce que j'ai trouvé :
-   2 · le critère         :
-   3 · on contrôle en     :
+/* 1 · ce que j'ai trouvé : la connexion déclarait --fond, --encre et
+                            --accent dans son .ecran ; le choix des
+                            mondes déclarait quarante variables à lui,
+                            dont aucune du même nom. Les deux écrans
+                            n'avaient donc PAS une couleur en commun.
+   2 · le critère         : n° 1 — les couleurs portent les mêmes noms
+                            de variables et les mêmes valeurs partout.
+   3 · on contrôle en     : cherchant, dans les deux fichiers de style,
+                            les lignes qui commencent par deux tirets,
+                            et en vérifiant qu'on y lit les sept mêmes
+                            noms.
 */
 
 :root {
-  /* Texte */
-  --encre: #eadbd3;
-  --encre-douce: #b8a4a0;
-  --encre-loading: #e5c7bd;
-  --ecran-texte-blanc: #ffffff;
+  /* ── LES SEPT ─────────────────────────────────────────────────────
+     Ces écrans sont une instance SOMBRE des sept noms ; le jeu en a
+     une claire (site/css/couleurs.css). C'est exactement à ça que
+     servent des noms : la même structure, deux habillages.
 
-  /* Fond de page */
+     Contrastes mesurés, critère n° 2 — aucune des sept illisible sur
+     les autres :
+       --encre      sur --fond    13,72:1
+       --encre-pale sur --fond     7,80:1
+       --bordure    sur --fond     6,07:1
+       --parchemin  sur --accent   5,00:1   (texte des boutons)
+       --accent-clair sur --fond   3,76:1   (contour de focus : un
+                                             élément non textuel,
+                                             pour lequel 3:1 suffit)
+     ⚠️ --accent n'est PAS lisible en texte sur --fond (2,75:1), et
+     aucune valeur ne pourrait l'être tout en servant de fond sous du
+     texte clair. C'est une couleur de FOND : rien ne doit l'employer
+     en texte. */
+  --fond: #1c1016;
+  --parchemin: #eadbd3;
+  --encre: #eadbd3;
+  --encre-pale: #b8a4a0;
+  --accent: #a82e3a;
+  --accent-clair: #d52d3c;
+  --bordure: #b58b70;
+
+  /* ── LE DÉCOR DES TROIS PORTES ────────────────────────────────────
+     Propre à cette maquette : des lueurs, des ombres et des halos que
+     le jeu n'a pas. Un monde ne les remplit pas — ce ne sont pas des
+     couleurs d'univers, ce sont celles d'une mise en scène. */
+
+  /* Dégradé de fond */
   --fond-1: #35171d;
   --fond-2: #1c1016;
   --fond-3: #09070a;
   --fond-4: #030304;
-  --noir: #000000;
   --ombre-bord: #000000a8;
   --ombre-porte: #000000b0;
   --ombre-porte-fort: #000000c0;
 
-  /* Rouge sang (Sombreval + loading + titre) */
+  /* Rouge sang — Sombreval */
   --sang: #a82e3a;
   --sang-vif: #d52d3c;
   --sang-sombre: #9c1728;
@@ -48,14 +85,14 @@
   --sang-lueur-2: #791a2750;
   --sang-phrase: #f0c2c0;
 
-  /* Blanc (Salem) */
+  /* Blanc — Salem */
   --blanc-lueur-1: #ffffff8c;
   --blanc-lueur-2: #dce9ff55;
   --blanc-phrase: #edf1ff;
   --blanc-halo: #dceaff;
   --blanc-pur: #ffffff;
 
-  /* Or (Sérénissime) */
+  /* Or — Sérénissime */
   --or-lueur-1: #e9c36d78;
   --or-lueur-2: #a16c3150;
   --or-phrase: #f4dfb0;
@@ -66,33 +103,10 @@
   --bronze: #b58b70;
   --titre-halo: #ffffff20;
   --brume: #aaa2bd;
+  --encre-loading: #e5c7bd;
 }
 
-/*      -----MON CODE------   */
-
-
-.ecran {
-  --fond-1: #35171d;
-  --fond-2: #1c1016;
-  --encre: #eadbd3;
-  --encre-douce: #b8a4a0;
-  --accent: #a82e3a;
-}
-
-.ecran button {
-  background: var(--fond-1);
-  color: var(--encre);
-}
-
-.ecran button:hover {
-  background: var(--accent);
-  color: var(--encre);
-}
-
-}
-
-.ecran button:hover {
-  background: var(--accent);
-  color: var(--encre);
-}
-
+/* ⚠️ Plus aucune règle de bouton ici : elles vivaient en double, dont une
+   derrière une accolade fermante orpheline qui cassait le fichier. Le
+   modèle de bouton est dans site/css/commun/boutons.css — un seul, partout,
+   c'est le critère n° 4. */

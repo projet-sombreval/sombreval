@@ -1,21 +1,47 @@
-/* Version téléphone */
+/* ── LE TÉLÉPHONE ───────────────────────────
+   Rien ne doit déborder sur un écran large de
+   360 pixels, et il n'y a qu'UN seul point de
+   rupture pour les deux écrans (critère n° 7).
+
+   ⚠️ Le bloc « @media » n'était pas fermé : il
+   manquait deux accolades, et « width: 100% »
+   n'avait pas de point-virgule. Tout ce qui
+   suivait était donc avalé par le navigateur —
+   la règle sur les images n'a jamais rien fait.
+
+   Pas de couleur ici : ce fichier est partagé
+   avec le jeu, où chaque monde a les siennes.
+   ──────────────────────────────────────── */
+
+/* 1 · ce que j'ai trouvé : à 360 px, les trois portes restaient
+                            sur trois colonnes et débordaient.
+   2 · le critère         : n° 7 — rien ne déborde sur un écran
+                            large de 360 pixels.
+   3 · on contrôle en     : réduisant la fenêtre à 360 px dans
+                            les outils du navigateur.
+*/
 
 @media (max-width: 480px) {
+  body {
+    margin: 0;
+    padding: 8px;
+  }
+
+  .ecran {
+    padding: 24px 16px;
+  }
+
   .entree {
     max-width: 100%;
   }
 
-  h1 {
+  .titre {
     letter-spacing: 3px;
   }
-body {
-   width: 100%
-   margin: 0;
-   padding: 10px ;
-}
-img { 
-   max-width: 100%;
-   flex-direction: column;
-}
 
-   
+  /* Une image ne dépasse jamais sa colonne. */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}

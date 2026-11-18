@@ -1,28 +1,35 @@
-/* Gabarit — écran de connexion
-   Groupe A. Tu ne changes QUE ce fichier. */
+/* ── L'ÉCRAN DE CONNEXION ───────────────────
+   Le premier écran : un pseudonyme, et on entre.
+
+   ⚠️ Les trois couleurs étaient écrites en dur
+   dans « .ecran » (#141b22, #e8e2d4, #c9a227),
+   donc sous des noms que personne d'autre
+   n'emploie — et sur un écran qui n'avait PAS
+   une couleur en commun avec celui des mondes.
+   Les sept noms imposés vivent dans
+   couleurs.css ; cet écran n'en redéclare
+   aucune.
+
+   Le reste — typographie, espacements, bouton,
+   champ, focus, téléphone — vient des six
+   fragments partagés. Il n'y a donc presque
+   rien à écrire ici, et c'est le but.
+   ──────────────────────────────────────── */
 
 .ecran {
-  /* Les trois couleurs de l'écran commun.
-     Neutres : aucun monde n'est encore choisi. */
-  --fond:   #141b22;
-  --encre:  #e8e2d4;
-  --accent: #c9a227;
-
   background: var(--fond);
   color: var(--encre);
-  padding: 1.5rem;
 }
 
 .titre {
-  color: var(--accent);
-  margin: 0;
+  /* Le titre est plus petit qu'au choix des mondes : c'est un écran de
+     saisie, pas une entrée en scène. Deuxième des trois tailles. */
+  font-size: clamp(1.75rem, 4vw, 3rem);
 }
 
-/* ---- À TOI ----------------------------------
-   1. l'accroche et le pied, en texte discret
-   2. le champ : hauteur confortable, bordure
-   3. le bouton : fond d'accent, texte lisible
-   4. l'aide en petit, l'erreur en rouge
-   5. le focus : un contour visible au clavier
-   Aucune couleur en dur : var(--...) partout.
-   ------------------------------------------ */
+.entree {
+  /* Le formulaire ne s'étire pas sur toute la largeur d'un écran large :
+     un champ de pseudonyme de 1200 px ne se lit pas. */
+  width: 100%;
+  max-width: 360px;
+}

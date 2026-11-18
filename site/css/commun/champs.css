@@ -1,32 +1,38 @@
 /* ── LES CHAMPS DE SAISIE ───────────────────
-   Compare les champs de saisie des deux
-   écrans.
+   Un seul modèle de champ. Et son étiquette
+   doit être VISIBLE — un texte d'exemple gris
+   dans le champ ne suffit pas : il disparaît
+   dès qu'on tape (critère n° 5).
 
-   Pas de couleur ici : ce fichier est
-   partagé avec le jeu, où chaque monde
-   a les siennes.
-
-   À TOI, dans cet ordre :
-     1. ce que tu as trouvé — une différence
-        entre les deux écrans, ou une absence
-        si aucun ne s'en occupe ;
-     2. le critère qui aurait évité ça ;
-     3. le geste qui permet de le contrôler
-        sur une seule page ;
-     4. le CSS qui l'applique.
-
-   Les trois premiers s'écrivent en dessous.
+   Pas de couleur en dur : ce fichier est
+   partagé avec le jeu, où chaque monde a les
+   siennes.
    ──────────────────────────────────────── */
 
-/* 1 · ce que j'ai trouvé :
-   2 · le critère         :
-   3 · on contrôle en     :
+/* 1 · ce que j'ai trouvé : la connexion a bien une étiquette
+                            « Ton pseudo » en <label for>, mais
+                            rien ne la dessinait — et le choix
+                            des mondes n'a aucun champ, donc
+                            aucun des deux ne fixait de modèle.
+   2 · le critère         : n° 5 — chaque champ a une étiquette
+                            visible, pas seulement un placeholder.
+   3 · on contrôle en     : tapant dans le champ : l'étiquette
+                            doit rester à l'écran.
 */
 
 input, select {
-  /* 4 · À TOI */
+  min-height: 44px;
+  padding: 8px 16px;
+  color: var(--encre);
+  background: color-mix(in srgb, var(--fond) 70%, transparent);
+  border: 1px solid var(--bordure);
+  border-radius: 2px;
 }
 
+/* L'étiquette est AU-DESSUS du champ, et elle y reste quand on tape. */
 label {
-  /* 4 · À TOI */
+  display: block;
+  margin-bottom: 4px;
+  color: var(--encre);
+  text-align: left;
 }

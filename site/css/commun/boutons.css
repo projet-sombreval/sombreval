@@ -1,73 +1,72 @@
 /* ── LES BOUTONS ────────────────────────────
-   Compare les boutons des deux écrans.
+   Un seul modèle de bouton, partout.
 
-   Pas de couleur ici : ce fichier est
-   partagé avec le jeu, où chaque monde
-   a les siennes.
+   ⚠️ AUCUNE COULEUR EN DUR : ce fichier est
+   partagé avec le jeu, où chaque monde a les
+   siennes.
 
-   À TOI, dans cet ordre :
-     1. ce que tu as trouvé — une différence
-        entre les deux écrans, ou une absence
-        si aucun ne s'en occupe ;
-     2. le critère qui aurait évité ça ;
-     3. le geste qui permet de le contrôler
-        sur une seule page ;
-     4. le CSS qui l'applique.
-
-   Les trois premiers s'écrivent en dessous.
+   ⚠️ ET AUCUNE RÈGLE SUR « body ». Il y en
+   avait une — fond figé, flex centré, hauteur
+   100vh — et comme ce fichier est chargé en
+   DERNIER par le jeu, elle repeignait tous ses
+   écrans par-dessus les couleurs du monde.
+   Un fragment partagé ne met pas en page la
+   page entière : il habille ce qu'il nomme.
    ──────────────────────────────────────── */
 
-/* 1 · ce que j'ai trouvé :
-   2 · le critère         :
-   3 · on contrôle en     :
+/* 1 · ce que j'ai trouvé : la connexion avait un bouton,
+                            le choix des mondes en avait trois,
+                            et aucun des deux écrans ne les
+                            dessinait pareil.
+   2 · le critère         : n° 4 — un seul modèle de bouton.
+   3 · on contrôle en     : les mettant côte à côte, et en
+                            comparant hauteur, bordure et survol.
 */
 
+/* ⚠️ La règle porte sur « button », pas sur une classe.
+   Le dessin vivait dans « .enter-btn », que PERSONNE n'écrit
+   dans le HTML : il ne s'appliquait donc à aucun bouton, et les
+   trois « Entrer » du choix des mondes restaient ceux du
+   navigateur. Posé sur l'élément, il les habille tous. */
 button {
-  /* 4 · À TOI */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  /* Hauteur confortable au doigt : 44 px, l'exigence E12. */
+  min-height: 44px;
+  padding: 8px 24px;
+
+  color: var(--parchemin);
+  background: var(--accent);
+  border: 1px solid var(--accent-clair);
+  border-radius: 2px;
+
+  cursor: pointer;
+  transition: background .4s ease, border-color .4s ease, transform .4s ease;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
+/* ⚠️ Le survol ASSOMBRIT le fond, il ne l'éclaircit pas. Le texte du bouton
+   est toujours « --parchemin », c'est-à-dire clair : en éclaircissant le fond
+   on réduirait le contraste au moment précis où l'on désigne le bouton.
+   Assombrir marche dans les DEUX thèmes — mesuré : le jeu passe de 7,05:1 à
+   mieux, ces écrans de 5,00:1 à mieux. */
 button:hover {
-  /* 4 · À TOI */
-}
-body 
-{background: #100c10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;}
-
-.enter-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    padding: 7px 22px;
-    margin-top: 5px;
-
-    font-family: Georgia, serif;
-    font-size: 12px;
-    letter-spacing: 3px;
-
-    color: #e8c9c9;
-    background: linear-gradient(135deg, #32151e, #171018);
-
-    border: 1px solid #9d7373;
-    border-radius: 2px;
-
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.4s ease;
-
-    box-shadow: 0 0 10px #8b243533;
+  background: color-mix(in srgb, var(--accent) 75%, black);
+  border-color: var(--parchemin);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 40%, transparent);
+  transform: scale(1.04);
 }
 
-.enter-btn:hover {
-    background: linear-gradient(135deg, #642c3b, #29131d);
-    color: #fff0e8;
-    border-color: #d8b6a0;
-
-    box-shadow: 0 0 20px #a52c4d66;
-    transform: scale(1.08);
+/* ⚠️ Désactivé se voit SANS la couleur (critère n° 8) : le curseur
+   change et l'opacité tombe, pas seulement la teinte. */
+button:disabled {
+  color: var(--encre-pale);
+  background: transparent;
+  border-color: var(--bordure);
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
 }
