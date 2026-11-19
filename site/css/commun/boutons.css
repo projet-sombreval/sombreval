@@ -29,14 +29,33 @@ button {
 button:hover {
   /* 4 · À TOI */
 }
-body 
-{background: #100c10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;}
+/* ⚠️ UNE RÈGLE « body » A ÉTÉ RETIRÉE ICI, et c'est la seule chose que ce
+   fichier a perdue. Elle posait « background: #100c10 », « display: flex »,
+   « align-items: center » et « height: 100vh ».
 
+   Elle faisait deux dégâts, et aucun des deux ne se voyait en la lisant :
+
+   1. Ce fichier est chargé EN DERNIER par le jeu (site/index.html) : son fond
+      figé repeignait tous les écrans du jeu par-dessus les couleurs du monde
+      choisi. La décision n° 4 — aucune couleur dans le code — était annulée
+      par l'ordre de chargement.
+
+   2. Il est aussi chargé en dernier par choix-univers.html : son fond
+      recouvrait LE DÉGRADÉ RADIAL de l'écran des portes, qui n'était donc
+      pas affiché. La retirer ne change pas le design : elle le rend.
+
+   Un fragment partagé habille ce qu'il nomme ; il ne met pas en page la page
+   entière. Le reste du fichier est intact. */
+
+/* ⚠️ « .enter-btn » N'EST PORTÉE PAR AUCUN ÉLÉMENT — ni dans les deux
+   écrans, ni dans le jeu. Ce dessin ne s'applique donc à rien : les boutons
+   affichés prennent « .ecran button » de ecrans/couleurs.css.
+
+   Il est GARDÉ tel quel, sans une virgule de changée. Le poser sur
+   « button » le rendrait visible — et ce serait changer votre design, pas le
+   corriger. Le jour où vous voudrez ce bouton-là, il suffira d'écrire
+   « class="enter-btn" » dans le HTML, ou de renommer le sélecteur ici en
+   « button ». La décision est la vôtre. */
 .enter-btn {
     display: inline-flex;
     align-items: center;

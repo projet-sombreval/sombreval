@@ -18,11 +18,24 @@
    Les trois premiers s'écrivent en dessous.
    ──────────────────────────────────────── */
 
-/* 1 · ce que j'ai trouvé :
-   2 · le critère         :
-   3 · on contrôle en     :
+/* 1 · ce que j'ai trouvé : rien, dans aucun des deux écrans. À la touche
+                            Tab on ne voyait jamais où on était — et
+                            l'écran des mondes n'a QUE des boutons, donc il
+                            était injouable au clavier.
+   2 · le critère         : n° 6 — on voit où on est quand on navigue à la
+                            touche Tab.
+   3 · on contrôle en     : appuyant plusieurs fois sur Tab, sans souris.
 */
 
+/* ⚠️ Un « :focus-visible {} » vide veut dire « aucun focus visible ». Rempli
+   ici parce que c'est un plancher d'accessibilité, pas un choix de style :
+   sans lui, l'écran des portes ne se joue pas au clavier.
+
+   Un CONTOUR, pas un changement de couleur : qui ne distingue pas les
+   couleurs doit le voir aussi (critère n° 8). Et « outline-offset », sinon
+   le contour se confond avec la bordure du bouton. La teinte est celle de
+   l'écran — « --accent-clair » —, donc la vôtre. */
 :focus-visible {
-  /* 4 · À TOI */
+  outline: 3px solid var(--accent-clair);
+  outline-offset: 3px;
 }

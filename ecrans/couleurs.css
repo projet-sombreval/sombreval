@@ -19,6 +19,27 @@
 */
 
 :root {
+  /* ── LES SEPT NOMS IMPOSÉS ────────────────────────────────────────────
+     Ajoutés, et c'est le seul ajout de ce fichier. Vos quarante variables
+     restent toutes, aux mêmes valeurs.
+
+     Pourquoi : le jeu ne sait remplir que ces sept noms-là — il les pose
+     sur la page, monde par monde (site/js/jeu.js). Une maquette qui ne
+     parle qu'en --sang et --fond-1 ne peut donc recevoir aucune couleur
+     d'univers. Les sept prennent ici VOS valeurs : rien ne change à
+     l'écran, mais l'écran devient habillable.
+
+     Ces maquettes sont une instance SOMBRE des sept noms ; le jeu en a une
+     claire (site/css/couleurs.css). C'est exactement à ça que servent des
+     noms partagés : une structure, deux habillages. */
+  --fond: #1c1016;         /* = --fond-2 */
+  --parchemin: #eadbd3;    /* le clair qui se pose SUR l'accent */
+  --encre: #eadbd3;        /* = votre --encre */
+  --encre-pale: #b8a4a0;   /* = votre --encre-douce */
+  --accent: #a82e3a;       /* = votre --sang */
+  --accent-clair: #d52d3c; /* = votre --sang-vif */
+  --bordure: #b58b70;      /* = votre --bronze */
+
   /* Texte */
   --encre: #eadbd3;
   --encre-douce: #b8a4a0;
@@ -89,10 +110,38 @@
   color: var(--encre);
 }
 
+/* ⚠️ Une accolade fermante orpheline suivait, puis ce même bloc
+   « .ecran button:hover » une seconde fois. Retirés : le fichier est à
+   nouveau valide, et la règle est la vôtre, une seule fois. */
+
+
+/* ── LE DÉCOR DES DEUX ÉCRANS ─────────────────────────────────────────────
+   Trois règles ARRIVENT ICI depuis site/css/commun/typo.css, avec leurs
+   valeurs exactes. Elles n'ont pas changé d'un chiffre — elles ont changé
+   de place, parce que typo.css est partagé avec le jeu : laissées là-bas,
+   ce halo rouge, ce filet bronze et ce rouge d'erreur se posaient sur
+   CHAQUE monde du jeu, quelles que soient ses couleurs.
+   Ici, elles habillent les deux maquettes et elles seules. */
+
+.titre {
+  text-shadow:
+    0 0 15px var(--titre-halo),
+    0 0 35px var(--sang-titre),
+    0 0 70px var(--sang-titre-fond);
 }
 
-.ecran button:hover {
-  background: var(--accent);
-  color: var(--encre);
+.titre::after {
+  content: "";
+  display: block;
+  width: min(220px, 35vw);
+  height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, var(--bronze), transparent);
+  box-shadow: 0 0 12px var(--sang-ligne);
+}
+
+.erreur {
+  color: var(--sang-vif);
+  text-shadow: 0 0 12px #a82e3a78;
 }
 

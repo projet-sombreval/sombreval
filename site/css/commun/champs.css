@@ -18,15 +18,33 @@
    Les trois premiers s'écrivent en dessous.
    ──────────────────────────────────────── */
 
-/* 1 · ce que j'ai trouvé :
-   2 · le critère         :
-   3 · on contrôle en     :
+/* 1 · ce que j'ai trouvé : la connexion a bien une vraie étiquette
+                            (« <label for="pseudo"> »), mais rien ne la
+                            dessinait — et l'écran des mondes n'a aucun
+                            champ. Aucun des deux ne fixait donc de modèle.
+   2 · le critère         : n° 5 — chaque champ a une étiquette visible,
+                            pas seulement un texte d'exemple.
+   3 · on contrôle en     : tapant dans le champ : l'étiquette doit rester.
 */
 
+/* ⚠️ Rempli au strict minimum : le champ n'avait AUCUNE règle, donc aucun
+   design à préserver — c'était celui du navigateur. Les couleurs viennent
+   des sept noms, donc de l'écran qui les déclare. */
+
 input, select {
-  /* 4 · À TOI */
+  /* 44 px : la cible confortable au doigt, exigence E12. */
+  min-height: 44px;
+  padding: 8px 16px;
+  color: var(--encre);
+  background: transparent;
+  border: 1px solid var(--bordure);
+  border-radius: 2px;
 }
 
+/* L'étiquette est AU-DESSUS du champ, et elle y reste quand on tape : c'est
+   tout l'objet du critère n° 5. */
 label {
-  /* 4 · À TOI */
+  display: block;
+  margin-bottom: 4px;
+  text-align: left;
 }

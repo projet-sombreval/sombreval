@@ -1,5 +1,14 @@
 /* Version téléphone */
 
+/* ⚠️ CE FICHIER NE S'APPLIQUAIT PAS. Le bloc « @media » n'était pas fermé —
+   il manquait deux accolades — et « width: 100% » n'avait pas de
+   point-virgule, ce qui avalait la ligne suivante. Le navigateur jetait donc
+   tout ce qui suit la première erreur : la règle sur les images n'a jamais
+   rien fait.
+
+   Les règles ci-dessous sont celles qui étaient écrites, AU MOT PRÈS. Seules
+   les accolades et le point-virgule sont ajoutés. */
+
 @media (max-width: 480px) {
   .entree {
     max-width: 100%;
@@ -8,14 +17,17 @@
   h1 {
     letter-spacing: 3px;
   }
-body {
-   width: 100%
-   margin: 0;
-   padding: 10px ;
-}
-img { 
-   max-width: 100%;
-   flex-direction: column;
+
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+  }
+
+  img {
+    max-width: 100%;
+    flex-direction: column;
+  }
 }
 
    

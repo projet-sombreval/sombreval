@@ -5,15 +5,10 @@ titreApparition 3s ease forwards,
 titreFlottement 5s ease-in-out 3s infinite;
 }
 
-.titre::after {
-content: "";
-display: block;
-width: min(220px, 35vw);
-height: 1px;
-margin: 12px auto 0;
-background: linear-gradient(90deg, transparent, #b58b70, transparent);
-box-shadow: 0 0 12px #a83240;
-}
+/* ⚠️ Le filet sous le titre est parti dans ecrans/couleurs.css, lui aussi :
+   « .titre » est employé SIX FOIS par le jeu (site/js/jeu.js), donc ce filet
+   bronze et sa lueur rouge se seraient posés sous le titre de chaque monde.
+   Valeurs exactes conservées. */
 
 @keyframes titreApparition {
 from {
@@ -39,30 +34,33 @@ translate: 0 -6px;
 /* TEXTES — IDENTITÉ SOMBREVAL */
 
 body {
-color: #eadbd3;
+color: var(--encre);
 font-family: Georgia, "Times New Roman", serif;
 }
 
 
 
 .titre {
-color: #eadbd3;
 font-family: Georgia, "Times New Roman", serif;
 font-size: clamp(2rem, 5.2vw, 5rem);
 font-weight: normal;
 letter-spacing: clamp(3px, .8vw, 9px);
 text-transform: uppercase;
-
-text-shadow:
-0 0 15px #ffffff20,
-0 0 35px #9b3640,
-0 0 70px #551923;
 }
+
+/* ⚠️ Deux choses ont quitté ce bloc, et aucune n'est perdue :
+
+   — « color » : il écrasait le titre DORÉ de l'écran de connexion
+     (connexion.css : « color: var(--accent) »), qui n'était donc pas
+     affiché. Le retirer rend ce titre ;
+   — « text-shadow » : le halo rouge est le décor des maquettes. Laissé ici,
+     il imposait ce rouge à TOUS les mondes du jeu. Il est reparti dans
+     ecrans/couleurs.css, avec ses valeurs exactes. */
 
 
 
 .accroche {
-color: #b8a4a0;
+color: var(--encre-pale);
 font-family: Georgia, "Times New Roman", serif;
 font-size: .95rem;
 font-style: italic;
@@ -72,7 +70,7 @@ letter-spacing: 3px;
 /* LABEL DU PSEUDO */
 
 .entree label {
-color: #eadbd3;
+color: var(--encre);
 font-family: Georgia, "Times New Roman", serif;
 font-size: .95rem;
 letter-spacing: 2px;
@@ -81,14 +79,14 @@ letter-spacing: 2px;
 /* CHAMP PSEUDO */
 
 .entree input {
-color: #eadbd3;
+color: var(--encre);
 font-family: Georgia, "Times New Roman", serif;
 font-size: 1rem;
 letter-spacing: 1px;
 }
 
 .entree input::placeholder {
-color: #b8a4a0;
+color: var(--encre-pale);
 font-family: Georgia, "Times New Roman", serif;
 font-style: italic;
 }
@@ -96,7 +94,7 @@ font-style: italic;
 /* TEXTE D'AIDE */
 
 .aide {
-color: #b8a4a0;
+color: var(--encre-pale);
 font-family: Georgia, "Times New Roman", serif;
 font-size: .85rem;
 font-style: italic;
@@ -105,18 +103,19 @@ letter-spacing: 1px;
 
 /* MESSAGE D'ERREUR */
 
+/* La couleur et la lueur de l'erreur sont parties dans ecrans/couleurs.css,
+   avec leurs valeurs exactes : un rouge figé ici vaudrait pour tous les
+   mondes du jeu. */
 .erreur {
-color: #d52d3c;
 font-family: Georgia, "Times New Roman", serif;
 font-size: .9rem;
 font-style: italic;
-text-shadow: 0 0 12px #a82e3a78;
 }
 
 /* BOUTON */
 
 .entree button {
-color: #eadbd3;
+color: var(--encre);
 font-family: Georgia, "Times New Roman", serif;
 font-size: .95rem;
 font-weight: normal;
@@ -127,7 +126,7 @@ text-transform: uppercase;
 /* PIED DE PAGE */
 
 .pied {
-color: #b8a4a0;
+color: var(--encre-pale);
 font-family: Georgia, "Times New Roman", serif;
 font-size: .85rem;
 font-style: italic;

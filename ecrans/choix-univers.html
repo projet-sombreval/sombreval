@@ -4,8 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sombreval — choix de l'univers</title>
-<link rel="stylesheet" href="choix-univers.css">
+<!-- Les couleurs D'ABORD : ce sont les variables que la feuille de
+     l'écran consomme, et l'écran doit pouvoir les redéfinir pour lui.
+     Dans l'autre sens, le bloc « .ecran » de couleurs.css écrasait
+     celui de choix-univers.css — et l'écran perdait ses propres couleurs. -->
 <link rel="stylesheet" href="couleurs.css">
+<link rel="stylesheet" href="choix-univers.css">
 <link rel="stylesheet" href="../site/css/commun/typo.css">
 <link rel="stylesheet" href="../site/css/commun/espacements.css">
 <link rel="stylesheet" href="../site/css/commun/boutons.css">
@@ -21,21 +25,20 @@
 
     <ul class="mondes">
       <li class="monde monde-sombreval">
-        <img src="porte-gothique-steam.png" alt="Porte Sombreval">
-        <span class="phrase">Bienvenue à Sombreval 
-          La peste approche</span>
+        <img src="porte-gothique-steam.png" alt="La porte de Sombreval">
+        <span class="phrase">Bienvenue à Sombreval<br>La peste approche</span>
         <button type="button">Entrer</button>
       </li>
 
       <li class="monde monde-salem">
-        <img src="portail-gothique-aux.png" alt="Porte">
-        <span class="phrase">Salem Salem là ou les corbeaux observent</span>
+        <img src="portail-gothique-aux.png" alt="La porte de Salem">
+        <span class="phrase">Salem<br>Là où les corbeaux observent</span>
         <button type="button">Entrer</button>
       </li>
 
       <li class="monde monde-serenissime">
-        <img src="portail-gothique-aux-2.png" alt="Porte ">
-        <span class="phrase">Serenissime.Derrière le masque </span>
+        <img src="portail-gothique-aux-2.png" alt="La porte de Sérénissime">
+        <span class="phrase">Sérénissime<br>Derrière le masque</span>
         <button type="button">Entrer</button>
       </li>
     </ul>

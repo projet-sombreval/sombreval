@@ -1,52 +1,15 @@
-:root {
-  /* Texte */
-  --encre: #eadbd3;
-  --encre-douce: #b8a4a0;
-  --encre-loading: #e5c7bd;
-  --ecran-texte-blanc: #ffffff;
+/* ── L'ÉCRAN DU CHOIX DES MONDES ────────────
+   Trois portes, une mise en scène.
 
-  /* Fond de page */
-  --fond-1: #35171d;
-  --fond-2: #1c1016;
-  --fond-3: #09070a;
-  --fond-4: #030304;
-  --noir: #000000;
-  --ombre-bord: #000000a8;
-  --ombre-porte: #000000b0;
-  --ombre-porte-fort: #000000c0;
-
-  /* Rouge sang (Sombreval + loading + titre) */
-  --sang: #a82e3a;
-  --sang-vif: #d52d3c;
-  --sang-sombre: #9c1728;
-  --sang-titre: #9b3640;
-  --sang-titre-fond: #551923;
-  --sang-barre: #8c2834;
-  --sang-barre-fond: #382127;
-  --sang-ligne: #a83240;
-  --sang-lueur-1: #c52c3b78;
-  --sang-lueur-2: #791a2750;
-  --sang-phrase: #f0c2c0;
-
-  /* Blanc (Salem) */
-  --blanc-lueur-1: #ffffff8c;
-  --blanc-lueur-2: #dce9ff55;
-  --blanc-phrase: #edf1ff;
-  --blanc-halo: #dceaff;
-  --blanc-pur: #ffffff;
-
-  /* Or (Sérénissime) */
-  --or-lueur-1: #e9c36d78;
-  --or-lueur-2: #a16c3150;
-  --or-phrase: #f4dfb0;
-  --or-halo: #e7b858;
-  --or-halo-fond: #9d6b30;
-
-  /* Divers */
-  --bronze: #b58b70;
-  --titre-halo: #ffffff20;
-  --brume: #aaa2bd;
-}
+   ⚠️ La palette n'est plus EN DOUBLE ici. Les
+   quarante mêmes variables, aux mêmes valeurs,
+   étaient déclarées deux fois : dans ce fichier
+   ET dans couleurs.css. Deux copies dérivent au
+   premier changement — c'est ce que le critère
+   n° 1 interdit. Rien n'est perdu : couleurs.css
+   est chargé juste avant celui-ci, et c'est la
+   même liste.
+   ──────────────────────────────────────── */
 
 * {
   box-sizing: border-box;
@@ -132,7 +95,13 @@ body::before {
 }
 
 /* TITRE */
-.titre {
+/* ⚠️ « .ecran .titre » et non « .titre » : site/css/commun/typo.css est
+   chargé APRÈS ce fichier et y déclarait aussi une animation, SANS son
+   délai de 3,5 s. C'est elle qui gagnait : l'entrée en scène du titre
+   partait avant l'heure, et toute la séquence des portes avec. Un sélecteur
+   d'un cran plus précis rend l'ordre voulu, sans rien retirer à l'autre
+   écran — qui garde, lui, l'animation du fragment. */
+.ecran .titre {
   position: relative;
   z-index: 2;
   margin: 0;
@@ -319,10 +288,14 @@ body::before {
   animation: phraseApparition 4s ease 19s forwards;
 }
 
+/* ⚠️ L'animation finissait à « opacity: 0 » : le nom de chaque monde
+   apparaissait, puis DISPARAISSAIT pour de bon. Au bout d'une vingtaine de
+   secondes, l'écran montrait trois portes sans un mot — sur un écran dont
+   tout le propos est de choisir entre trois mondes nommés. Le fondu
+   d'entrée est gardé tel quel ; seule la dernière image reste visible. */
 @keyframes phraseApparition {
   0% { opacity: 0; filter: blur(15px); }
-  25%, 70% { opacity: 1; filter: blur(0); }
-  100% { opacity: 0; filter: blur(12px); }
+  25%, 100% { opacity: 1; filter: blur(0); }
 }
 
 /* SURVOL SANS CADRE */
@@ -436,4 +409,33 @@ body::before {
   50% {
     transform: translate(-48%, 0);
   }
+}
+
+/* =====================================
+   LES BOUTONS « ENTRER », SUR LA PORTE
+===================================== */
+
+/* ⚠️ Ils n'étaient PAS VISIBLES. Aucune règle ne les plaçait : posés dans le
+   flux, sous une image de 91vh, ils tombaient hors de l'écran — et
+   « .ecran { overflow: hidden } » les rognait. D'où, sans doute, le fichier
+   « choix-univers-AVEC-BOUTONS.html » : la question était la bonne.
+
+   On ne touche pas à leur dessin : leurs couleurs restent celles de
+   « .ecran button » dans couleurs.css. On ne fait que les POSER sur la
+   porte, et leur donner une cible confortable au doigt (44 px, l'exigence
+   E12 du cahier des charges). */
+
+.monde button {
+  position: absolute;
+  z-index: 4;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 44px;
+  padding: 8px 24px;
+  cursor: pointer;
+}
+
+.monde button:hover {
+  transform: translateX(-50%) scale(1.04);
 }
