@@ -8,6 +8,28 @@
   --encre:  #e8e2d4;
   --accent: #c9a227;
 
+  /* ── LES QUATRE AUTRES DES SEPT NOMS ──────────────────────────────────
+     Ajoutées, et c'est le seul ajout de ce fichier. Vos trois couleurs
+     sont intactes.
+
+     Pourquoi : les sept noms sont ceux que le jeu remplit, monde par
+     monde. Vous en déclariez trois ; les fragments partagés en emploient
+     sept. Les quatre manquantes étaient donc vides sur cet écran — et
+     c'est pour ça que l'étiquette, l'aide, le pied et la bordure du champ
+     n'avaient pas de couleur du tout.
+
+     Elles sont DÉRIVÉES de vos trois : rien d'inventé. */
+  --encre-pale: color-mix(in srgb, var(--encre) 65%, var(--fond));   /* 6,32:1 */
+  --accent-clair: color-mix(in srgb, var(--accent) 70%, var(--encre)); /* 8,68:1 */
+  --bordure: color-mix(in srgb, var(--encre) 45%, var(--fond));        /* 3,73:1,
+     c'est une bordure, donc un élément non textuel : 3:1 suffit. */
+
+  /* ⚠️ « --parchemin » n'est PAS redéfinie ici, à dessein. C'est le clair
+     qui se pose SUR l'accent, et sur votre or (#c9a227) le crème ne donne
+     que 1,87:1 — illisible. Rien sur cet écran ne l'emploie : plutôt que
+     d'écrire une valeur qui trahirait le premier qui s'en servirait, on la
+     laisse à celle de couleurs.css. */
+
   background: var(--fond);
   color: var(--encre);
   padding: 1.5rem;
