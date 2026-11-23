@@ -1,0 +1,131 @@
+/* LA PALETTE DES DEUX ÉCRANS DE LA CLASSE — reprise de ecrans/couleurs.css,
+   aux mêmes valeurs, sans une de changée.
+
+   ⚠️ ELLE EST POSÉE SUR <body>, et seulement sur ces deux écrans-là.
+   Le jeu pose les SEPT noms imposés sur document.documentElement, monde par
+   monde (appliquerLesCouleurs). Ces deux écrans-ci arrivent AVANT qu'un monde
+   soit choisi — l'encre brune de Sombreval, faite pour du parchemin, serait
+   illisible sur leur fond sombre. Déclarées ici sur <body>, ces valeurs
+   l'emportent pour tout ce qu'il contient, et pour ces deux écrans seuls.
+
+   Les autres écrans du jeu (salle d'attente, nuit, jour) ne portent aucun
+   data-ecran : ils gardent les couleurs de leur monde, intactes. */
+
+body[data-ecran="portes"],
+body[data-ecran="connexion"] {
+  /* Les sept noms, instance SOMBRE (celle des maquettes) */
+  --fond: #1c1016;
+  --parchemin: #eadbd3;
+  --encre: #eadbd3;
+  --encre-pale: #b8a4a0;
+  --accent: #a82e3a;
+  --accent-clair: #d52d3c;
+  --bordure: #b58b70;
+
+  /* Texte */
+  --encre-douce: #b8a4a0;
+  --encre-loading: #e5c7bd;
+  --ecran-texte-blanc: #ffffff;
+
+  /* Fond de page */
+  --fond-1: #35171d;
+  --fond-2: #1c1016;
+  --fond-3: #09070a;
+  --fond-4: #030304;
+  --noir: #000000;
+  --ombre-bord: #000000a8;
+  --ombre-porte: #000000b0;
+  --ombre-porte-fort: #000000c0;
+
+  /* Rouge sang (Sombreval + loading + titre) */
+  --sang: #a82e3a;
+  --sang-vif: #d52d3c;
+  --sang-sombre: #9c1728;
+  --sang-titre: #9b3640;
+  --sang-titre-fond: #551923;
+  --sang-barre: #8c2834;
+  --sang-barre-fond: #382127;
+  --sang-ligne: #a83240;
+  --sang-lueur-1: #c52c3b78;
+  --sang-lueur-2: #791a2750;
+  --sang-phrase: #f0c2c0;
+
+  /* Blanc (Salem) */
+  --blanc-lueur-1: #ffffff8c;
+  --blanc-lueur-2: #dce9ff55;
+  --blanc-phrase: #edf1ff;
+  --blanc-halo: #dceaff;
+  --blanc-pur: #ffffff;
+
+  /* Or (Sérénissime) */
+  --or-lueur-1: #e9c36d78;
+  --or-lueur-2: #a16c3150;
+  --or-phrase: #f4dfb0;
+  --or-halo: #e7b858;
+  --or-halo-fond: #9d6b30;
+
+  /* Divers */
+  --bronze: #b58b70;
+  --titre-halo: #ffffff20;
+  --brume: #aaa2bd;
+}
+
+/* Le filet sous le titre, et le rouge d'erreur. Portés eux aussi : laissés
+   sans portée, ils se poseraient sur les titres de tous les écrans du jeu. */
+
+.ecran-portes .titre::after,
+.ecran-connexion .titre::after {
+  content: "";
+  display: block;
+  width: min(220px, 35vw);
+  height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, var(--bronze), transparent);
+  box-shadow: 0 0 12px var(--sang-ligne);
+}
+
+.ecran-portes .erreur,
+.ecran-connexion .erreur {
+  color: var(--sang-vif);
+  text-shadow: 0 0 12px #a82e3a78;
+}
+
+/* Les boutons des deux maquettes, tels que la classe les a réglés. */
+
+.ecran-portes button,
+.ecran-connexion button {
+  background: var(--fond-1);
+  color: var(--encre);
+}
+
+.ecran-portes button:hover,
+.ecran-connexion button:hover {
+  background: var(--accent);
+  color: var(--encre);
+}
+
+/* ⚠️ CES DEUX ÉCRANS NE SONT PAS LA CARTE DU JEU — et il faut le dire, sinon
+   rien ne tient.
+
+   Trois feuilles du jeu habillent « .ecran » comme une carte centrée :
+   site.css lui donne « max-width: 44rem », une bordure et des coins ;
+   couleurs.css un fond parchemin ; commun/espacements.css « margin: 0 ».
+   Les maquettes de la classe n'ont jamais chargé les deux premières : elles
+   sont pleine page, et c'est leur mise en scène.
+
+   MESURÉ dans le navigateur avant ce bloc : les trois portes tenaient dans
+   704 px collés au bord gauche, sur un fond clair. */
+
+.ecran-portes,
+.ecran-connexion {
+  max-width: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+body[data-ecran="portes"],
+body[data-ecran="connexion"] {
+  padding: 0;   /* site.css en pose 1rem autour de la page */
+}

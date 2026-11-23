@@ -1,0 +1,556 @@
+/* L'ÉCRAN DES PORTES — la feuille écrite par la classe (ecrans/choix-univers.css),
+   posée telle quelle dans le jeu. SEULS LES SÉLECTEURS ONT CHANGÉ :
+
+     body            ->  body[data-ecran="portes"]
+     .ecran          ->  .ecran-portes
+
+   Sans cette portée, le « L O A D I N G » et le fond des portes se
+   poseraient sur TOUS les écrans du jeu. Les deux marques sont posées par
+   dessiner() dans site/js/jeu.js.
+
+   Pas une valeur, pas une animation, pas un délai n'a été touché. */
+
+/* ── L'ÉCRAN DU CHOIX DES MONDES ────────────
+   Trois portes, une mise en scène.
+
+   ⚠️ La palette n'est plus EN DOUBLE ici. Les
+   quarante mêmes variables, aux mêmes valeurs,
+   étaient déclarées deux fois : dans ce fichier
+   ET dans couleurs.css. Deux copies dérivent au
+   premier changement — c'est ce que le critère
+   n° 1 interdit. Rien n'est perdu : couleurs.css
+   est chargé juste avant celui-ci, et c'est la
+   même liste.
+   ──────────────────────────────────────── */
+
+body[data-ecran="portes"] {
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--encre);
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(ellipse at 50% 38%, var(--fond-1) 0%, var(--fond-2) 38%, var(--fond-3) 78%, var(--fond-4) 100%);
+}
+
+/* Ombres sur les bords */
+body[data-ecran="portes"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 42%, var(--ombre-bord) 100%);
+}
+
+.ecran-portes {
+  position: relative;
+  min-height: 100vh;
+  padding: 22px clamp(4px, 1vw, 14px) 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* LOADING */
+.ecran-portes::before {
+  content: "L O A D I N G";
+  position: fixed;
+  z-index: 101;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--encre-loading);
+  font-size: 1rem;
+  letter-spacing: 7px;
+  text-shadow: 0 0 15px var(--sang), 0 0 40px var(--sang);
+  pointer-events: none;
+  animation: loadingTexte 3.5s ease forwards;
+}
+
+.ecran-portes::after {
+  content: "";
+  position: fixed;
+  z-index: 101;
+  top: 51%;
+  left: 50%;
+  width: min(280px, 60vw);
+  height: 2px;
+  transform: translateX(-50%);
+  background: var(--sang-barre-fond);
+  box-shadow: 0 0 15px var(--sang-barre);
+  pointer-events: none;
+  animation: loadingBarre 3.5s ease forwards;
+}
+
+@keyframes loadingTexte {
+  0%, 10% { opacity: 0; filter: blur(10px); }
+  25%, 75% { opacity: 1; filter: blur(0); }
+  100% { opacity: 0; filter: blur(8px); visibility: hidden; }
+}
+
+@keyframes loadingBarre {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+  20% { opacity: 1; }
+  80% { clip-path: inset(0 0 0 0); opacity: 1; }
+  100% { opacity: 0; clip-path: inset(0 0 0 0); }
+}
+
+/* TITRE */
+/* ⚠️ « .ecran-portes .titre » et non « .titre » : site/css/commun/typo.css est
+   chargé APRÈS ce fichier et y déclarait aussi une animation, SANS son
+   délai de 3,5 s. C'est elle qui gagnait : l'entrée en scène du titre
+   partait avant l'heure, et toute la séquence des portes avec. Un sélecteur
+   d'un cran plus précis rend l'ordre voulu, sans rien retirer à l'autre
+   écran — qui garde, lui, l'animation du fragment. */
+.ecran-portes .titre {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: clamp(2rem, 5.2vw, 5rem);
+  letter-spacing: clamp(3px, .8vw, 9px);
+  color: var(--encre);
+  text-shadow: 0 0 15px var(--titre-halo), 0 0 35px var(--sang-titre), 0 0 70px var(--sang-titre-fond);
+  opacity: 0;
+  animation:
+    titreApparition 3s ease 3.5s forwards,
+    titreFlottement 5s ease-in-out 6.5s infinite;
+}
+
+.titre::after {
+  content: "";
+  display: block;
+  width: min(220px, 35vw);
+  height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, var(--bronze), transparent);
+  box-shadow: 0 0 12px var(--sang-ligne);
+}
+
+@keyframes titreApparition {
+  from { opacity: 0; filter: blur(15px); transform: translateY(25px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+@keyframes titreFlottement {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+
+/* ACCROCHE */
+.accroche {
+  position: relative;
+  z-index: 2;
+  margin: 12px 0 18px;
+  text-align: center;
+  font-size: .95rem;
+  font-style: italic;
+  letter-spacing: 3px;
+  color: var(--encre-douce);
+  opacity: 0;
+  animation: accrocheApparition 3s ease 4s forwards;
+}
+
+@keyframes accrocheApparition {
+  to { opacity: 1; }
+}
+
+/* TROIS PORTES */
+.mondes {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  width: 100%;
+  max-width: 2200px;
+  gap: 0;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.monde {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  height: min(91vh, 1050px);
+  margin: 0 -28px;
+  padding: 0;
+  overflow: visible;
+  border: none !important;
+  outline: none !important;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none !important;
+  opacity: 0;
+  animation: porteApparition 2.5s ease 6s forwards;
+}
+
+.monde:nth-child(1) { z-index: 1; }
+.monde:nth-child(2) { z-index: 2; }
+.monde:nth-child(3) { z-index: 1; }
+
+.monde img {
+  position: relative;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: brightness(.86) contrast(1.08) drop-shadow(0 12px 22px var(--ombre-porte));
+  transition: filter .8s ease, transform 1s ease;
+}
+
+@keyframes porteApparition {
+  from { opacity: 0; transform: translateY(35px); filter: brightness(0); }
+  to { opacity: 1; transform: translateY(0); filter: brightness(1); }
+}
+
+/* LUEURS SUCCESSIVES */
+.monde::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 4% 8%;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.monde-sombreval::before {
+  background: radial-gradient(ellipse at center, var(--sang-lueur-1), var(--sang-lueur-2) 42%, transparent 78%);
+  animation: lumiereRouge 4s ease 9s forwards;
+}
+
+.monde-salem::before {
+  background: radial-gradient(ellipse at center, var(--blanc-lueur-1), var(--blanc-lueur-2) 42%, transparent 78%);
+  animation: lumiereBlanche 4s ease 14s forwards;
+}
+
+.monde-serenissime::before {
+  background: radial-gradient(ellipse at center, var(--or-lueur-1), var(--or-lueur-2) 42%, transparent 78%);
+  animation: lumiereDoree 4s ease 19s forwards;
+}
+
+@keyframes lumiereRouge {
+  0%, 100% { opacity: 0; }
+  20%, 70% { opacity: 1; }
+  45% { opacity: .65; }
+}
+
+@keyframes lumiereBlanche {
+  0%, 100% { opacity: 0; }
+  20%, 70% { opacity: 1; }
+  45% { opacity: .65; }
+}
+
+@keyframes lumiereDoree {
+  0%, 100% { opacity: 0; }
+  20%, 70% { opacity: 1; }
+  45% { opacity: .65; }
+}
+
+/* PHRASES SUR LES PORTES */
+.phrase {
+  position: absolute;
+  z-index: 3;
+  top: 43%;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: clamp(.85rem, 1.65vw, 1.55rem);
+  line-height: 1.5;
+  letter-spacing: clamp(1px, .25vw, 3px);
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.monde-sombreval .phrase {
+  color: var(--sang-phrase);
+  text-shadow: 0 0 15px var(--sang-vif), 0 0 40px var(--sang-sombre);
+  animation: phraseApparition 4s ease 9s forwards;
+}
+
+.monde-salem .phrase {
+  color: var(--blanc-phrase);
+  text-shadow: 0 0 15px var(--blanc-halo), 0 0 40px var(--blanc-pur);
+  animation: phraseApparition 4s ease 14s forwards;
+}
+
+.monde-serenissime .phrase {
+  color: var(--or-phrase);
+  text-shadow: 0 0 15px var(--or-halo), 0 0 40px var(--or-halo-fond);
+  animation: phraseApparition 4s ease 19s forwards;
+}
+
+/* ⚠️ L'animation finissait à « opacity: 0 » : le nom de chaque monde
+   apparaissait, puis DISPARAISSAIT pour de bon. Au bout d'une vingtaine de
+   secondes, l'écran montrait trois portes sans un mot — sur un écran dont
+   tout le propos est de choisir entre trois mondes nommés. Le fondu
+   d'entrée est gardé tel quel ; seule la dernière image reste visible. */
+@keyframes phraseApparition {
+  0% { opacity: 0; filter: blur(15px); }
+  25%, 100% { opacity: 1; filter: blur(0); }
+}
+
+/* SURVOL SANS CADRE */
+.monde:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.monde:hover img {
+  filter: brightness(1.08) contrast(1.1) drop-shadow(0 12px 28px var(--ombre-porte-fort));
+  transform: scale(1.025);
+}
+
+/* TÉLÉPHONES */
+@media (max-width: 760px) {
+  .ecran-portes {
+    padding: 24px 3vw;
+  }
+
+  .mondes {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .monde {
+    height: 72vh;
+    min-height: 420px;
+    margin: -22px 0;
+  }
+
+  .accroche {
+    margin-bottom: 18px;
+  }
+
+  .phrase {
+    font-size: 1.2rem;
+  }
+}
+
+/* ACCESSIBILITÉ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .titre,
+  .accroche,
+  .monde {
+    opacity: 1;
+  }
+}
+
+/* =====================================
+   IMMENSE BRUME EN ARRIÈRE-PLAN
+===================================== */
+
+.ecran-portes {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.brume-portes {
+  position: absolute;
+  z-index: -1;
+
+  left: 50%;
+  bottom: -5vh;
+
+  transform: translateX(-50%);
+
+  width: 190%;
+  max-width: none;
+  height: auto;
+  max-height: none;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  filter:
+    brightness(1.15)
+    drop-shadow(0 0 20px var(--brume));
+
+  animation:
+    brumeApparition 4s ease 7s forwards,
+    brumeFlottement 14s ease-in-out 11s infinite;
+}
+
+@keyframes brumeApparition {
+  from {
+    opacity: 0;
+    filter: blur(15px);
+  }
+
+  to {
+    opacity: 0.85;
+    filter: blur(2px);
+  }
+}
+
+@keyframes brumeFlottement {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    transform: translate(-48%, 0);
+  }
+}
+
+/* =====================================
+   LES BOUTONS « ENTRER », SUR LA PORTE
+===================================== */
+
+/* ⚠️ Ils n'étaient PAS VISIBLES. Aucune règle ne les plaçait : posés dans le
+   flux, sous une image de 91vh, ils tombaient hors de l'écran — et
+   « .ecran-portes { overflow: hidden } » les rognait. D'où, sans doute, le fichier
+   « choix-univers-AVEC-BOUTONS.html » : la question était la bonne.
+
+   On ne touche pas à leur dessin : leurs couleurs restent celles de
+   « .ecran-portes button » dans couleurs.css. On ne fait que les POSER sur la
+   porte, et leur donner une cible confortable au doigt (44 px, l'exigence
+   E12 du cahier des charges). */
+
+.monde button {
+  position: absolute;
+  z-index: 4;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 44px;
+  padding: 8px 24px;
+  cursor: pointer;
+}
+
+.monde button:hover {
+  transform: translateX(-50%) scale(1.04);
+}
+
+/* =====================================
+   UNE PORTE FERMÉE
+===================================== */
+
+/* Un monde dont le fichier dit « disponible: false ». Il est MONTRÉ — on voit
+   qu'il existe et qu'il viendra — mais on ne peut pas y entrer.
+
+   Trois signes, et deux ne sont PAS des couleurs : le bouton est « disabled »
+   (le clavier le saute, le navigateur l'annonce) et porte « Bientôt » au lieu
+   d'« Entrer ». Le gris est le troisième, jamais le seul.
+
+   Rien ici n'est à écrire : il suffit qu'une ambassadrice mette
+   « disponible: true » dans le fichier de son monde, et sa porte s'allume. */
+
+.monde-ferme img {
+  filter: grayscale(1) brightness(.42) contrast(.95)
+          drop-shadow(0 12px 22px var(--ombre-porte));
+}
+
+/* Elle ne réagit pas au survol : rien ne s'éclaire, rien ne bouge. */
+.monde-ferme:hover img {
+  filter: grayscale(1) brightness(.42) contrast(.95)
+          drop-shadow(0 12px 22px var(--ombre-porte));
+  transform: none;
+}
+
+/* Pas de lueur : c'est la lumière derrière la porte, et il n'y a personne. */
+.monde-ferme::before {
+  animation: none;
+  opacity: 0;
+}
+
+.monde-ferme .phrase {
+  color: var(--encre-douce);
+  text-shadow: none;
+}
+
+/* ⚠️ Écrit en toutes lettres, et pas laissé à « button:disabled » de
+   site/css/couleurs.css : cette feuille-ci est chargée APRÈS, donc c'est la
+   règle « .ecran-portes button » de maquettes.css qui gagnerait, et la porte
+   fermée aurait l'air d'un bouton ordinaire. */
+.monde-ferme button,
+.monde-ferme button:hover {
+  background: transparent;
+  color: var(--encre-douce);
+  border: 1px solid var(--bordure);
+  cursor: not-allowed;
+  transform: translateX(-50%);
+}
+
+/* =====================================
+   LES PORTES TIENNENT DANS L'ÉCRAN
+===================================== */
+
+/* ⚠️ LE SEUL ENDROIT OÙ LA HAUTEUR RÉGLÉE PAR LA CLASSE A BOUGÉ — et il le
+   fallait.
+
+   « .monde { height: min(91vh, 1050px) } » valait dans la maquette, où la
+   porte était seule sur sa page. Dans le jeu, le titre et l'accroche la
+   précèdent : la porte descend plus bas que le cadre, et
+   « overflow: hidden » rogne précisément ce qui dépasse — LES BOUTONS.
+
+   MESURÉ au navigateur : 43 px de trop sur 1600×1000, 31 px sur 1366×768.
+   Les trois portes étaient là, superbes, et on ne pouvait entrer dans
+   aucune.
+
+   Ici, les portes prennent la hauteur qui RESTE sous le titre : « .mondes »
+   occupe le reste de la colonne, et chaque porte s'y étire. Il a fallu
+   repasser « align-items » de « center » à « stretch » — sans ça, la case
+   de la grille garde la taille de son contenu et la porte déborde quand
+   même (essayé, mesuré : les boutons descendaient de 73 px de plus).
+
+   Rien d'autre ne change : ni les images, ni les lueurs, ni les délais, ni
+   la brume. */
+
+/* ⚠️ « height » et NON « min-height » : avec min-height, le cadre grandit
+   avec son contenu, il n'y a jamais d'espace en trop, et le flex ne
+   contracte rien du tout. Mesuré : les portes restaient à la même place,
+   deux corrections de suite. */
+.ecran-portes {
+  height: 100vh;
+}
+
+.ecran-portes .mondes {
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.ecran-portes .monde {
+  height: auto;
+  min-height: 0;
+}
+
+/* Sur téléphone, les trois portes s'empilent : là, c'est l'écran qui défile. */
+@media (max-width: 760px) {
+  .ecran-portes {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .ecran-portes .mondes {
+    flex: 0 0 auto;
+    align-items: center;
+  }
+
+  .ecran-portes .monde {
+    height: 72vh;
+    min-height: 420px;
+  }
+}
