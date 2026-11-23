@@ -25,8 +25,15 @@ const etat = {
 
 /* ------------------------------------------------------------------ outils */
 
-function dessiner(html) {
-  document.getElementById("ecran").innerHTML = html;
+function dessiner(html, ecranNomme = "") {
+  const ecran = document.getElementById("ecran");
+  // Deux marques, deux portées : la CLASSE habille la boîte, l'ATTRIBUT sur
+  // <body> habille la page entière (son fond, l'ombre de ses bords). Sans
+  // elles, la feuille d'un écran se poserait sur tous les autres — l'écran
+  // des portes y mettrait son « L O A D I N G » partout.
+  ecran.className = ecranNomme ? `ecran ecran-${ecranNomme}` : "ecran";
+  document.body.dataset.ecran = ecranNomme;
+  ecran.innerHTML = html;
 }
 
 function echapper(texte) {
@@ -117,17 +124,26 @@ function premierUnivers() {
 }
 
 function ecranConnexion() {
-  const univers = premierUnivers();
+  // L'écran écrit par la classe (ecrans/connexion.html). Il ne nomme AUCUN
+  // monde, et c'est voulu : à cet instant, aucun n'est encore choisi.
   dessiner(`
-    <h1>${echapper(univers.titre || "")}</h1>
-    <p class="sous-titre">${univers.annee} — ${echapper(univers.sous_titre || "")}</p>
-    <p class="consigne">${etat.partie
-      ? "On t'a invité à une partie. Choisis ton nom."
-      : "Ouvre une partie, puis envoie le lien à ceux que tu veux voir jouer."}</p>
-    <label for="pseudo">Ton pseudonyme</label>
-    <input id="pseudo" maxlength="20" autocomplete="off">
-    <button class="large" onclick="entrer()">Entrer</button>
-  `);
+    <h1 class="titre">Sombreval</h1>
+    <p class="accroche">Trois mondes. Une nuit.</p>
+
+    <form class="entree" onsubmit="entrer(); return false;">
+      <label for="pseudo">Ton pseudo</label>
+      <input id="pseudo" name="pseudo" type="text"
+             maxlength="20" autocomplete="off" placeholder="Ex. Corneille">
+
+      <p class="aide">De 3 à 20 signes.</p>
+
+      <button type="submit">Entrer</button>
+    </form>
+
+    <p class="pied">${etat.partie
+      ? "On t'a invité à une partie — choisis ton nom."
+      : "Partie privée — sur invitation."}</p>
+  `, "connexion");
   document.getElementById("pseudo").focus();
 }
 
@@ -147,18 +163,32 @@ async function entrer() {
 }
 
 function ecranChoixDeLUnivers() {
-  const choix = etat.univers.map((univers) => `
-    <li><button onclick="creerLaPartie('${univers.nom}')" ${univers.disponible ? "" : "disabled"}>
-      ${echapper(univers.titre)} ${univers.annee}<br>
-      <small>${univers.disponible ? echapper(univers.sous_titre) : "bientôt"}</small>
-    </button></li>`).join("");
+  // UNE PORTE PAR MONDE, fabriquée à partir de ce que le serveur a lu dans
+  // regles/univers/. Rien n'est écrit en dur ici : ni les noms, ni les
+  // phrases, ni le fait qu'un monde soit ouvert. Ajouter un quatrième monde,
+  // c'est ajouter un fichier — et déposer son image.
+  //
+  // L'image d'un monde porte son nom : site/images/porte-<nom>.png
+  const portes = etat.univers.map((univers) => `
+    <li class="monde monde-${univers.nom}${univers.disponible ? "" : " monde-ferme"}">
+      <img src="images/porte-${univers.nom}.png"
+           alt="La porte de ${echapper(univers.titre)}">
+      <span class="phrase">${echapper(univers.titre)}<br>${univers.disponible
+        ? echapper(univers.sous_titre)
+        : "bientôt"}</span>
+      <button type="button" onclick="creerLaPartie('${univers.nom}')"
+              ${univers.disponible ? "" : "disabled"}>${univers.disponible
+        ? "Entrer"
+        : "Bientôt"}</button>
+    </li>`).join("");
 
   dessiner(`
-    <h1>Trois villages</h1>
-    <p class="sous-titre">Celui que tu choisis vaut pour tout le monde.</p>
+    <h1 class="titre">Choisis ton monde</h1>
+    <p class="accroche">Choisissez votre monde avec soin. Le destin ne connaît aucun chemin de retour.</p>
     ${choixDeLaTaille()}
-    <ul class="choix">${choix}</ul>
-  `);
+    <ul class="mondes">${portes}</ul>
+    <img class="brume-portes" src="images/brume-portes.png" alt="">
+  `, "portes");
 }
 
 // Le nombre de joueurs, parmi ceux que regles/roles.yaml sait composer.
