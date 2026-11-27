@@ -5,6 +5,7 @@ indexation dure : la première manquante arrêtait le serveur. Un monde ne
 pouvait donc être montré qu'une fois fini. Ces tests fixent l'inverse.
 """
 
+import copy
 import itertools
 import random
 import shutil
@@ -78,7 +79,8 @@ class TestUnUniversIncomplet(unittest.TestCase):
 
         vue = jeu.vue(ouverture["partie"], ouverture["jeton"])
 
-        self.assertEqual(vue["univers"]["presentation"], "à écrire")
+        self.assertEqual(vue["univers"]["presentation"],
+                         jeu.configuration.defauts["presentation"])
         self.assertEqual(len(vue["univers"]["couleurs"]), 7)
 
     def test_une_partie_entiere_se_joue_sur_un_univers_vide(self):
@@ -144,14 +146,21 @@ class TestUnUniversIncomplet(unittest.TestCase):
         self.assertNotIn("textes", a_ecrire)
 
     def test_un_univers_complet_n_a_rien_a_ecrire(self):
-        """Sombreval est écrit : sa liste doit être VIDE.
+        """Un monde qui écrit chaque clé : sa liste doit être VIDE.
 
         Sans cette moitié-là, une liste qui renverrait tout marquerait aussi
         les textes déjà écrits — et le signal ne voudrait plus rien dire.
-        """
-        configuration = Configuration()
 
-        self.assertEqual(configuration.univers["sombreval"]["a_ecrire"], [])
+        Le monde est fabriqué ici, et non pris dans regles/univers/ : aucun
+        des trois mondes n'est complet, et c'est voulu — leurs textes sont
+        ceux des équipes, qui arrivent semaine après semaine.
+        """
+        complet = copy.deepcopy(Configuration(self.dossier).defauts)
+        self._ecrire_univers(UNIVERS_NU | complet | {"annee": 1500})
+
+        a_ecrire = Configuration(self.dossier).univers_choisi("vide")["a_ecrire"]
+
+        self.assertEqual(a_ecrire, [])
 
     def test_une_cle_ecrite_sort_de_la_liste(self):
         self._ecrire_univers(UNIVERS_NU | {"presentation": "Un monde bien à lui."})

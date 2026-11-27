@@ -125,7 +125,9 @@ class TestApplication(unittest.TestCase):
             if vue["phase"] == "fin":
                 break
         self.assertEqual(vue["phase"], "fin")
-        self.assertIn(vue["resultat"]["camp"], ("le Village", "les Loups"))
+        camps = self.jeu.configuration.univers["sombreval"]["camps"]
+        self.assertIn(vue["resultat"]["camp"],
+                      (camps["village"]["nom"], camps["menace"]["nom"]))
         self.assertEqual(len(vue["resultat"]["roles"]), 8)
 
 
