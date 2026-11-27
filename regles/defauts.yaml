@@ -24,10 +24,16 @@ presentation: à écrire
 annee: 0
 sous_titre: à écrire
 
-# ── À TOI · AMBIANCE ──────────────────────────────────
-# Les sept gris qui s'affichent tant qu'un monde n'a pas
-# donné les siens. Vérifie-les au contraste : un filet
-# illisible ne sert à rien.
+# ── CE FICHIER N'EST PLUS UNE PIÈCE ───────────────────
+# Les sept gris ci-dessous s'affichent tant qu'un monde
+# n'a pas donné ses couleurs. Ils ont été mesurés, et ils
+# passent le seuil de 4,5:1 sur la carte : les chiffres
+# sont juste en dessous. Il n'y a rien à y faire.
+#
+# Directrice de l'ambiance : ta pièce est dans
+# site/css/couleurs.css. C'est là qu'on décide quelles
+# couleurs se posent où — et c'est là qu'un couple peut
+# tomber sous le seuil, même avec des gris qui passent.
 # ──────────────────────────────────────────────────────
 
 # Des GRIS, parce qu'un monde pas encore habillé doit se voir comme tel. Mais
