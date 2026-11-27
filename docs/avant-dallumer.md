@@ -7,9 +7,9 @@ vide : c'est elle que tu écris, et elle demande comment
 on vérifie chacune.
 
 Une phrase par condition, et elle doit dire le geste :
-« on ouvre le fichier et on compte les sept couleurs »
-se fait ; « on s'assure que c'est complet » ne se fait
-pas.
+« on ouvre le fichier et on vérifie que la présentation
+n'est pas vide » se fait ; « on s'assure que c'est
+complet » ne se fait pas.
 
 Et ce soir, c'est toi qui dis si on allume. Avant chaque
 intégration, tu passes ta liste sur le monde concerné et
@@ -22,7 +22,7 @@ vraies. Elles se vérifient, elles ne se discutent pas.
 
 | | Ce qu'on vérifie | Comment |
 |---|---|---|
-| 1 | les sept couleurs sont présentes, et ce sont les sept noms imposés | |
+| 1 | si des couleurs sont données, ce sont les sept noms imposés | |
 | 2 | aucune des sept n'est illisible sur les autres | |
 | 3 | la présentation est écrite | |
 | 4 | le titre, l'année et le sous-titre sont là | |
