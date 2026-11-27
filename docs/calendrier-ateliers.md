@@ -16,11 +16,14 @@ ordre.
     salle design pour les rendus en D, la salle édito
     pour ceux en R. Ce sont les ambassadrices qui
     écrivent — elles sont déjà le contact de leur
-    univers. Une ligne par univers, puis dessous, en une
-    phrase, pour quand chacune doit avoir écrit.
+    univers. Une ligne par univers : c'est toi qui écris
+    le prénom de chaque ambassadrice. Puis dessous, en
+    une phrase, pour quand chacune doit avoir écrit.
 
-Et rappelle ce qui est en retard : R1 et D1 ne sont
-jamais arrivés, et c'est ce qui bloque le plus.
+Et dis que rien n'est en retard : les carnets
+d'univers sont arrivés, l'ancien D1 est annulé, et la
+prochaine échéance est la confirmation des sept
+couleurs, le 14 décembre.
 
 Chaque ligne d'un tableau tient sur UNE SEULE ligne de
 texte, même longue. Coupée en deux, elle ne s'affiche

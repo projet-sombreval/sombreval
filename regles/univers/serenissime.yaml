@@ -10,11 +10,13 @@ sous_titre: Venise complote derrière ses masques.
 # ── À TOI ─────────────────────────────────────────────
 # 1. La présentation de ton monde : deux ou trois phrases,
 #    reprises du carnet d'univers rendu le 19 octobre.
-# 2. Plus tard : les sept couleurs, recopiées de D1. Les
-#    sept NOMS sont imposés : tu ne changes que les valeurs.
+# 2. Plus tard : les sept couleurs, confirmées par ton
+#    atelier. Les sept NOMS sont imposés : tu ne changes
+#    que les valeurs.
 # 3. Quand la présentation est écrite : disponible: true
-#    Les couleurs viendront quand votre D1 arrivera — ton
-#    monde s'affiche en gris d'ici là, et c'est prévu.
+#    Les couleurs viendront quand ton atelier les aura
+#    confirmées — ton monde s'affiche en gris jusqu'au
+#    4 janvier, et c'est prévu.
 #
 # Tant qu'une clé manque, le jeu la remplace par une valeur
 # d'attente et l'écran l'affiche en « à écrire ». Ton monde
