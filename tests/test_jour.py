@@ -34,7 +34,8 @@ class TestJour(unittest.TestCase):
         resoudre_le_jour(self.partie)
 
         self.assertEqual(len(self.partie.vivants()), 6)
-        self.assertIn("pas su choisir", self.partie.journal[-1]["texte"])
+        self.assertEqual(self.partie.journal[-1]["texte"],
+                         self.partie.univers["textes"]["egalite_jour"])
 
     def test_personne_ne_vote_personne_nest_elimine(self):
         resoudre_le_jour(self.partie)

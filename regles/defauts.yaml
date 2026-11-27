@@ -6,23 +6,26 @@
 # le serveur. Rien n'était donc visible avant que tout soit fini.
 #
 # Avec ce fichier, un univers réduit à son nom se charge, s'affiche et se joue.
-# Il est gris et criblé de « à écrire », et c'est le but : UN TROU VISIBLE EST
+# Il est gris et criblé de « ici, … », et c'est le but : UN TROU VISIBLE EST
 # UNE INFORMATION, UN BLANC EST UN BOGUE.
 #
 # ⚠️ CE FICHIER NE CONTIENT QUE DES CLÉS LUES EN INDEXATION DURE. Les clés
 # optionnelles — `confirmation` et `revelation` d'un rôle, lues par
 # `texte_du_role()` avec `.get()` — n'y sont PAS, et ne doivent pas y entrer :
 # un rôle qui ne révèle rien doit continuer à ne rien révéler. Y mettre un
-# « à écrire » ferait parler des rôles muets, dans les trois univers.
+# texte d'attente ferait parler des rôles muets, dans les trois univers.
 #
 # ⚠️ ET LES TROUS GARDENT LEURS PARAMÈTRES. Un texte est passé par
 # `.format(...)` : s'il perd son `{pseudo}`, on ne sait plus qui est mort ;
 # s'il gagne un paramètre que l'appelant ne fournit pas, `.format` lève une
 # erreur. Les paramètres ci-dessous sont exactement ceux que le code passe.
 
-presentation: à écrire
+# ⚠️ CHAQUE VALEUR D'ATTENTE DIT CE QU'ON ATTEND À CET ENDROIT. Elle commence
+# par « ici », garde ses paramètres et tient en 55 caractères : celle qui ouvre
+# un monde vide doit y lire une consigne, pas un mur de « à écrire ».
+presentation: "ici, deux ou trois phrases qui présentent le monde"
 annee: 0
-sous_titre: à écrire
+sous_titre: "ici, le sous-titre du monde, en une ligne"
 
 # ── CE FICHIER N'EST PLUS UNE PIÈCE ───────────────────
 # Les sept gris ci-dessous s'affichent tant qu'un monde
@@ -51,49 +54,79 @@ couleurs:
 
 camps:
   village:
-    nom: le camp à écrire
-    apparence: quelqu'un — à écrire
-    victoire: à écrire
+    nom: "ici, le nom du camp du village"
+    apparence: "ici, à quoi ressemble quelqu'un du village"
+    victoire: "ici, la phrase quand le village gagne"
   menace:
-    nom: la menace à écrire
-    apparence: une menace — à écrire
-    victoire: à écrire
+    nom: "ici, le nom du camp de la menace"
+    apparence: "ici, à quoi ressemble quelqu'un de la menace"
+    victoire: "ici, la phrase quand la menace gagne"
 
 # Les dix rôles de regles/roles.yaml. Trois clés chacun, celles qui sont lues
 # durement : `nom`, `pouvoir`, `instruction_nuit`.
 roles:
-  menace:      {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  espion:      {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  traitre:     {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  enqueteur:   {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  temoin:      {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  protecteur:  {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  guerisseur:  {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  justicier:   {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  doyen:       {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
-  villageois:  {nom: rôle à écrire, pouvoir: à écrire, instruction_nuit: à écrire}
+  menace:
+    nom: "ici, le nom du rôle de la menace"
+    pouvoir: "ici, le pouvoir de la menace, en une phrase"
+    instruction_nuit: "ici, ce que fait la menace la nuit"
+  espion:
+    nom: "ici, le nom du rôle de l'espion"
+    pouvoir: "ici, le pouvoir de l'espion, en une phrase"
+    instruction_nuit: "ici, ce que fait l'espion la nuit"
+  traitre:
+    nom: "ici, le nom du rôle du traître"
+    pouvoir: "ici, le pouvoir du traître, en une phrase"
+    instruction_nuit: "ici, ce que fait le traître la nuit"
+  enqueteur:
+    nom: "ici, le nom du rôle de l'enquêteur"
+    pouvoir: "ici, le pouvoir de l'enquêteur, en une phrase"
+    instruction_nuit: "ici, ce que fait l'enquêteur la nuit"
+  temoin:
+    nom: "ici, le nom du rôle du témoin"
+    pouvoir: "ici, le pouvoir du témoin, en une phrase"
+    instruction_nuit: "ici, ce que fait le témoin la nuit"
+  protecteur:
+    nom: "ici, le nom du rôle du protecteur"
+    pouvoir: "ici, le pouvoir du protecteur, en une phrase"
+    instruction_nuit: "ici, ce que fait le protecteur la nuit"
+  guerisseur:
+    nom: "ici, le nom du rôle du guérisseur"
+    pouvoir: "ici, le pouvoir du guérisseur, en une phrase"
+    instruction_nuit: "ici, ce que fait le guérisseur la nuit"
+  justicier:
+    nom: "ici, le nom du rôle du justicier"
+    pouvoir: "ici, le pouvoir du justicier, en une phrase"
+    instruction_nuit: "ici, ce que fait le justicier la nuit"
+  doyen:
+    nom: "ici, le nom du rôle du doyen"
+    pouvoir: "ici, le pouvoir du doyen, en une phrase"
+    instruction_nuit: "ici, ce que fait le doyen la nuit"
+  villageois:
+    nom: "ici, le nom du rôle du villageois"
+    pouvoir: "ici, le pouvoir du villageois, en une phrase"
+    instruction_nuit: "ici, ce que fait le villageois la nuit"
 
-# Les dix-neuf textes. « à écrire » partout, et les paramètres conservés.
+# Les dix-neuf textes. Chacun dit ce qu'on attend, et garde ses paramètres.
 textes:
-  attente_titre: à écrire
-  attente_consigne: à écrire
-  decouverte_titre: à écrire
-  decouverte_consigne: à écrire
-  nuit_titre: à écrire
-  nuit_sans_pouvoir: à écrire
-  nuit_choix_fait: à écrire
-  nuit_mort: à écrire
-  jour_titre: à écrire
-  jour_consigne: à écrire
-  jour_mort: à écrire
-  vote_en_cours: "{nombre} — à écrire"
-  elimine_nuit: "{pseudo} est mort — texte à écrire (c'était {role})"
-  personne_eliminee_nuit: à écrire
-  elimine_jour: "{pseudo} a été jugé — texte à écrire (c'était {role})"
-  egalite_jour: à écrire
-  fin_titre: à écrire
-  nuit_numero: Nuit {numero} — à écrire
-  jour_numero: Jour {numero} — à écrire
+  attente_titre: "ici, le titre de la salle d'attente"
+  attente_consigne: "ici, ce qu'on fait en attendant les autres joueurs"
+  decouverte_titre: "ici, le titre de l'écran qui révèle ton rôle"
+  decouverte_consigne: "ici, la consigne quand on découvre son rôle"
+  nuit_titre: "ici, le titre de la nuit"
+  nuit_sans_pouvoir: "ici, ce que vit la nuit un joueur sans pouvoir"
+  nuit_choix_fait: "ici, la phrase une fois le choix de nuit fait"
+  nuit_mort: "ici, ce que vit la nuit un joueur mort"
+  jour_titre: "ici, le titre du jour"
+  jour_consigne: "ici, la consigne du débat et du vote"
+  jour_mort: "ici, ce que vit le jour un joueur mort"
+  vote_en_cours: "ici, le nombre de voix : {nombre}"
+  elimine_nuit: "ici, {pseudo} meurt la nuit ; c'était {role}"
+  personne_eliminee_nuit: "ici, la phrase quand personne ne meurt la nuit"
+  elimine_jour: "ici, le village juge {pseudo} ; c'était {role}"
+  egalite_jour: "ici, la phrase quand le vote est à égalité"
+  fin_titre: "ici, le titre de la fin de partie"
+  nuit_numero: "ici, le nom de la nuit numéro {numero}"
+  jour_numero: "ici, le nom du jour numéro {numero}"
 
 # ⚠️ ONZE, ET CE NOMBRE EST PORTEUR — mesuré. Les joueurs factices remplissent
 # les places libres avec un pseudonyme NON DÉJÀ PRIS : avec un seul, un seul
@@ -115,4 +148,4 @@ pseudos_factices:
 
 # Non vide : le jour, le moteur tire une phrase au hasard dans cette liste.
 messages:
-  - Phrases de discussion à écrire.
+  - "ici, une phrase que les joueurs peuvent dire"

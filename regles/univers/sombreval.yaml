@@ -14,15 +14,15 @@ sous_titre: La peste remonte la vallée.
 # ── À TOI ─────────────────────────────────────────────
 # 1. La présentation de ton monde : deux ou trois phrases,
 #    reprises du carnet d'univers rendu le 19 octobre.
+#    Elle n'est pas encore là : ajoute « presentation: >- »
+#    juste sous ce bloc.
+#    Les camps et les textes des écrans viendront ensuite.
+#    D'ici là, le jeu affiche à leur place ce qu'il attend.
 # 2. Les sept couleurs, confirmées par ton atelier. Les
 #    sept NOMS sont imposés : tu ne changes que les valeurs.
 #
 # Pas de troisième ligne ici : Sombreval est déjà allumé.
 # ──────────────────────────────────────────────────────
-presentation: >-
-  Sombreval, hiver 1348. Trois morts en deux nuits, et pas de la peste :
-  la gorge ouverte. Le village ferme ses portes et se regarde.
-
 # Ces couleurs deviennent des variables CSS dans la page.
 # Aucune couleur n'est écrite dans le code ni dans la feuille de style.
 couleurs:
@@ -33,16 +33,6 @@ couleurs:
   accent: "#8d2119"
   accent-clair: "#c4552a"
   bordure: "#b9a279"
-
-camps:
-  village:
-    nom: le Village
-    apparence: quelqu'un du village
-    victoire: Le dernier loup est mort. Sombreval passera l'hiver.
-  menace:
-    nom: les Loups
-    apparence: un loup
-    victoire: Les loups sont désormais les plus nombreux. Sombreval est à eux.
 
 roles:
 
@@ -113,32 +103,6 @@ roles:
     nom: le Doyen
     pouvoir: "Tu es vieux et dur à tuer : la première attaque te manque."
     instruction_nuit: Tu dors d'un sommeil léger.
-
-# Les textes des écrans. Les mots entre accolades sont remplacés par le jeu.
-textes:
-  attente_titre: La nuit va tomber
-  attente_consigne: >-
-    Envoie ce lien à ceux que tu veux voir jouer. La partie commence quand
-    le village est au complet.
-  decouverte_titre: Voici qui tu es
-  decouverte_consigne: "Ne le dis à personne. Ou mens : c'est le jeu."
-  nuit_titre: Le village dort
-  nuit_sans_pouvoir: >-
-    Tu dors. Tu ne sauras qu'au matin ce qui s'est passé cette nuit.
-  nuit_choix_fait: Ton choix est fait. Attends le jour.
-  nuit_mort: Tu es mort. La nuit passe sans toi.
-  jour_titre: Le village s'éveille
-  jour_consigne: Parle, écoute, puis désigne celui que le village jugera.
-  jour_mort: >-
-    Tu es mort : tu vois tout, tu ne votes plus et tu ne parles plus.
-  vote_en_cours: "{nombre} voix"
-  elimine_nuit: "{pseudo} n'a pas vu le jour. C'était {role}."
-  personne_eliminee_nuit: Cette nuit, personne n'est mort. Quelqu'un a veillé.
-  elimine_jour: "Le village a jugé {pseudo}. C'était {role}."
-  egalite_jour: Le village n'a pas su choisir. Personne n'est jugé.
-  fin_titre: La partie est finie
-  nuit_numero: "Nuit {numero}"
-  jour_numero: "Jour {numero}"
 
 # Les pseudonymes des joueurs factices : ils remplissent les places libres
 # pour qu'on puisse jouer seul. Des prénoms du XIVe siècle, tant qu'à faire.

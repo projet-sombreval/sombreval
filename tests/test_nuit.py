@@ -82,7 +82,8 @@ class TestNuit(unittest.TestCase):
     def test_le_bailli_apprend_le_camp_de_sa_cible(self):
         self._viser(self.bailli, self.loup)
         resoudre_la_nuit(self.partie)
-        self.assertIn("un loup", self._dernier_secret(self.bailli))
+        apparence = self.partie.univers["camps"]["menace"]["apparence"]
+        self.assertIn(apparence, self._dernier_secret(self.bailli))
 
     def test_le_bailli_ne_lit_que_letat_du_debut_de_nuit(self):
         # Le bailli sonde le manant ; les loups le tuent la même nuit.
